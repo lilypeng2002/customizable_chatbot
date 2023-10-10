@@ -1,3 +1,3 @@
-## Note to self
+## Note
 
-Avoid sensitive info.
+Avoid sensitive info. This is just a test.
