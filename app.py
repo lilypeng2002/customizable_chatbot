@@ -3,10 +3,10 @@ import streamlit as st
 import sqlite3
 from datetime import datetime
 
-from config import API_KEY
+# from config import API_KEY
 
 # Set your OpenAI API key here, or use an environment variable
-openai.api_key = API_KEY
+openai.api_key = st.secrets["API_KEY"]
 
 st.title('Chatbot')
 
