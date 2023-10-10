@@ -74,12 +74,18 @@ if 'messages' not in st.session_state:
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-user_input = st.text_input("You: ")
+if 'user_input_value' not in st.session_state:
+    st.session_state.user_input_value = ''
+
+user_input = st.text_input("You: ", value=st.session_state.user_input_value)
+
+#user_input = st.text_input("You: ")
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
 if st.button('Send'):
+    st.session_state.user_input_value = user_input
     st.session_state.messages.append({'class': 'user', 'text': f"You: {user_input}"})
     user_message = {"role": "user", "content": user_input}
     st.session_state.chat.append(user_message)
@@ -100,5 +106,5 @@ if st.button('Send'):
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
     save_conversation(conversation_content)
     
-    st.session_state.user_input = "" 
+    st.session_state.user_input_value = ''
     st.rerun()  # Clear input box by rerunning the app
