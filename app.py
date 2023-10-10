@@ -3,6 +3,11 @@ import streamlit as st
 import sqlite3
 from datetime import datetime
 
+if 'last_submission' not in st.session_state:
+    st.session_state.last_submission = ''
+if 'widget_value' not in st.session_state:
+    st.session_state.widget_value = ''
+
 # from config import API_KEY
 
 # Set your OpenAI API key here, or use an environment variable
@@ -50,6 +55,10 @@ def create_database():
 
 create_database()
 
+def submit():
+    st.session_state.last_submission = st.session_state.widget_value
+    st.session_state.widget_value = ''
+
 def save_conversation(content):
     conn = sqlite3.connect('chat_records.db')
     cursor = conn.cursor()
@@ -74,21 +83,21 @@ if 'messages' not in st.session_state:
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-if 'user_input_value' not in st.session_state:
-    st.session_state.user_input_value = ''
+# Modified text input
+user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
-user_input = st.text_input("You: ", value=st.session_state.user_input_value)
-
-#user_input = st.text_input("You: ")
+# user_input = st.text_input("You: ")
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
 if st.button('Send'):
-    st.session_state.user_input_value = user_input
-    st.session_state.messages.append({'class': 'user', 'text': f"You: {user_input}"})
-    user_message = {"role": "user", "content": user_input}
+    st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
+    user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
+    #st.session_state.messages.append({'class': 'user', 'text': f"You: {user_input}"})
+    #user_message = {"role": "user", "content": user_input}
+    #st.session_state.chat.append(user_message)
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -106,5 +115,5 @@ if st.button('Send'):
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
     save_conversation(conversation_content)
     
-    st.session_state.user_input_value = ''
+    st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
