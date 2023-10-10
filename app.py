@@ -94,10 +94,11 @@ if st.button('Send'):
     bot_response = response['choices'][0]['message']['content']
     bot_message = {"role": "system", "content": bot_response}
     st.session_state.chat.append(bot_message)
-    st.session_state.messages.append({'class': 'bot', 'text': f"Bot: {bot_response}"})
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
     # Save the conversation to SQLite
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
     save_conversation(conversation_content)
     
+    st.session_state.user_input = "" 
     st.rerun()  # Clear input box by rerunning the app
