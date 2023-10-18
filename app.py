@@ -30,15 +30,21 @@ st.markdown(js_code, unsafe_allow_html=True)
 
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
-if "user_id" not in st.session_state:
-    # JavaScript to get the value from the hidden input and set it in session_state
-    js = """
-        const userID = document.getElementById("userID").value;
-        if (userID) {
-            window.Streamlit.setSessionState({"user_id": userID});
-        }
-    """
-    st.markdown(js, unsafe_allow_html=True)
+js_code = """
+<div style="color: black;">
+    <script>
+        setTimeout(function() {
+            const userID = document.getElementById("userID").value;
+            if (userID) {
+                window.Streamlit.setSessionState({"user_id": userID});
+            }
+        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
+    </script>
+</div>
+"""
+
+st.markdown(js_code, unsafe_allow_html=True)
+
 
 # Now, you can use st.session_state.user_id throughout your app without displaying it
 
