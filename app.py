@@ -13,6 +13,30 @@ if 'widget_value' not in st.session_state:
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
+import streamlit as st
+
+st.write("""
+    <input type="hidden" id="userID" name="userID">
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const userID = urlParams.get('userID');
+        document.getElementById("userID").value = userID;
+    </script>
+""", unsafe_allow_html=True)
+
+# If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
+if "user_id" not in st.session_state:
+    # JavaScript to get the value from the hidden input and set it in session_state
+    js = """
+        const userID = document.getElementById("userID").value;
+        if (userID) {
+            window.Streamlit.setSessionState({"user_id": userID});
+        }
+    """
+    st.markdown(js, unsafe_allow_html=True)
+
+# Now, you can use st.session_state.user_id throughout your app without displaying it
+
 st.title('Chatbot')
 
 # Custom CSS for the chat interface
@@ -64,7 +88,7 @@ def save_conversation(content):
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
-    user_id = "example_user_id"  # Replace with your actual user identification method
+    user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
     cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (?, ?, ?, ?)", 
                    (user_id, current_date, current_hour, content))
     conn.commit()
