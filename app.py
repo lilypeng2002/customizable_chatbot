@@ -13,16 +13,16 @@ if 'widget_value' not in st.session_state:
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
-import streamlit as st
+js_code = """
+<script>
+    const userID = document.getElementById("userID").value;
+    if (userID) {
+        window.Streamlit.setSessionState({"user_id": userID});
+    }
+</script>
+"""
 
-st.write("""
-    <input type="hidden" id="userID" name="userID">
-    <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const userID = urlParams.get('userID');
-        document.getElementById("userID").value = userID;
-    </script>
-""", unsafe_allow_html=True)
+st.markdown(js_code, unsafe_allow_html=True)
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
 if "user_id" not in st.session_state:
