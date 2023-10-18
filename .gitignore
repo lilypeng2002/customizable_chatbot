@@ -178,6 +178,6 @@ config.py
 testing_env.ipynb
 
 # database
-chat_records.db
+#chat_records.db
 
 # End of https://www.toptal.com/developers/gitignore/api/python
