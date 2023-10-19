@@ -73,29 +73,55 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Setup SQLite Database
-def create_database():
-    conn = sqlite3.connect('chat_records.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS conversations (
-        user_id TEXT,
-        date TEXT,
-        hour TEXT,
-        content TEXT
-    )
-    ''')
-    conn.commit()
-    conn.close()
+###### doing how the streamlit blog suggested https://docs.streamlit.io/library/advanced-features/connecting-to-data
 
-create_database()
+# streamlit_app.py
+
+# Create the SQL connection to pets_db as specified in your secrets file.
+conn = st.experimental_connection('chat_records.db', type='sql')
+
+# Insert some data with conn.session.
+with conn.session as s:
+    s.execute('CREATE TABLE IF NOT EXISTS conversations (user_id TEXT, date TEXT, hour TEXT, content TEXT);')
+    #s.execute('DELETE FROM pet_owners;')
+    #pet_owners = {'jerry': 'fish', 'barbara': 'cat', 'alex': 'puppy'}
+    #for k in pet_owners:
+    #    s.execute(
+    #        'INSERT INTO pet_owners (person, pet) VALUES (:owner, :pet);',
+    #        params=dict(owner=k, pet=pet_owners[k])
+    #    )
+    s.commit()
+
+# Query and display the data you inserted
+#pet_owners = conn.query('select * from pet_owners')
+#st.dataframe(pet_owners)
+
+
+
+
+# # Setup SQLite Database
+# def create_database():
+#     conn = sqlite3.connect('chat_records.db')
+#     cursor = conn.cursor()
+#     cursor.execute('''
+#     CREATE TABLE IF NOT EXISTS conversations (
+#         user_id TEXT,
+#         date TEXT,
+#         hour TEXT,
+#         content TEXT
+#     )
+#     ''')
+#     conn.commit()
+#     conn.close()
+
+# create_database()
 
 def submit():
     st.session_state.last_submission = st.session_state.widget_value
     st.session_state.widget_value = ''
 
 def save_conversation(content):
-    conn = sqlite3.connect('chat_records.db')
+    #conn = sqlite3.connect('chat_records.db')
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
