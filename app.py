@@ -2,6 +2,7 @@ import openai
 import streamlit as st
 import sqlite3
 from datetime import datetime
+import sqlalchemy
 
 if 'last_submission' not in st.session_state:
     st.session_state.last_submission = ''
