@@ -109,7 +109,7 @@ with conn.session as s:
 
 # # Setup SQLite Database
 # def create_database():
-#     conn = sqlite3.connect('chat_records.db')
+#     conn = sqlite3.connect('chatrecords.db')
 #     cursor = conn.cursor()
 #     cursor.execute('''
 #     CREATE TABLE IF NOT EXISTS conversations (
@@ -182,7 +182,7 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
-    save_conversation(user_id, current_date, current_hour, conversation_content)
+    save_conversation(conversation_content)
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
