@@ -49,6 +49,13 @@ st.markdown(js_code, unsafe_allow_html=True)
 
 # Now, you can use st.session_state.user_id throughout your app without displaying it
 
+# getting user_id from the hidden input
+user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+
+# getting current date and time
+current_date = datetime.now().strftime("%Y-%m-%d")
+current_hour = datetime.now().strftime("%H:%M:%S")
+
 st.title('Chatbot')
 
 # Custom CSS for the chat interface
@@ -175,7 +182,7 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
-    save_conversation(conversation_content)
+    save_conversation(user_id, current_date, current_hour, conversation_content)
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
