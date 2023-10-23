@@ -79,7 +79,7 @@ st.markdown(
 # streamlit_app.py
 
 # Create the SQL connection to pets_db as specified in your secrets file.
-conn = st.experimental_connection('chatrecords.db', type='sql')
+conn = st.experimental_connection('chatrecords_db', type='sql')
 
 # Insert some data with conn.session.
 with conn.session as s:
@@ -122,7 +122,7 @@ def submit():
     st.session_state.widget_value = ''
 
 def save_conversation(content):
-    conn = sqlite3.connect('chatrecords.db')
+    conn = sqlite3.connect('chatrecords_db')
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
