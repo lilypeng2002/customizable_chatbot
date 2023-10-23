@@ -131,11 +131,11 @@ def submit():
 def save_conversation(content):
     # conn = sqlite3.connect('chatrecords_db')
     conn = st.experimental_connection('chatrecords_db', type='sql')
-    cursor = conn.cursor()
+    #cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (?, ?, ?, ?)", 
+    conn.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (?, ?, ?, ?)", 
                    (user_id, current_date, current_hour, content))
     conn.commit()
     conn.close()
