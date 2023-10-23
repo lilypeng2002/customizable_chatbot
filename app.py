@@ -129,7 +129,8 @@ def submit():
     st.session_state.widget_value = ''
 
 def save_conversation(content):
-    conn = sqlite3.connect('chatrecords_db')
+    # conn = sqlite3.connect('chatrecords_db')
+    conn = st.experimental_connection('chatrecords_db', type='sql')
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
