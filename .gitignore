@@ -176,6 +176,7 @@ pyrightconfig.json
 # file with confidential info (api key)
 config.py
 testing_env.ipynb
+secrets.toml
 
 # database
 #chat_records.db

@@ -1,8 +1,9 @@
 import openai
 import streamlit as st
-import sqlite3
+# import sqlite3
 from datetime import datetime
-import sqlalchemy
+# import sqlalchemy
+import mysql.connector
 
 if 'last_submission' not in st.session_state:
     st.session_state.last_submission = ''
@@ -85,20 +86,47 @@ st.markdown(
 
 # streamlit_app.py
 
+def connect_to_db():
+    connection = mysql.connector.connect(
+        user='st.secrets["sql_user"]',
+        password='st.secrets["sql_password"]',
+        host='st.secrets["sql_host"]',
+        database='st.secrets["sql_database"]'
+    )
+    return connection
+
+
+def create_database():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS conversations (
+        user_id VARCHAR(255),
+        date VARCHAR(255),
+        hour VARCHAR(255),
+        content TEXT
+    )
+    ''')
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+create_database()
+
 # Create the SQL connection to pets_db as specified in your secrets file.
-conn = st.experimental_connection('chatrecords_db', type='sql')
+#conn = st.experimental_connection('chatrecords_db', type='sql')
 
 # Insert some data with conn.session.
-with conn.session as s:
-    s.execute('CREATE TABLE IF NOT EXISTS conversations (user_id TEXT, date TEXT, hour TEXT, content TEXT);')
-    #s.execute('DELETE FROM pet_owners;')
-    #pet_owners = {'jerry': 'fish', 'barbara': 'cat', 'alex': 'puppy'}
-    #for k in pet_owners:
-    #    s.execute(
-    #        'INSERT INTO pet_owners (person, pet) VALUES (:owner, :pet);',
-    #        params=dict(owner=k, pet=pet_owners[k])
-    #    )
-    s.commit()
+# with conn.session as s:
+#     s.execute('CREATE TABLE IF NOT EXISTS conversations (user_id TEXT, date TEXT, hour TEXT, content TEXT);')
+#     #s.execute('DELETE FROM pet_owners;')
+#     #pet_owners = {'jerry': 'fish', 'barbara': 'cat', 'alex': 'puppy'}
+#     #for k in pet_owners:
+#     #    s.execute(
+#     #        'INSERT INTO pet_owners (person, pet) VALUES (:owner, :pet);',
+#     #        params=dict(owner=k, pet=pet_owners[k])
+#     #    )
+#     s.commit()
 
 # Query and display the data you inserted
 #pet_owners = conn.query('select * from pet_owners')
@@ -139,17 +167,30 @@ def submit():
 #                   (user_id, current_date, current_hour, content))
 #    conn.close()
 
-def save_conversation(content):
-    conn = st.experimental_connection('chatrecords_db', type='sql')
+# def save_conversation(content):
+#     conn = st.experimental_connection('chatrecords_db', type='sql')
 
+#     current_date = datetime.now().strftime("%Y-%m-%d")
+#     current_hour = datetime.now().strftime("%H:%M:%S")
+#     user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+    
+#     with conn.session as s:
+#         s.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (:user_id, :date, :hour, :content)", 
+#                   params=dict(user_id=user_id, date=current_date, hour=current_hour, content=content))
+#         s.commit()
+
+def save_conversation(content):
+    conn = connect_to_db()
+    cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
-    user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-    
-    with conn.session as s:
-        s.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (:user_id, :date, :hour, :content)", 
-                  params=dict(user_id=user_id, date=current_date, hour=current_hour, content=content))
-        s.commit()
+    user_id = st.session_state.get('user_id', 'unknown_user_id')
+    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
+                   (user_id, current_date, current_hour, content))
+    conn.commit()
+    cursor.close()
+    conn.close()
+
 
 start_message = {
     "role": "system", 
@@ -198,3 +239,4 @@ if st.button('Send'):
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
+    # st.download_button("Download DB", "chatrecords_db")
