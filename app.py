@@ -86,7 +86,7 @@ st.markdown(
 
 # streamlit_app.py
 
-conn = st.experimental_connection('mysql', type='sql')
+conn = st.experimental_connection('chatrecords', type='sql')
 
 def connect_to_db():
     connection = mysql.connector.connect(
