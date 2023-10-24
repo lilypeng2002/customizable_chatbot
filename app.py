@@ -99,7 +99,8 @@ def connect_to_db():
         user='st.secrets["sql_user"]',
         password='st.secrets["sql_password"]',
         host='st.secrets["sql_host"]',
-        database='st.secrets["sql_database"]'
+        database='st.secrets["sql_database"]',
+        port='st.secrets["sql_port"]'
     )
     return connection
 
