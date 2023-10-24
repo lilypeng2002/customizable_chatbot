@@ -15,6 +15,9 @@ if 'widget_value' not in st.session_state:
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
+st.write(st.secrets["sql_user"])
+st.write(st.secrets["sql_database"])
+
 js_code = """
 <div style="display:none;">
     <script>
