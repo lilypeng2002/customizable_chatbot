@@ -115,6 +115,7 @@ create_database()
 
 # Create the SQL connection to pets_db as specified in your secrets file.
 #conn = st.experimental_connection('chatrecords_db', type='sql')
+conn = st.experimental_connection('mysql', type='sql')
 
 # Insert some data with conn.session.
 # with conn.session as s:
