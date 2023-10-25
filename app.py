@@ -144,7 +144,7 @@ if st.button('Send'):
     # Save the conversation to SQLite
     conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
     save_conversation(conversation_content)
-    st.write(conversation_content)
+    #st.write(conversation_content)
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
