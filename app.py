@@ -88,15 +88,26 @@ st.markdown(
 ###### doing how the streamlit blog suggested https://docs.streamlit.io/library/advanced-features/connecting-to-data
 
 
-conn = st.experimental_connection('chatrecords',
-    type="sql",
-    username=st.secrets["sql_user"],
-    password=st.secrets["sql_password"],
-    host=st.secrets["sql_host"],
-    port=st.secrets["sql_port"],
-    database=st.secrets["sql_database"],
-    dialect="mysql"
+# conn = st.experimental_connection('chatrecords',
+#     type="sql",
+#     username=st.secrets["sql_user"],
+#     password=st.secrets["sql_password"],
+#     host=st.secrets["sql_host"],
+#     port=st.secrets["sql_port"],
+#     database=st.secrets["sql_database"],
+#     dialect="mysql"
+# )
+
+# Connect to the database
+conn = mysql.connector.connect(
+    user=st.secrets['sql_user'],
+    password=st.secrets['sql_password'],
+    host=st.secrets['sql_host'],
+    port=st.secrets['sql_port'],
+    database=st.secrets['sql_database']
 )
+
+cursor = conn.cursor()
 
 
 # def connect_to_db():
@@ -110,23 +121,40 @@ conn = st.experimental_connection('chatrecords',
 #     return connection
 
 
-def create_database():
-    #conn = connect_to_db()
-    #cursor = conn.cursor()
-    st.write(dir(conn))
-    conn.execute('''
-    CREATE TABLE IF NOT EXISTS conversations (
-        user_id VARCHAR(255),
-        date VARCHAR(255),
-        hour VARCHAR(255),
-        content TEXT
-    )
-    ''')
-    conn.commit()
-    #conn.close()
-    conn.close()
+# def create_database():
+#     #conn = connect_to_db()
+#     #cursor = conn.cursor()
+#     st.write(dir(conn))
+#     conn.execute('''
+#     CREATE TABLE IF NOT EXISTS conversations (
+#         user_id VARCHAR(255),
+#         date VARCHAR(255),
+#         hour VARCHAR(255),
+#         content TEXT
+#     )
+#     ''')
+#     conn.commit()
+#     #conn.close()
+#     conn.close()
 
-create_database()
+# create_database()
+
+# Define and execute the table creation query
+create_table_query = '''
+CREATE TABLE IF NOT EXISTS conversations (
+    user_id VARCHAR(255),
+    date VARCHAR(255),
+    hour VARCHAR(255),
+    content TEXT
+)
+'''
+
+cursor.execute(create_table_query)
+conn.commit()
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
 
 # Create the SQL connection to pets_db as specified in your secrets file.
 #conn = st.experimental_connection('chatrecords_db', type='sql')
