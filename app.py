@@ -161,7 +161,7 @@ if st.button('Send'):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         temperature=0.2,
-        max_tokens=200,
+        max_tokens=2000,
         messages=[start_message, *st.session_state.chat]
     )
 
@@ -171,10 +171,11 @@ if st.button('Send'):
     st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
     # Save the conversation to SQLite
-    conversation_content = f"You: {user_input}\nBot: {bot_response}"
-    st.write("debugging!")
-    st.write(user_input)
+    conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
+    #st.write("debugging!")
+    #st.write(user_input)
     save_conversation(conversation_content)
+    st.write(conversation_content)
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
