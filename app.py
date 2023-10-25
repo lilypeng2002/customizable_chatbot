@@ -13,33 +13,9 @@ if 'widget_value' not in st.session_state:
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
-    st.write("Initialized messages!")
-else:
-    st.write("Messages already exist!")
-
-st.write("last submission:")
-st.write(st.session_state.last_submission)
-
-# from config import API_KEY
 
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
-
-# js_code = """
-# <div style="display:none;">
-#     <script>
-#         setTimeout(function() {
-#             const userID = document.getElementById("userID").value;
-#             if (userID) {
-#                 window.Streamlit.setSessionState({"user_id": userID});
-#             }
-#         }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
-#     </script>
-# </div>
-# """
-
-# st.markdown(js_code, unsafe_allow_html=True)
-
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
 js_code = """
@@ -62,6 +38,37 @@ st.markdown(js_code, unsafe_allow_html=True)
 
 # getting user_id from the hidden input
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+
+def get_params():
+    # Get session
+    session = st.server.server.Server.get_current()._get_session_info().session
+
+    # If the session state does not have the parameter dictionary, create it
+    if not hasattr(session, "_custom_url_params"):
+        session._custom_url_params = {}
+
+    params = session._custom_url_params
+
+    # If the parameters have not been populated yet, populate them
+    if not params:
+        query_params = st.experimental_get_query_params()
+        params.update(query_params)
+
+        # Save back to the session state
+        session._custom_url_params = params
+
+    return params
+
+# Use the function
+params = get_params()
+st.write(params)
+
+# if "user_id" in params:
+#     response_id = params["userid"][0]
+#     st.write(f"Received ResponseID: {user_id}")
+
+#     # Now, you can save 'response_id' to your DB
+
 
 # getting current date and time
 current_date = datetime.now().strftime("%Y-%m-%d")
@@ -146,9 +153,6 @@ start_message = {
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-# Modified text input
-#user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
-#st.write(user_input)
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
@@ -172,8 +176,6 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
-    #st.write("debugging!")
-    #st.write(user_input)
     save_conversation(conversation_content)
     st.write(conversation_content)
     
