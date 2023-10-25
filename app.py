@@ -88,15 +88,13 @@ CREATE TABLE IF NOT EXISTS conversations (
 
 cursor.execute(create_table_query)
 conn.commit()
+# Close the cursor and connection
+cursor.close()
 
 # Get the query parameters
-
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 st.write(f"User ID: {userID}")
-
-# Close the cursor and connection
-cursor.close()
 
 def submit():
     st.session_state.last_submission = st.session_state.widget_value
