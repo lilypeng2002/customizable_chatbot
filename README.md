@@ -5,7 +5,7 @@ It is customized because you can change for the model that you want (gpt3.5, gpt
 The goal is that you can easily customize OpenAI chatbots to behave however you want and embed them into qualtrics for running experiments.
 
 ## FIRST, you'll need:
-There is a lot you'll need before you begin building your chatbot app.
+There is a lot you'll need before you begin building your chatbot app. This will take more time than actually developing the app.
 - An account with the OpenAI API. 
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
 - A mySQL database hosted online.
@@ -24,11 +24,11 @@ Fork this repository in your own github.
 ### Step 2
 Figure out your OpenAI API key and the credentials for the google cloud SQL db.
 
-### Step 2.
+### Step 3.
 Create an app on streamlit and select the forked github repo as the source.
 Under your app, go to settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
 
-### Step 3.
+### Step 4.
 Create a new qualtrics survey and create a Text/Graphic question.
 Under "Question Behavior" select "javascript".
 Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app).
@@ -68,10 +68,15 @@ Qualtrics.SurveyEngine.addOnUnload(function()
 });
 ```
 
-### Step 4: Publish the survey and test it.
+### Step 5: Publish the survey and test it.
 For testing, you'll chat with the chatbot. To make sure it's working:
 - ensure there are no error messages;
 - ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content).
+
+### Step 6: Customize it!
+Now that the app is working, customize the app. To change the chatbot behavior, there are two main things you can do:
+1) change the message on "start_message", where we tell the system how to behave.
+2) Changing and adding arguments to the "openai.ChatCompletion.create". There are many thing you can change (max number of tokens used, you can penalize certain words to decrease their frequency, change system temperature, etc.). You can check how to do it in https://platform.openai.com/docs/guides/gpt
 
 And there you have it!
 
