@@ -224,7 +224,13 @@ def submit():
 #         s.commit()
 
 def save_conversation(content):
-    #conn = connect_to_db()
+    conn = mysql.connector.connect(
+        user=st.secrets['sql_user'],
+        password=st.secrets['sql_password'],
+        database=st.secrets['sql_database'],
+        host=st.secrets['sql_host'],
+        port=st.secrets['sql_port']
+        )
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
