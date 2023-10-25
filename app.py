@@ -113,7 +113,7 @@ conn = st.experimental_connection('chatrecords',
 def create_database():
     #conn = connect_to_db()
     #cursor = conn.cursor()
-    print(dir(conn))
+    st.write(dir(conn))
     conn.execute('''
     CREATE TABLE IF NOT EXISTS conversations (
         user_id VARCHAR(255),
@@ -201,6 +201,7 @@ def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')
+    st.write(dir(conn))
     conn.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
                    (user_id, current_date, current_hour, content))
     conn.commit()
