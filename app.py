@@ -95,8 +95,6 @@ conn.commit()
 
 # Get the query parameters
 params = st.experimental_get_query_params()
-st.write("params:")
-st.write(params["userID"][0])
 
 # Close the cursor and connection
 cursor.close()
@@ -108,11 +106,11 @@ def submit():
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
-    user_id = st.session_state.get('user_id', 'unknown_user_id')
+    #user_id = st.session_state.get('user_id', 'unknown_user_id')
     #st.write(dir(conn))
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
-                   (user_id, current_date, current_hour, content))
+                   (params["userID"][0], current_date, current_hour, content))
     conn.commit()
     cursor.close()
     #conn.close()
