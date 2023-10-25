@@ -39,28 +39,32 @@ st.markdown(js_code, unsafe_allow_html=True)
 # getting user_id from the hidden input
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
 
-def get_params():
-    # Get session
-    session = st.server.server.Server.get_current()._get_session_info().session
+# def get_params():
+#     # Get session
+#     session = st.server.server.Server.get_current()._get_session_info().session
 
-    # If the session state does not have the parameter dictionary, create it
-    if not hasattr(session, "_custom_url_params"):
-        session._custom_url_params = {}
+#     # If the session state does not have the parameter dictionary, create it
+#     if not hasattr(session, "_custom_url_params"):
+#         session._custom_url_params = {}
 
-    params = session._custom_url_params
+#     params = session._custom_url_params
 
-    # If the parameters have not been populated yet, populate them
-    if not params:
-        query_params = st.experimental_get_query_params()
-        params.update(query_params)
+#     # If the parameters have not been populated yet, populate them
+#     if not params:
+#         query_params = st.experimental_get_query_params()
+#         params.update(query_params)
 
-        # Save back to the session state
-        session._custom_url_params = params
+#         # Save back to the session state
+#         session._custom_url_params = params
 
-    return params
+#     return params
 
-# Use the function
-params = get_params()
+# # Use the function
+# params = get_params()
+# st.write(params)
+
+params = st.experimental_get_query_params()
+st.write("params are:")
 st.write(params)
 
 # if "user_id" in params:
