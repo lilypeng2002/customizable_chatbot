@@ -225,7 +225,7 @@ def submit():
 
 def save_conversation(content):
     #conn = connect_to_db()
-    #cursor = conn.cursor()
+    cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')
