@@ -224,11 +224,11 @@ def submit():
 #         s.commit()
 
 def save_conversation(content):
-    cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')
     #st.write(dir(conn))
+    cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
                    (user_id, current_date, current_hour, content))
     conn.commit()
