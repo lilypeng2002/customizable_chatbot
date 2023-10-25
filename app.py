@@ -13,6 +13,9 @@ if 'widget_value' not in st.session_state:
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
+    st.write("Initialized messages!")
+else:
+    st.write("Messages already exist!")
 
 st.write("last submission:")
 st.write(st.session_state.last_submission)
@@ -21,6 +24,22 @@ st.write(st.session_state.last_submission)
 
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
+
+# js_code = """
+# <div style="display:none;">
+#     <script>
+#         setTimeout(function() {
+#             const userID = document.getElementById("userID").value;
+#             if (userID) {
+#                 window.Streamlit.setSessionState({"user_id": userID});
+#             }
+#         }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
+#     </script>
+# </div>
+# """
+
+# st.markdown(js_code, unsafe_allow_html=True)
+
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
 js_code = """
@@ -127,6 +146,9 @@ start_message = {
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
+# Modified text input
+user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+#st.write(user_input)
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
@@ -150,6 +172,8 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
+    #st.write("debugging!")
+    #st.write(user_input)
     save_conversation(conversation_content)
     st.write(conversation_content)
     
