@@ -17,6 +17,8 @@ if 'messages' not in st.session_state:
 else:
     st.write("Messages already exist!")
 
+st.write(st.session_state.messages)
+
 # from config import API_KEY
 
 # Set your OpenAI API key here, or use an environment variable
@@ -138,8 +140,6 @@ start_message = {
     "role": "system", 
     "content": "You are a helpful and nice 50-year old human secretary called Kit who is passionate about your job. You answer things personally. You can answer all questions personally. You never mention your age, name, or that you're human, you just behave naturally. You are now talking to a friend of yours, so act like one."
 }
-
-
 
 # Display chat messages
 for msg in st.session_state.messages:
