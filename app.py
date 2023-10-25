@@ -102,9 +102,9 @@ st.markdown(
 conn = mysql.connector.connect(
     user=st.secrets['sql_user'],
     password=st.secrets['sql_password'],
+    database=st.secrets['sql_database'],
     host=st.secrets['sql_host'],
-    port=st.secrets['sql_port'],
-    database="chatrecords"
+    port=st.secrets['sql_port']
 )
 
 cursor = conn.cursor()
