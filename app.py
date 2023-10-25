@@ -90,7 +90,7 @@ st.markdown(
 
 conn = st.experimental_connection('chatrecords',
     type="sql",
-    user=st.secrets["sql_user"],
+    username=st.secrets["sql_user"],
     password=st.secrets["sql_password"],
     host=st.secrets["sql_host"],
     port=st.secrets["sql_port"],
