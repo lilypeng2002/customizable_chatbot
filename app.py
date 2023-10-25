@@ -93,9 +93,10 @@ CREATE TABLE IF NOT EXISTS conversations (
 cursor.execute(create_table_query)
 conn.commit()
 
+# Get the query parameters
 params = st.experimental_get_query_params()
 st.write("params:")
-st.write(params)
+st.write(params["userID"][0])
 
 # Close the cursor and connection
 cursor.close()
