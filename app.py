@@ -33,9 +33,6 @@ js_code = """
 
 st.markdown(js_code, unsafe_allow_html=True)
 
-
-# Now, you can use st.session_state.user_id throughout your app without displaying it
-
 # getting user_id from the hidden input
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
 
@@ -67,7 +64,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-
 
 # Connect to the database
 conn = mysql.connector.connect(
@@ -106,15 +102,11 @@ def submit():
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
-    #user_id = st.session_state.get('user_id', 'unknown_user_id')
-    #st.write(dir(conn))
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
                    (params["userID"][0], current_date, current_hour, content))
     conn.commit()
     cursor.close()
-    #conn.close()
-
 
 start_message = {
     "role": "system", 
@@ -125,7 +117,7 @@ start_message = {
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-# Modified text input
+# Display modified text input
 user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 if 'chat' not in st.session_state:
@@ -155,4 +147,3 @@ if st.button('Send'):
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
-    #conn.close()
