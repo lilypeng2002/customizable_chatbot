@@ -93,6 +93,7 @@ conn.commit()
 
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
+st.write(f"User ID: {userID}")
 
 # Close the cursor and connection
 cursor.close()
