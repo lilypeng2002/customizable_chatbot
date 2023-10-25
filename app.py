@@ -196,15 +196,15 @@ def submit():
 #         s.commit()
 
 def save_conversation(content):
-    conn = connect_to_db()
-    cursor = conn.cursor()
+    #conn = connect_to_db()
+    #cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')
-    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
+    conn.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)", 
                    (user_id, current_date, current_hour, content))
     conn.commit()
-    cursor.close()
+    #cursor.close()
     conn.close()
 
 
