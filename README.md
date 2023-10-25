@@ -7,15 +7,21 @@ The goal is that you can easily customize OpenAI chatbots to behave however you 
 ## FIRST, you'll need:
 There is a lot you'll need before you begin building your chatbot app. This will take more time than actually developing the app.
 - An account with the OpenAI API. 
+
 You'll need to set up a payment method and get an API key (https://platform.openai.com/docs/api-reference/authentication).
 - A mySQL database hosted online.
+
 In this tutorial, I'll be using google clod for hosting. It's one of the easiest ways to do it. If you want to do it the same way, you'll have to create an account and set up payment method.(https://console.cloud.google.com).
 You will also need to create a database and get all its credentials (user, passoword, IP, port)
-- A Streamlit account
+- A Streamlit account.
+
 A free account works.
-- A Github account
+- A Github account.
+
 You need it to launch you project in streamlit.
+
 - A bunch of things installed on your pc. Included but not limited to python3, streamlit, git, mysql...
+
 - An editor for the code. I recommend VSCode. 
 
 ### Step 1
