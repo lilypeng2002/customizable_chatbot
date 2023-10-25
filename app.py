@@ -14,6 +14,11 @@ if 'widget_value' not in st.session_state:
 if 'messages' not in st.session_state:
     st.session_state.messages = []
 
+st.write("last submission:")
+st.write(st.session_state.last_submission)
+
+# from config import API_KEY
+
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
@@ -38,41 +43,6 @@ st.markdown(js_code, unsafe_allow_html=True)
 
 # getting user_id from the hidden input
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-
-# def get_params():
-#     # Get session
-#     session = st.server.server.Server.get_current()._get_session_info().session
-
-#     # If the session state does not have the parameter dictionary, create it
-#     if not hasattr(session, "_custom_url_params"):
-#         session._custom_url_params = {}
-
-#     params = session._custom_url_params
-
-#     # If the parameters have not been populated yet, populate them
-#     if not params:
-#         query_params = st.experimental_get_query_params()
-#         params.update(query_params)
-
-#         # Save back to the session state
-#         session._custom_url_params = params
-
-#     return params
-
-# # Use the function
-# params = get_params()
-# st.write(params)
-
-params = st.experimental_get_query_params()
-st.write("params are:")
-st.write(params)
-
-# if "user_id" in params:
-#     response_id = params["userid"][0]
-#     st.write(f"Received ResponseID: {user_id}")
-
-#     # Now, you can save 'response_id' to your DB
-
 
 # getting current date and time
 current_date = datetime.now().strftime("%Y-%m-%d")
