@@ -17,7 +17,7 @@ if 'messages' not in st.session_state:
 else:
     st.write("Messages already exist!")
 
-st.write(st.session_state.messages)
+st.write(st.session_state.last_submission)
 
 # from config import API_KEY
 
