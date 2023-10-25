@@ -154,7 +154,7 @@ conn.commit()
 
 # Close the cursor and connection
 cursor.close()
-conn.close()
+#conn.close()
 
 # Create the SQL connection to pets_db as specified in your secrets file.
 #conn = st.experimental_connection('chatrecords_db', type='sql')
@@ -224,13 +224,6 @@ def submit():
 #         s.commit()
 
 def save_conversation(content):
-    conn = mysql.connector.connect(
-        user=st.secrets['sql_user'],
-        password=st.secrets['sql_password'],
-        database=st.secrets['sql_database'],
-        host=st.secrets['sql_host'],
-        port=st.secrets['sql_port']
-        )
     cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
