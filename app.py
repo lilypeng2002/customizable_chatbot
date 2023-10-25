@@ -171,6 +171,7 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
+    st.write("debugging!")
     st.write(user_input)
     save_conversation(conversation_content)
     
