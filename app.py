@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS conversations (
     user_id VARCHAR(255),
     date VARCHAR(255),
     hour VARCHAR(255),
-    content VARCHAR(255)
+    content MEDIUMTEXT
 )
 '''
 
