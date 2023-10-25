@@ -113,6 +113,7 @@ conn = st.experimental_connection('chatrecords',
 def create_database():
     #conn = connect_to_db()
     #cursor = conn.cursor()
+    print(dir(conn))
     conn.execute('''
     CREATE TABLE IF NOT EXISTS conversations (
         user_id VARCHAR(255),
