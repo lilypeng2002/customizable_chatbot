@@ -104,7 +104,7 @@ conn = mysql.connector.connect(
     password=st.secrets['sql_password'],
     host=st.secrets['sql_host'],
     port=st.secrets['sql_port'],
-    database=st.secrets['sql_database']
+    database="chatrecords"
 )
 
 cursor = conn.cursor()
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS conversations (
     user_id VARCHAR(255),
     date VARCHAR(255),
     hour VARCHAR(255),
-    content TEXT
+    content VARCHAR(255)
 )
 '''
 
@@ -225,7 +225,7 @@ def submit():
 
 def save_conversation(content):
     #conn = connect_to_db()
-    cursor = conn.cursor()
+    #cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     user_id = st.session_state.get('user_id', 'unknown_user_id')
