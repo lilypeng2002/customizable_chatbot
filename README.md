@@ -24,17 +24,17 @@ You need it to launch you project in streamlit.
 
 - An editor for the code. I recommend VSCode. 
 
-### Step 1
+### Step 1: Fork it
 Fork this repository in your own github.
 
-### Step 2
+### Step 2: OpenAI API key
 Figure out your OpenAI API key and the credentials for the google cloud SQL db.
 
-### Step 3.
+### Step 3: Streamlit
 Create an app on streamlit and select the forked github repo as the source.
 Under your app, go to settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
 
-### Step 4.
+### Step 4: Qualtrics
 Create a new qualtrics survey and create a Text/Graphic question.
 Under "Question Behavior" select "javascript".
 Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app).
