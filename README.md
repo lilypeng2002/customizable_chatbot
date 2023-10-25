@@ -73,3 +73,5 @@ For testing, you'll chat with the chatbot. To make sure it's working:
 - ensure there are no error messages;
 - ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content).
 
+And there you have it!
+
