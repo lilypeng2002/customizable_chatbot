@@ -94,7 +94,8 @@ conn = st.experimental_connection('chatrecords',
     password=st.secrets["sql_password"],
     host=st.secrets["sql_host"],
     port=st.secrets["sql_port"],
-    database=st.secrets["sql_database"]
+    database=st.secrets["sql_database"],
+    dialect="mysql"
 )
 
 
