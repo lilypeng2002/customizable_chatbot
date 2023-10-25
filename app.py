@@ -174,4 +174,4 @@ if st.button('Send'):
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
-    conn.close()
+    #conn.close()
