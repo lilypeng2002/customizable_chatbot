@@ -15,9 +15,6 @@ if 'widget_value' not in st.session_state:
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
-st.write("this is a test!")
-st.write(st.secrets.keys())
-
 js_code = """
 <div style="display:none;">
     <script>
@@ -85,18 +82,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-###### doing how the streamlit blog suggested https://docs.streamlit.io/library/advanced-features/connecting-to-data
-
-
-# conn = st.experimental_connection('chatrecords',
-#     type="sql",
-#     username=st.secrets["sql_user"],
-#     password=st.secrets["sql_password"],
-#     host=st.secrets["sql_host"],
-#     port=st.secrets["sql_port"],
-#     database=st.secrets["sql_database"],
-#     dialect="mysql"
-# )
 
 # Connect to the database
 conn = mysql.connector.connect(
@@ -108,36 +93,6 @@ conn = mysql.connector.connect(
 )
 
 cursor = conn.cursor()
-
-
-# def connect_to_db():
-#     connection = mysql.connector.connect(
-#         user='st.secrets["sql_user"]',
-#         password='st.secrets["sql_password"]',
-#         host='st.secrets["sql_host"]',
-#         database='st.secrets["sql_database"]',
-#         port='st.secrets["sql_port"]'
-#     )
-#     return connection
-
-
-# def create_database():
-#     #conn = connect_to_db()
-#     #cursor = conn.cursor()
-#     st.write(dir(conn))
-#     conn.execute('''
-#     CREATE TABLE IF NOT EXISTS conversations (
-#         user_id VARCHAR(255),
-#         date VARCHAR(255),
-#         hour VARCHAR(255),
-#         content TEXT
-#     )
-#     ''')
-#     conn.commit()
-#     #conn.close()
-#     conn.close()
-
-# create_database()
 
 # Define and execute the table creation query
 create_table_query = '''
@@ -154,74 +109,10 @@ conn.commit()
 
 # Close the cursor and connection
 cursor.close()
-#conn.close()
-
-# Create the SQL connection to pets_db as specified in your secrets file.
-#conn = st.experimental_connection('chatrecords_db', type='sql')
-
-
-# Insert some data with conn.session.
-# with conn.session as s:
-#     s.execute('CREATE TABLE IF NOT EXISTS conversations (user_id TEXT, date TEXT, hour TEXT, content TEXT);')
-#     #s.execute('DELETE FROM pet_owners;')
-#     #pet_owners = {'jerry': 'fish', 'barbara': 'cat', 'alex': 'puppy'}
-#     #for k in pet_owners:
-#     #    s.execute(
-#     #        'INSERT INTO pet_owners (person, pet) VALUES (:owner, :pet);',
-#     #        params=dict(owner=k, pet=pet_owners[k])
-#     #    )
-#     s.commit()
-
-# Query and display the data you inserted
-#pet_owners = conn.query('select * from pet_owners')
-#st.dataframe(pet_owners)
-
-
-
-
-# # Setup SQLite Database
-# def create_database():
-#     conn = sqlite3.connect('chatrecords.db')
-#     cursor = conn.cursor()
-#     cursor.execute('''
-#     CREATE TABLE IF NOT EXISTS conversations (
-#         user_id TEXT,
-#         date TEXT,
-#         hour TEXT,
-#         content TEXT
-#     )
-#     ''')
-#     conn.commit()
-#     conn.close()
-
-# create_database()
 
 def submit():
     st.session_state.last_submission = st.session_state.widget_value
     st.session_state.widget_value = ''
-
-#def save_conversation(content):
-#    #conn = sqlite3.connect('chatrecords_db')
-#    conn = st.experimental_connection('chatrecords_db', type='sql')
-#    cursor = conn.cursor()
-#    current_date = datetime.now().strftime("%Y-%m-%d")
-#    current_hour = datetime.now().strftime("%H:%M:%S")
-#    user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-#    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (?, ?, ?, ?)", 
-#                   (user_id, current_date, current_hour, content))
-#    conn.close()
-
-# def save_conversation(content):
-#     conn = st.experimental_connection('chatrecords_db', type='sql')
-
-#     current_date = datetime.now().strftime("%Y-%m-%d")
-#     current_hour = datetime.now().strftime("%H:%M:%S")
-#     user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-    
-#     with conn.session as s:
-#         s.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (:user_id, :date, :hour, :content)", 
-#                   params=dict(user_id=user_id, date=current_date, hour=current_hour, content=content))
-#         s.commit()
 
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -252,8 +143,6 @@ for msg in st.session_state.messages:
 # Modified text input
 user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
-# user_input = st.text_input("You: ")
-
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
@@ -261,9 +150,6 @@ if st.button('Send'):
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
-    #st.session_state.messages.append({'class': 'user', 'text': f"You: {user_input}"})
-    #user_message = {"role": "user", "content": user_input}
-    #st.session_state.chat.append(user_message)
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -283,5 +169,4 @@ if st.button('Send'):
     
     st.session_state.last_submission = ''
     st.rerun()  # Clear input box by rerunning the app
-    # st.download_button("Download DB", "chatrecords_db")
     conn.close()
