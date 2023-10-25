@@ -91,7 +91,7 @@ st.markdown(
 ###### doing how the streamlit blog suggested https://docs.streamlit.io/library/advanced-features/connecting-to-data
 
 
-conn = st.experimental_connect('chatrecords',
+conn = st.experimental_connection('chatrecords',
     type="mysql",
     user=st.secrets["sql_user"],
     password=st.secrets["sql_password"],
@@ -113,7 +113,7 @@ conn = st.experimental_connect('chatrecords',
 
 
 def create_database():
-    conn = connect_to_db()
+    #conn = connect_to_db()
     cursor = conn.cursor()
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS conversations (
