@@ -147,6 +147,7 @@ for msg in st.session_state.messages:
 
 # Modified text input
 user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+st.write(user_input)
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
@@ -170,6 +171,7 @@ if st.button('Send'):
 
     # Save the conversation to SQLite
     conversation_content = f"You: {user_input}\nBot: {bot_response}"
+    st.write(user_input)
     save_conversation(conversation_content)
     
     st.session_state.last_submission = ''
