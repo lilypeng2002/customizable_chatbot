@@ -112,8 +112,8 @@ conn = st.experimental_connection('chatrecords',
 
 def create_database():
     #conn = connect_to_db()
-    cursor = conn.cursor()
-    cursor.execute('''
+    #cursor = conn.cursor()
+    conn.execute('''
     CREATE TABLE IF NOT EXISTS conversations (
         user_id VARCHAR(255),
         date VARCHAR(255),
@@ -122,7 +122,7 @@ def create_database():
     )
     ''')
     conn.commit()
-    cursor.close()
+    #conn.close()
     conn.close()
 
 create_database()
