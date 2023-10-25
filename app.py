@@ -21,6 +21,8 @@ st.write(st.secrets["API_KEY"])
 st.write(st.secrets["sql_user"])
 st.write(st.secrets["sql_database"])
 
+st.write(st.secrets["sql_port"])
+
 js_code = """
 <div style="display:none;">
     <script>
