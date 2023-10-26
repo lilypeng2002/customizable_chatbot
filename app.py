@@ -94,7 +94,7 @@ cursor.close()
 # Get the query parameters
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
-st.write(f"User ID: {userID}")
+#st.write(f"User ID: {userID}")
 
 def submit():
     st.session_state.last_submission = st.session_state.widget_value
