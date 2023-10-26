@@ -34,7 +34,10 @@ Figure out your OpenAI API key and the credentials for the google cloud SQL db.
 Create an app on streamlit and select the forked github repo as the source.
 Under your app, go to settings and set up all the secrets in there (API_KEY, sql_user, sql_password, sql_host, sql_port, sql_database).
 
-### Step 4: Qualtrics
+### Step 4: Set up MySQL database on Google Cloud
+Create an instance, create a database, get all your keys.
+
+### Step 5: Qualtrics
 Create a new qualtrics survey and create a Text/Graphic question.
 Under "Question Behavior" select "javascript".
 Paste the following code (make sure to substitute the values in [YOUR-DOMAIN] by the name of your streamlit app).
@@ -74,12 +77,12 @@ Qualtrics.SurveyEngine.addOnUnload(function()
 });
 ```
 
-### Step 5: Publish the survey and test it.
+### Step 6: Publish the survey and test it.
 For testing, you'll chat with the chatbot. To make sure it's working:
 - ensure there are no error messages;
 - ensure that your data is recorded properly on your database by downloading it from google cloud and checking if all fields are filled correctly (user id, date, time, content).
 
-### Step 6: Customize it!
+### Step 7: Customize it!
 Now that the app is working, customize the app. To change the chatbot behavior, there are two main things you can do:
 1) change the message on "start_message", where we tell the system how to behave.
 2) Changing and adding arguments to the "openai.ChatCompletion.create". There are many thing you can change (max number of tokens used, you can penalize certain words to decrease their frequency, change system temperature, etc.). You can check how to do it in https://platform.openai.com/docs/guides/gpt
