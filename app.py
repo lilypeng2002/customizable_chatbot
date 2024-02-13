@@ -15,7 +15,7 @@ if 'messages' not in st.session_state:
     st.session_state.messages = []
 
 # Set your OpenAI API key here, or use an environment variable
-openai.api_key = st.secrets["API_KEY"]
+openai.api_key = st.secrets["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"]
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
 js_code = """
