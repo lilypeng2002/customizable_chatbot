@@ -29,7 +29,37 @@ js_code = """
     </script>
 </div>
 """
-st.markdown(js_code, unsafe_allow_html=True)
+# Chat header with logo and name
+st.markdown("""
+<style>
+    .chat-header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f1f1f1; /* Light grey background */
+        border-top-left-radius: 10px; /* Rounded corners at the top to match the chat container */
+        border-top-right-radius: 10px;
+    }
+    
+    .chat-header img {
+        height: 40px; /* Adjust based on your logo */
+        width: 40px;
+        border-radius: 50%; /* Makes the image circular */
+        margin-right: 10px;
+    }
+    
+    .chat-header h4 {
+        margin: 0;
+        font-weight: normal;
+    }
+</style>
+
+<div class="chat-header">
+    <img src="YOUR_LOGO_URL_HERE" alt="Logo">
+    <h4>Alex</h4>
+</div>
+""", unsafe_allow_html=True)
+
 
 # Get user_id from session state
 user_id = st.session_state.get('user_id', 'unknown_user_id')
