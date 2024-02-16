@@ -1,54 +1,56 @@
-python
-Copy code
 import openai
 import streamlit as st
 from datetime import datetime
 import mysql.connector
 
-# Initialize session state variables if not already initialized
+# Initialize session state variables
 if 'last_submission' not in st.session_state:
-    st.session_state.last_submission = ''
+    st.session_state['last_submission'] = ''
 if 'widget_value' not in st.session_state:
-    st.session_state.widget_value = ''
+    st.session_state['widget_value'] = ''
 if 'messages' not in st.session_state:
-    st.session_state.messages = []
+    st.session_state['messages'] = []
 if 'chat' not in st.session_state:
-    st.session_state.chat = []
+    st.session_state['chat'] = []
 
 # Set OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
 
+# JavaScript for capturing userID
+js_code = """
+<div style="color: black;">
+    <script>
+        setTimeout(function() {
+            const userID = document.getElementById("userID").value;
+            if (userID) {
+                window.Streamlit.setSessionState({"user_id": userID});
+            }
+        }, 1000);
+    </script>
+</div>
+"""
+st.markdown(js_code, unsafe_allow_html=True)
+
+# Get user_id from session state
+user_id = st.session_state.get('user_id', 'unknown_user_id')
+
+# Set up the page
+st.title('Chatbot')
+
 # Styling
 st.markdown("""
 <style>
-    /* Frame the chat interface */
-    .chat-container {
-        border: 2px solid #007bff;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 10px 0;
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    body {
+        font-family: 'Roboto', sans-serif;
     }
-
-    /* Chat header */
-    .chat-header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .chat-header img {
-        border-radius: 50%;
-        width: 50px; /* Adjust size as needed */
-        margin-right: 10px;
-    }
-
-    /* Message styling */
     .message {
-        margin: 5px 0;
+        margin: 10px 0;
         padding: 10px;
         border-radius: 20px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        width: auto;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 70%;
+        position: relative;
         word-wrap: break-word;
     }
     .user {
@@ -63,48 +65,76 @@ st.markdown("""
         margin-right: auto;
         border-top-left-radius: 0;
     }
-
-    /* Input and Button styling */
-    .input-group {
-        display: flex;
+    .stButton>button {
+        border-radius: 20px;
+        border: 1px solid #007bff;
+        color: #ffffff;
+        background-color: #007bff;
+        padding: 10px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #0056b3;
     }
     .stTextInput>div>div>input {
-        flex: 1;
-        border-top-left-radius: 20px !important;
-        border-bottom-left-radius: 20px !important;
-        margin-right: -1px; /* Align with button */
+        border-radius: 20px !important;
+        padding: 10px !important;
     }
-    .stButton>button {
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
+    ::placeholder {
+        color: #adb5bd;
+        opacity: 1;
+    }
+    :-ms-input-placeholder {
+        color: #adb5bd;
+    }
+    ::-ms-input-placeholder {
+        color: #adb5bd;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Chat header with logo and name
-st.markdown("""
-<div class="chat-header">
-    <img src="LOGO_URL" alt="Logo">
-    <h4>Alex</h4>
-</div>
-""", unsafe_allow_html=True)
+# Database connection
+conn = mysql.connector.connect(
+    user=st.secrets['sql_user'],
+    password=st.secrets['sql_password'],
+    database=st.secrets['sql_database'],
+    host=st.secrets['sql_host'],
+    port=st.secrets['sql_port']
+)
 
-# Framed chat container
-st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+# Create table if not exists
+cursor = conn.cursor()
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS conversations (
+    user_id VARCHAR(255),
+    date VARCHAR(255),
+    hour VARCHAR(255),
+    content MEDIUMTEXT
+)
+''')
+conn.commit()
+cursor.close()
+
+# Define helper functions
+def submit():
+    st.session_state['last_submission'] = st.session_state['widget_value']
+    st.session_state['widget_value'] = ''
+
+def save_conversation(content):
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
+                   (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+    conn.commit()
+    cursor.close()
 
 # Display messages
-for msg in st.session_state.messages:
+for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)  # Close chat container
-
-# Input group for text and button
-st.markdown('<div class="input-group">', unsafe_allow_html=True)
-user_input = st.text_input("Type your message here...", value="", key='widget_value', placeholder="Type a message...")
-send_button = st.button('Send', key='sendButton')
-st.markdown('</div>', unsafe_allow_html=True)  # Close input group
-
-
+# User input
+user_input = st.text_input("You: ", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
 
 # Handle message sending
 if st.button('Send', key='sendButton'):
@@ -122,6 +152,3 @@ if st.button('Send', key='sendButton'):
         save_conversation(f"You: {user_message}\nKit: {bot_response}")
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
-
-
-
