@@ -96,28 +96,31 @@ for msg in st.session_state.messages:
 
 st.markdown('</div>', unsafe_allow_html=True)  # Close chat container
 
-# Input group for text and button
-st.markdown('<div class="input-group">', unsafe_allow_html=True)
-user_input = st.text_input("Type your message here...", value="", key='widget_value', placeholder="Type a message...")
-send_button = st.button('Send', key='sendButton')
-st.markdown('</div>', unsafe_allow_html=True)  # Close input group
+# Input group for text and button on the same line
+with st.container():
+    col1, col2 = st.columns([5, 1], gap="small")
+    with col1:
+        user_input = st.text_input("Type your message here...", value="", key='user_input', placeholder="Type a message...")
+    with col2:
+        send_button = st.button('Send', key='unique_send_button')  # Ensure unique key
 
-# Handle message sending
-if st.button('Send', key='sendButton'):
-    user_message = st.session_state['last_submission']
+# Adjusted message sending logic to use the new 'send_button' click detection
+if send_button:
+    user_message = user_input  # Get the message from the input field directly
     if user_message:  # Ensure there is a message to send
-        st.session_state['messages'].append({'class': 'user', 'text': f"You: {user_message}"})
+        st.session_state.messages.append({'class': 'user', 'text': f"You: {user_message}"})
+        # Assuming you have defined the `save_conversation` function elsewhere
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
             temperature=0.2,
             max_tokens=2000,
             messages=[{"role": "user", "content": user_message}]
         )
-        bot_response = response.choices[0].message.content
-        st.session_state['messages'].append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+        bot_response = response.choices[0].message['content']
+        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+        # Assuming you have defined the `save_conversation` function elsewhere
         save_conversation(f"You: {user_message}\nKit: {bot_response}")
-        st.session_state['last_submission'] = ''
-        st.experimental_rerun()
-
+        st.session_state['user_input'] = ''  # Reset the input field
+        st.experimental_rerun()  # Optional: Rerun the app to refresh the state
 
 
