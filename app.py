@@ -165,7 +165,7 @@ for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # User input
-user_input = st.text_input("You: ", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
+user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
 
 # Handle message sending
 if st.button('Send', key='sendButton'):
@@ -181,6 +181,6 @@ if st.button('Send', key='sendButton'):
         )
         bot_response = response.choices[0].message.content
         st.session_state['messages'].append({'class': 'bot', 'text': f"Alex: {bot_response}"})
-        save_conversation(f"You: {user_message}\nKit: {bot_response}")
+        save_conversation(f"You: {user_message}\nAlex: {bot_response}")
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
