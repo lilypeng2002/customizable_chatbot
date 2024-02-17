@@ -204,8 +204,19 @@ if not st.session_state['chat_started']:
 for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-# User input
-user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
+# User input with conditional rendering of the 'Send' button
+user_input = st.text_input("Type a message...", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
+
+if st.session_state['send_button_enabled']:
+    send_button = st.button('Send', key='sendButton')
+
+    if send_button:
+        st.session_state['send_button_enabled'] = False  # Disable send button immediately after it's pressed
+        process_user_message()  # Function to process user message and generate bot response
+
+
+
+
 
 # Handle message sending
 if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
@@ -247,3 +258,4 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
     
     # Use st.experimental_rerun() to refresh the page and update the UI
     st.experimental_rerun()
+
