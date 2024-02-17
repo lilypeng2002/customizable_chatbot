@@ -78,7 +78,7 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
-     .message-container {
+    .message-container {
         overflow-y: auto;
         height: 500px; /* Adjust based on your needs */
         margin-bottom: 20px;
@@ -136,10 +136,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-
-message_container = st.container()
-message_placeholder = message_container.empty()
-
 # Database connection
 conn = mysql.connector.connect(
     user=st.secrets['sql_user'],
@@ -175,24 +171,11 @@ def save_conversation(content):
     cursor.close()
 
 # Display messages
-#for msg in st.session_state['messages']:
-#    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-if 'messages' in st.session_state:
-    with message_placeholder.container():
-        for msg in st.session_state['messages']:
-            # Determine the CSS class based on the message sender
-            css_class = 'user-message' if msg['class'] == 'user' else 'bot-message'
-            st.markdown(f"<div class='message {css_class}'>{msg['text']}</div>", unsafe_allow_html=True)
-
-        # Scroll to the last message - this is a workaround using JS as Streamlit doesn't natively support auto-scroll
-        st.markdown("<script>window.scrollTo(0, document.body.scrollHeight);</script>", unsafe_allow_html=True)
-
+for msg in st.session_state['messages']:
+    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # User input
-#user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
-user_input = st.text_input("Type a message...", key="input", on_change=None)
-
-
+user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
 
 # Handle message sending
 if st.button('Send', key='sendButton'):
