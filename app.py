@@ -106,22 +106,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Wrap the chat messages display in a container
-st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-for msg in st.session_state['messages']:
-    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# Use Streamlit columns for the input box and send button
-st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
-col1, col2 = st.columns([0.8, 0.2], gap='small')
-with col1:
-    user_input = st.text_input("", value=st.session_state['widget_value'], placeholder="Type a message...", key='widget_value')
-with col2:
-    send_button = st.button('Send', key='sendButton')
-st.markdown('</div>', unsafe_allow_html=True)
-
-
 
 # Database connection
 conn = mysql.connector.connect(
