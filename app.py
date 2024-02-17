@@ -219,7 +219,7 @@ if not st.session_state['chat_started']:
 
 
 # Display messages
-for msg in st.session_state['messages']:
+for msg in reversed(st.session_state['messages']):
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # Adjusted approach using Streamlit's columns for input and button alignment
