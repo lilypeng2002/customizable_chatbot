@@ -261,7 +261,7 @@ with col2:
         )
         bot_response = response.choices[0].message.content
         st.session_state['messages'].append({'class': 'bot', 'text': bot_response})
-        st.script_runner.RerunException(st.script_request_queue.RerunData(None))
+        
         scroll_js = """
         <script>
         window.scrollTo(0, document.body.scrollHeight);
