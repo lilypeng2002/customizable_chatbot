@@ -58,7 +58,7 @@ st.markdown("""
 </style>
 
 <div class="chat-header">
-    <img src="logo.png" alt="Logo">
+    <div class="circle-logo"></div> 
     <h4>Alex</h4>
 </div>
 """, unsafe_allow_html=True)
