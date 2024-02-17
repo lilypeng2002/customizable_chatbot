@@ -227,7 +227,7 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
 
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
-            temperature=0.2,
+            temperature=0.5,
             messages=conversation_history
         )
         bot_response = response.choices[0].message.content
