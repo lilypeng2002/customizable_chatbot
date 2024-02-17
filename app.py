@@ -261,10 +261,12 @@ with col2:
         st.experimental_rerun()
 
 
-        # At the end of your Streamlit app, after displaying all messages
-st.markdown("""
-    <script>
-    const chatContainer = document.querySelector('.chat-container');
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-    </script>
-""", unsafe_allow_html=True)
+ # JavaScript to scroll to the bottom of the page
+scroll_js = """
+<script>
+window.scrollTo(0, document.body.scrollHeight);
+</script>
+"""
+
+# Display the JavaScript with Streamlit's markdown renderer
+st.markdown(scroll_js, unsafe_allow_html=True)
