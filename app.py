@@ -13,10 +13,10 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 if 'chat' not in st.session_state:
     st.session_state['chat'] = []
-if 'chat_started' not in st.session_state:  # New session state to track if the chat has started
+if 'chat_started' not in st.session_state:  
     st.session_state['chat_started'] = False
 if 'send_button_enabled' not in st.session_state:
-    st.session_state['send_button_enabled'] = True  # Initially, the send button is enabled
+    st.session_state['send_button_enabled'] = True  
 
 
 # Set OpenAI API key
@@ -205,7 +205,7 @@ for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # User input
-user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
+user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
 
 # Handle message sending
 if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
