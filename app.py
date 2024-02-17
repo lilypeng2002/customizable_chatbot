@@ -253,6 +253,13 @@ with col2:
         bot_response = response.choices[0].message.content
         st.session_state['messages'].append({'class': 'bot', 'text': bot_response})
 
+        scroll_js = """
+        <script>
+        window.scrollTo(0, document.body.scrollHeight);
+        </script>
+        """
+        st.markdown(scroll_js, unsafe_allow_html=True)
+
             # Re-enable the send button and clear the last submission
         st.session_state['send_button_enabled'] = True 
         save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
@@ -261,12 +268,4 @@ with col2:
         st.experimental_rerun()
 
 
- # JavaScript to scroll to the bottom of the page
-scroll_js = """
-<script>
-window.scrollTo(0, document.body.scrollHeight);
-</script>
-"""
 
-# Display the JavaScript with Streamlit's markdown renderer
-st.markdown(scroll_js, unsafe_allow_html=True)
