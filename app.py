@@ -15,6 +15,8 @@ if 'chat' not in st.session_state:
     st.session_state['chat'] = []
 if 'chat_started' not in st.session_state:  # New session state to track if the chat has started
     st.session_state['chat_started'] = False
+if 'send_button_enabled' not in st.session_state:
+    st.session_state['send_button_enabled'] = True  # Initially, the send button is enabled
 
 
 # Set OpenAI API key
@@ -206,7 +208,8 @@ for msg in st.session_state['messages']:
 user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
 
 # Handle message sending
-if st.button('Send', key='sendButton'):
+if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
+    st.session_state['send_button_enabled'] = False 
     user_message = st.session_state['last_submission']
     if user_message:  # Ensure there is a message to send
         
@@ -232,7 +235,7 @@ if st.button('Send', key='sendButton'):
         bot_response = response.choices[0].message.content
         display_bot_response = bot_response  # Message without prefix for display
         st.session_state['messages'].append({'class': 'bot', 'text': display_bot_response})
-
+        st.session_state['send_button_enabled'] = True 
         save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
         save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
