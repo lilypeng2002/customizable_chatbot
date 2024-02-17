@@ -43,10 +43,11 @@ st.markdown("""
         border-top-right-radius: 10px;
     }
     
-    .chat-header img {
-        height: 40px; /* Adjust based on your logo */
+    .circle-logo {
+        height: 40px;
         width: 40px;
-        border-radius: 50%; /* Makes the image circular */
+        background-color: #4CAF50; /* Green background */
+        border-radius: 50%; /* Makes the div circular */
         margin-right: 10px;
     }
     
