@@ -64,18 +64,18 @@ st.markdown("""
     }
             
     .chat-container {
-        display: flex;
+        display: grid;
         flex-direction: column-reverse;
         justify-content: flex-start;
         height: 90vh;
         overflow-y: auto;
-        margin-bottom: 60px;
+        margin-bottom: 10vh;
     }
 
     .input-container {
         display: flex;
         justify-content: space-between;
-        height: 10vh;
+        height: 8vh;
         padding: 10px;
         position: fixed;
         bottom: 0;
