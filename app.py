@@ -217,7 +217,7 @@ for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # Adjusted approach using Streamlit's columns for input and button alignment
-col1, col2 = st.columns([5, 1]) 
+col1, col2 = st.columns([0.9, 0.1], gap="small")
 with col1:
     user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
 with col2:
