@@ -225,8 +225,6 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
                 conversation_history.append({"role": "system", "content": msg['text'][6:]})  # Remove "Alex: " prefix
 
 
-
-        with st.spinner('Waiting for response...'):
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
             temperature=0.2,
