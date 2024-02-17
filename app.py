@@ -55,7 +55,7 @@ st.markdown("""
 </style>
 
 <div class="chat-header">
-    <img src="YOUR_LOGO_URL_HERE" alt="Logo">
+    <img src="logo.png" alt="Logo">
     <h4>Alex</h4>
 </div>
 """, unsafe_allow_html=True)
@@ -63,9 +63,6 @@ st.markdown("""
 
 # Get user_id from session state
 user_id = st.session_state.get('user_id', 'unknown_user_id')
-
-# Set up the page
-st.title('Chatbot')
 
 # Styling
 st.markdown("""
