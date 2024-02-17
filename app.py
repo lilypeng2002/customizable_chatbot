@@ -38,7 +38,11 @@ js_code = """
 """
 
 
-# Chat header with logo and name
+# Get user_id from session state
+user_id = st.session_state.get('user_id', 'unknown_user_id')
+
+
+
 st.markdown("""
 <style>
     .chat-header {
@@ -63,26 +67,24 @@ st.markdown("""
         font-weight: normal;
     }
             
-    .chat-container {
+    .main-container {
         display: grid;
-        flex-direction: column-reverse;
-        justify-content: flex-start;
-        height: 90vh;
-        overflow-y: auto;
-        margin-bottom: 10vh;
+        grid-template-rows: auto 10vh;
+        height: 100vh;
+    }
+
+    .chat-container {
+        overflow-y: auto; /* Allows for scrolling within the chat container */
+        grid-row: 1 / span 1; /* Takes up the main part of the grid leaving space for input */
     }
 
     .input-container {
         display: flex;
         justify-content: space-between;
-        height: 8vh;
         padding: 10px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
         background-color: white;
         z-index: 2;
+        grid-row: 2 / span 1; /* Positions input container in the second row */
     }
 
     .stTextInput>div>div>input {
@@ -92,7 +94,6 @@ st.markdown("""
         border-radius: 20px !important; /* Keep your rounded corners */
         padding: 10px !important; /* Keep your padding */
     }
-    
 
     .stButton>button {
         white-space: nowrap; /* Ensure button text does not wrap */
@@ -104,26 +105,11 @@ st.markdown("""
         margin-top: 10px;
         font-size: 16px;
     }
-</style>
 
-<div class="chat-header">
-    <div class="circle-logo"></div> 
-    <h4>Alex</h4>
-</div>
-""", unsafe_allow_html=True)
-
-
-# Get user_id from session state
-user_id = st.session_state.get('user_id', 'unknown_user_id')
-
-
-# Styling
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
     body {
         font-family: 'Roboto', sans-serif;
     }
+    
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -133,42 +119,30 @@ st.markdown("""
         position: relative;
         word-wrap: break-word;
     }
+
     .user {
         background-color: #007bff;
         color: white;
         margin-left: auto;
         border-top-right-radius: 0;
     }
+
     .bot {
         background-color: #f1f1f1;
         color: #333;
         margin-right: auto;
         border-top-left-radius: 0;
     }
-    .stButton>button {
-        border-radius: 20px;
-        border: 1px solid #007bff;
-        color: #ffffff;
-        background-color: #007bff;
-        padding: 10px 24px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    .stButton>button:hover {
-        background-color: #0056b3;
-    }
-    .stTextInput>div>div>input {
-        border-radius: 20px !important;
-        padding: 10px !important;
-    }
+
     ::placeholder {
         color: #adb5bd;
         opacity: 1;
     }
+
     :-ms-input-placeholder {
         color: #adb5bd;
     }
+
     ::-ms-input-placeholder {
         color: #adb5bd;
     }
