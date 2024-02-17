@@ -65,7 +65,8 @@ st.markdown("""
             
     .chat-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
         height: 90vh;
         overflow-y: auto;
         margin-bottom: 60px;
