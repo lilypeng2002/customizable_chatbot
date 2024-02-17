@@ -216,15 +216,14 @@ if not st.session_state['chat_started']:
 for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-# User input
-    st.markdown('<div class="input-container">', unsafe_allow_html=True)
-user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
-
-# Handle message sending
-if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
-    st.session_state['send_button_enabled'] = False 
-
-    user_message = st.session_state['last_submission']
+# Adjusted approach using Streamlit's columns for input and button alignment
+col1, col2 = st.columns([5, 1]) 
+with col1:
+    user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
+with col2:
+    if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
+        st.session_state['send_button_enabled'] = False
+        user_message = st.session_state['last_submission']
     if user_message:  # Ensure there is a message to send
         
         display_user_message = user_message  # Message without prefix for display
@@ -244,8 +243,9 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
             messages=conversation_history
         )
         bot_response = response.choices[0].message.content
-        display_bot_response = bot_response  # Message without prefix for display
-        st.session_state['messages'].append({'class': 'bot', 'text': display_bot_response})
+        st.session_state['messages'].append({'class': 'bot', 'text': bot_response})
+
+            # Re-enable the send button and clear the last submission
         st.session_state['send_button_enabled'] = True 
         save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
         save_conversation(save_conversation_content)
