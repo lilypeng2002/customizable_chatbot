@@ -66,7 +66,7 @@ st.markdown("""
     .chat-container {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 160px);
+        height: 90vh;
         overflow-y: auto;
         margin-bottom: 60px;
     }
@@ -74,6 +74,7 @@ st.markdown("""
     .input-container {
         display: flex;
         justify-content: space-between;
+        height: 10vh;
         padding: 10px;
         position: fixed;
         bottom: 0;
