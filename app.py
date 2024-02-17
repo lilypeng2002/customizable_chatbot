@@ -83,7 +83,7 @@ st.markdown("""
 
     .stTextInput>div>div>input {
         flex-grow: 1;
-        margin-top: 0px;
+        margin-top: -5px;
         margin-right: 10px; /* Adjust space between input and button */
         border-radius: 20px !important; /* Keep your rounded corners */
         padding: 10px !important; /* Keep your padding */
