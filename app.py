@@ -70,60 +70,58 @@ user_id = st.session_state.get('user_id', 'unknown_user_id')
 # Styling
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-    .message {
-        margin: 10px 0;
+    .chat-container {
+        border: 2px solid black;
+        background-color: #f9f9f9; /* Slightly off-white */
+        border-radius: 10px;
         padding: 10px;
-        border-radius: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        width: 70%;
-        position: relative;
-        word-wrap: break-word;
+        margin-bottom: 20px;
+        height: 400px; /* Adjust based on your preference */
+        overflow-y: auto;
     }
-    .user {
-        background-color: #007bff;
-        color: white;
-        margin-left: auto;
-        border-top-right-radius: 0;
+    
+    .fixed-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        z-index: 2;
     }
-    .bot {
-        background-color: #f1f1f1;
-        color: #333;
-        margin-right: auto;
-        border-top-left-radius: 0;
+    
+    .input-group {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        box-sizing: border-box;
     }
-    .stButton>button {
-        border-radius: 20px;
-        border: 1px solid #007bff;
-        color: #ffffff;
-        background-color: #007bff;
-        padding: 10px 24px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    .stButton>button:hover {
-        background-color: #0056b3;
-    }
+    
     .stTextInput>div>div>input {
-        border-radius: 20px !important;
-        padding: 10px !important;
+        flex-grow: 1;
     }
-    ::placeholder {
-        color: #adb5bd;
-        opacity: 1;
-    }
-    :-ms-input-placeholder {
-        color: #adb5bd;
-    }
-    ::-ms-input-placeholder {
-        color: #adb5bd;
+    
+    .stButton>button {
+        white-space: nowrap;
     }
 </style>
 """, unsafe_allow_html=True)
+
+# Wrap the chat messages display in a container
+st.markdown('<div class="chat-container">', unsafe_allow_html=True)
+for msg in st.session_state['messages']:
+    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# Use Streamlit columns for the input box and send button
+st.markdown('<div class="fixed-footer">', unsafe_allow_html=True)
+col1, col2 = st.columns([0.8, 0.2], gap='small')
+with col1:
+    user_input = st.text_input("", value=st.session_state['widget_value'], placeholder="Type a message...", key='widget_value')
+with col2:
+    send_button = st.button('Send', key='sendButton')
+st.markdown('</div>', unsafe_allow_html=True)
+
+
 
 # Database connection
 conn = mysql.connector.connect(
