@@ -215,9 +215,6 @@ if st.session_state['send_button_enabled']:
         process_user_message()  # Function to process user message and generate bot response
 
 
-
-
-
 # Handle message sending
 if st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled']):
     st.session_state['send_button_enabled'] = False  # Immediately disable the send button
