@@ -239,7 +239,7 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
         # Perform the API call to OpenAI to get the chat completion
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
-            temperature=0.2,
+            temperature=0.5,
             messages=conversation_history
         )
         bot_response = response.choices[0].message.content
@@ -258,4 +258,3 @@ if st.button('Send', key='sendButton', disabled=not st.session_state['send_butto
     
     # Use st.experimental_rerun() to refresh the page and update the UI
     st.experimental_rerun()
-
