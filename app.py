@@ -88,6 +88,13 @@ st.markdown("""
         <span>Alex</span>
     </div>
     <div class="chat-messages">
+        <!-- Messages are dynamically inserted here -->
+    </div> <!-- This closes the chat-messages div -->
+    <div class="chat-input">
+        <!-- Input field and Send button -->
+    </div>
+</div> <!-- This closes the chat-container div -->
+...
 """, unsafe_allow_html=True)
 
 
@@ -229,7 +236,6 @@ if not st.session_state['initialized']:
 if st.button('Send', key='sendButton'):
     user_message = st.session_state['widget_value']
     if user_message:  
-        
         st.session_state['messages'].append({'class': 'user', 'text': f"You: {user_message}"})
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
