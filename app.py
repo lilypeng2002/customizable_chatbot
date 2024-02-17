@@ -222,6 +222,7 @@ with col1:
     user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
 with col2:
     st.write("") 
+    st.write("") 
     send_pressed = st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled'])
 
     if send_pressed:
