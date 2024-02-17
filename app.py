@@ -36,6 +36,8 @@ js_code = """
     </script>
 </div>
 """
+# Get user_id from session state
+user_id = st.session_state.get('user_id', 'unknown_user_id')
 
 
 # Chat header with logo and name
@@ -67,9 +69,10 @@ st.markdown("""
         display: grid;
         flex-direction: column-reverse;
         justify-content: flex-start;
-        height: 90vh;
+        height: 60vh;
         overflow-y: auto;
-        margin-bottom: 10vh;
+        margin-top: 20vh;
+        margin-bottom: 20vh;
     }
 
     .input-container {
@@ -113,8 +116,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Get user_id from session state
-user_id = st.session_state.get('user_id', 'unknown_user_id')
 
 
 # Styling
