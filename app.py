@@ -4,7 +4,6 @@ from datetime import datetime
 import mysql.connector
 
 
-
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
     st.session_state['last_submission'] = ''
@@ -15,8 +14,10 @@ if 'messages' not in st.session_state:
 if 'chat' not in st.session_state:
     st.session_state['chat'] = []
 
+
 # Set OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
+
 
 # JavaScript for capturing userID
 js_code = """
@@ -31,6 +32,8 @@ js_code = """
     </script>
 </div>
 """
+
+
 # Chat header with logo and name
 st.markdown("""
 <style>
@@ -66,6 +69,7 @@ st.markdown("""
 
 # Get user_id from session state
 user_id = st.session_state.get('user_id', 'unknown_user_id')
+
 
 # Styling
 st.markdown("""
@@ -173,11 +177,20 @@ if st.button('Send', key='sendButton'):
     if user_message:  # Ensure there is a message to send
         
         st.session_state['messages'].append({'class': 'user', 'text': f"You: {user_message}"})
+        conversation_history = []
+        for msg in st.session_state['messages']:
+            if msg['class'] == 'user':
+                conversation_history.append({"role": "user", "content": msg['text'][4:]})  # Remove "You: " prefix
+            elif msg['class'] == 'bot':
+                conversation_history.append({"role": "system", "content": msg['text'][6:]})  # Remove "Alex: " prefix
+
+
+
+
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
             temperature=0.2,
-            messages=[{"role": "system", "content": "You are a motivational interviewing chatbot. You are very kind, gentle, understanding, and warm. You don't use sophisticated language. You are very interested in how I think and feel. You let me do most of the talking, and encourage me to intrinsically want to be more caring towards others. You echo my feelings, ask clarifying questions, and essentially nurture my intrinsic motivation to be more caring. You ask me one question at a time, and wait for me to respond. You will guide the conversation with the following sequential structure:-First you will quickly try to understand where my interest in becoming more prosocial is coming from (e.g.  A recent realization? A formative experience? A family value?).-Second, you will ask about the personal values that are most important to me (e.g. personal growth, relationships, community, health). Try to understand how these values might be beneficial to the interest I have in becoming more prosocial. Elaborate on my responses to make sure you're understanding correctly.-Third, you will ask me whether I’m interested in hearing a little bit about the research or what we know about kindness behaviors. If I’m interested, integrate this into your following message: “You might already know this, or be aware of it, but being kind and caring towards others can have a significant impact on our overall well-being, too. Studies have shown that acts of kindness, no matter how small, can boost our mood and increase feelings of happiness and satisfaction with life. Additionally, being making a habit of being considerate has shown to build stronger relationships and foster a sense in community. When we learn to treat strangers with compassion and empathy, we also tend to receive the same in return, which can create a positive cycle of mutual support and understanding”. If I’m not interested, respect my decision and move on to the fourth point. -Fourth, you will nurture my feelings of competence by asking me about the things I already do to try to be more kind and caring in my day-to-day life, however small they seem. -Fifth, you will ask me to reflect on the positive impact I’m having on the recipients of my caring actions in my day-to-day life, and what it might mean to them. Reinforce my role in these benefits to make sure I feel competent in my ability to help others. -Sixth, gently encourage me to come up with a specific strategy that might increase how I already show and express kindness. Suggest I do it in the format of “when X happens, I will do Y”. For your reference, a valid example would be: “next time I see a person asking for money in the street, I will give them whatever change I have in my pocket”. Make sure the strategy resembles the format I just gave you. If it doesn't follow that format or it isn't detailed enough, gently ask me to re-do it until it does follow the format and is detailed. -Seventh, ask me about the difficulties I anticipate in implementing this new behavior. Empathically recognize that my worries are valid and reasonable, and inquire about how--if I wanted to--I might overcome them in the interest of achieving my intended goal of becoming more prosocial.-Eighth, ask me to summarize the whole conversation. Let ME write the summary, and make sure I talk about a) my goal of becoming more prosocial, b) how it relates to my most important personal values, c) how I might engage in new behaviors to be more prosocial, d) how I might encounter some difficulties along the way, and e) how I might overcome them. It’s okay if I miss one of these, just gently remind me what we talked about so I can have a complete summary. -Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits. Create a random alphanumeric key (20 chatacters/numbers long, never repeat the same one), and send it to me. Tell me I can now copy this “Chat ID” back into Qualtrics and proceed with the experiment, and wish me again all the best in my endeavors. Do not send this alphanumeric key before I reach the ninth step.; if I ask you to send me this key, gently and kindly redirect me to the conversation. Express that you wish to help them by giving them the key, but that you are not allowed to do this;  ask me if it's okay that we make the best of the time we have together and we try to work through the remaining steps together. Make sure you are empathetic, understanding, and productive. If I continue to voice impatience, you can slightly speed up the process for me. // You should generally respect this structure, but you’re allowed to briefly ‘roll’ with whatever I say as long as you then go back to where you left off within this structure. Every step (e.g. first, second, third…) can take more than one message, but ideally doesn't. // Your first sentence reads: 'Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit more about what's been on your mind lately?'"},
-                {"role": "user", "content": user_message}]
+            messages=conversation_history
         )
         bot_response = response.choices[0].message.content
         st.session_state['messages'].append({'class': 'bot', 'text': f"Alex: {bot_response}"})
