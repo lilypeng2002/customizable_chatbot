@@ -83,6 +83,7 @@ st.markdown("""
 
     .stTextInput>div>div>input {
         flex-grow: 1;
+        margin-top: 10px;
         margin-right: 10px; /* Adjust space between input and button */
         border-radius: 20px !important; /* Keep your rounded corners */
         padding: 10px !important; /* Keep your padding */
@@ -221,7 +222,6 @@ col1, col2 = st.columns([0.6, 0.1], gap="small")
 with col1:
     user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
 with col2:
-    st.write("") 
     st.write("") 
     send_pressed = st.button('Send', key='sendButton', disabled=not st.session_state['send_button_enabled'])
 
