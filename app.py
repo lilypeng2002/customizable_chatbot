@@ -70,21 +70,33 @@ st.markdown("""
         overflow: auto;
     }
 
-    .fixed-input {
+    .input-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
         position: fixed;
         bottom: 0;
         left: 0;
-        width: 80%;
-        padding: 10px;
-        background: white;
-    }
-            
-    .stTextInput>div>div>input {
-        width: calc(100% - 140px);
+        right: 0;
+        background-color: white;
     }
 
+    .stTextInput>div>div>input {
+        flex-grow: 1;
+        margin-right: 10px; /* Adjust space between input and button */
+        border-radius: 20px !important; /* Keep your rounded corners */
+        padding: 10px !important; /* Keep your padding */
+    }
+    
+
     .stButton>button {
-        width: 100px;
+        white-space: nowrap; /* Ensure button text does not wrap */
+        border-radius: 20px; /* Match your input's rounded corners */
+        border: 1px solid #007bff;
+        color: #ffffff;
+        background-color: #007bff;
+        padding: 10px 24px;
+        font-size: 16px;
     }
 </style>
 
@@ -205,6 +217,7 @@ for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # User input
+    st.markdown('<div class="input-container">', unsafe_allow_html=True)
 user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", disabled=not st.session_state['send_button_enabled'])
 
 # Handle message sending
