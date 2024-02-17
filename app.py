@@ -2,6 +2,17 @@ import openai
 import streamlit as st
 from datetime import datetime
 import mysql.connector
+import base64
+
+def get_image_base64(path):
+    with open(path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode()
+
+# Ensure the path is correct when running the script
+logo_base64 = get_image_base64("/Users/conrad/Desktop/Toronto/VictoriaChat/customizable_chatbot/logo.png")
+logo_html = f'<img src="data:image/png;base64,{logo_base64}" alt="Logo">'
+st.markdown(logo_html, unsafe_allow_html=True)
+
 
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
