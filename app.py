@@ -78,12 +78,6 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
-    .message-container {
-        overflow-y: auto;
-        height: 500px; /* Adjust based on your needs */
-        margin-bottom: 20px;
-    }
-            
     .message {
         margin: 10px 0;
         padding: 10px;
