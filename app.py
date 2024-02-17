@@ -190,31 +190,19 @@ def save_conversation(content):
 
 
 
-#NEW: 
-message_container = st.empty() #message display area
-with st.container(): #fixed input area 
-    st.write("")  # Placeholder to ensure the container is rendered
-    input_container = st.container()
-with input_container:
-    col1, col2 = st.columns([5, 1])
-    with col1:
-        user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...", args={"style": "margin-bottom: 0;"})
-    with col2:
-        send_button = st.button('Send', key='sendButton')
 
+# Display messages
+for msg in st.session_state['messages']:
+    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-with message_container: #display messages with fixed input at the bottom
-    chat_container = st.container()
-    with chat_container:
-        for msg in st.session_state['messages']:
-            st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-        st.markdown("<script>const chatBox = document.querySelector('.chat-container'); chatBox.scrollTop = chatBox.scrollHeight;</script>", unsafe_allow_html=True)
+# User input
+user_input = st.text_input("", value=st.session_state['widget_value'], on_change=submit, key='widget_value', placeholder="Type a message...")
 
-
-if send_button:
+# Handle message sending
+if st.button('Send', key='sendButton'):
     user_message = st.session_state['last_submission']
     if user_message:  # Ensure there is a message to send
-
+        
         display_user_message = user_message  # Message without prefix for display
         st.session_state['messages'].append({'class': 'user', 'text': display_user_message})
 
@@ -222,9 +210,12 @@ if send_button:
 
         for msg in st.session_state['messages']:
             if msg['class'] == 'user':
-                conversation_history.append({"role": "user", "content": msg['text']})
+                conversation_history.append({"role": "user", "content": msg['text'][4:]})  # Remove "You: " prefix
             elif msg['class'] == 'bot':
-                conversation_history.append({"role": "system", "content": msg['text']})
+                conversation_history.append({"role": "system", "content": msg['text'][6:]})  # Remove "Alex: " prefix
+
+
+
 
         response = openai.ChatCompletion.create(
             model="gpt-4-turbo-preview",
@@ -239,5 +230,3 @@ if send_button:
         save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
-
-
