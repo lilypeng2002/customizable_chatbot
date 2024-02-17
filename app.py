@@ -70,38 +70,57 @@ user_id = st.session_state.get('user_id', 'unknown_user_id')
 # Styling
 st.markdown("""
 <style>
-    .chat-container {
-        border: 2px solid black;
-        background-color: #f9f9f9; /* Slightly off-white */
-        border-radius: 10px;
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+    .message {
+        margin: 10px 0;
         padding: 10px;
-        margin-bottom: 20px;
-        height: 400px; /* Adjust based on your preference */
-        overflow-y: auto;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 70%;
+        position: relative;
+        word-wrap: break-word;
     }
-    
-    .fixed-footer {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: white;
-        z-index: 2;
+    .user {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        border-top-right-radius: 0;
     }
-    
-    .input-group {
-        display: flex;
-        gap: 10px;
-        padding: 10px;
-        box-sizing: border-box;
+    .bot {
+        background-color: #f1f1f1;
+        color: #333;
+        margin-right: auto;
+        border-top-left-radius: 0;
     }
-    
-    .stTextInput>div>div>input {
-        flex-grow: 1;
-    }
-    
     .stButton>button {
-        white-space: nowrap;
+        border-radius: 20px;
+        border: 1px solid #007bff;
+        color: #ffffff;
+        background-color: #007bff;
+        padding: 10px 24px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .stButton>button:hover {
+        background-color: #0056b3;
+    }
+    .stTextInput>div>div>input {
+        border-radius: 20px !important;
+        padding: 10px !important;
+    }
+    ::placeholder {
+        color: #adb5bd;
+        opacity: 1;
+    }
+    :-ms-input-placeholder {
+        color: #adb5bd;
+    }
+    ::-ms-input-placeholder {
+        color: #adb5bd;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -161,7 +180,7 @@ if st.button('Send', key='sendButton'):
                 {"role": "user", "content": user_message}]
         )
         bot_response = response.choices[0].message.content
-        st.session_state['messages'].append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+        st.session_state['messages'].append({'class': 'bot', 'text': f"Alex: {bot_response}"})
         save_conversation(f"You: {user_message}\nKit: {bot_response}")
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
