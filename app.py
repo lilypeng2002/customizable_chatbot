@@ -196,7 +196,10 @@ if st.button('Send', key='sendButton'):
             messages=conversation_history
         )
         bot_response = response.choices[0].message.content
-        st.session_state['messages'].append({'class': 'bot', 'text': f"Alex: {bot_response}"})
-        save_conversation(f"You: {user_message}\nAlex: {bot_response}")
+        display_bot_response = bot_response  # Message without prefix for display
+        st.session_state['messages'].append({'class': 'bot', 'text': display_bot_response})
+
+        save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
+        save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
