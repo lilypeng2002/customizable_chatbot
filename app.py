@@ -13,6 +13,8 @@ if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 if 'chat' not in st.session_state:
     st.session_state['chat'] = []
+if 'chat_started' not in st.session_state:  # New session state to track if the chat has started
+    st.session_state['chat_started'] = False
 
 
 # Set OpenAI API key
@@ -189,6 +191,11 @@ def save_conversation(content):
     cursor.close()
 
 
+# Automatically send the first bot message if the chat hasn't started
+if not st.session_state['chat_started']:
+    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
+    st.session_state['messages'].append({'class': 'bot', 'text': initial_bot_message})
+    st.session_state['chat_started'] = True  # Mark the chat as started
 
 
 # Display messages
