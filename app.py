@@ -43,27 +43,49 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 st.title('Chatbot')
 
 # Custom CSS for the chat interface
-st.markdown(
-    """
-    <style>
-        .message {
-            margin: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            width: 70%;
-        }
-        .user {
-            margin-left: auto;
-            background-color: #2D2928;
-        }
-        .bot {
-            margin-right: auto;
-            background-color: #2D2928;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+st.markdown("""
+<style>
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid black;
+        height: 80vh;
+        width: 40vw;
+        margin-left: 30vw;
+        background-color: #F8F8F8;
+    }
+    .chat-header {
+        height: 10%;
+        background-color: #E8E8E8;
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding: 0 20px;
+        border-bottom: 2px solid black;
+    }
+    .green-circle {
+        height: 15px;
+        width: 15px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .chat-messages {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 10px;
+        background-color: #F8F8F8;
+    }
+    .chat-input {
+        display: flex;
+        border-top: 2px solid black;
+        padding: 10px;
+    }
+    .send-button {
+        margin-left: 10px;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Connect to the database
 conn = mysql.connector.connect(
