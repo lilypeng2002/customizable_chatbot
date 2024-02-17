@@ -259,3 +259,12 @@ with col2:
         save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
+
+
+        # At the end of your Streamlit app, after displaying all messages
+st.markdown("""
+    <script>
+    const chatContainer = document.querySelector('.chat-container');
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    </script>
+""", unsafe_allow_html=True)
