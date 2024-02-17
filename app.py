@@ -74,13 +74,13 @@ st.markdown("""
         position: fixed;
         bottom: 0;
         left: 0;
-        width: 100%;
+        width: 80%;
         padding: 10px;
         background: white;
     }
             
     .stTextInput>div>div>input {
-        width: calc(100% - 120px);
+        width: calc(100% - 140px);
     }
 
     .stButton>button {
