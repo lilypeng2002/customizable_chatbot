@@ -58,6 +58,30 @@ st.markdown("""
         margin: 0;
         font-weight: normal;
     }
+            
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 120px);
+        overflow: auto;
+    }
+
+    .fixed-input {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background: white;
+    }
+            
+    .stTextInput>div>div>input {
+        width: calc(100% - 120px);
+    }
+
+    .stButton>button {
+        width: 100px;
+    }
 </style>
 
 <div class="chat-header">
