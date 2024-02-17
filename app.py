@@ -66,8 +66,9 @@ st.markdown("""
     .chat-container {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 120px);
-        overflow: auto;
+        height: calc(100vh - 160px);
+        overflow-y: auto;
+        margin-bottom: 60px;
     }
 
     .input-container {
@@ -79,6 +80,7 @@ st.markdown("""
         left: 0;
         right: 0;
         background-color: white;
+        z-index: 2;
     }
 
     .stTextInput>div>div>input {
