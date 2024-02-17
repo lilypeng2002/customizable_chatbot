@@ -96,7 +96,7 @@ st.markdown("""
         border: 1px solid #007bff;
         color: #ffffff;
         background-color: #007bff;
-        padding: 10px, -10px;
+        padding: 10px, -100px;
         font-size: 16px;
     }
 </style>
