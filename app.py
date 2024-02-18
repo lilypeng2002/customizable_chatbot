@@ -197,17 +197,10 @@ CREATE TABLE IF NOT EXISTS conversations (
     user_id VARCHAR(255),
     date VARCHAR(255),
     hour VARCHAR(255),
-    content MEDIUMTEXT
+    content MEDIUMTEXT,
+    conversation_id VARCHAR(255)
 )
 ''')
-try:
-    cursor.execute('''
-    ALTER TABLE conversations 
-    ADD COLUMN conversation_id VARCHAR(255)
-    ''')
-except mysql.connector.Error as err:
-    print("Error occurred: {}".format(err))
-
 conn.commit()
 cursor.close()
 
