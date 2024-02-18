@@ -198,7 +198,6 @@ CREATE TABLE IF NOT EXISTS conversations (
     date VARCHAR(255),
     hour VARCHAR(255),
     content MEDIUMTEXT,
-    conversation_id VARCHAR(255)
 )
 ''')
 conn.commit()
@@ -209,10 +208,10 @@ def submit():
     st.session_state['last_submission'] = st.session_state['widget_value']
     st.session_state['widget_value'] = ''
 
-def save_conversation(conversation_id, user_id, content):
+def save_conversation(user_id, content):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-               (conversation_id, user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
+               (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
 
@@ -272,7 +271,7 @@ with col2:
             # Re-enable the send button and clear the last submission
         st.session_state['send_button_enabled'] = True 
         save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
-        save_conversation(st.session_state['conversation_id'], user_id, save_conversation_content)
+        save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
 
