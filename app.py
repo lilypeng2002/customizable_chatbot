@@ -194,7 +194,7 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS conversations (
-    conversation_id VARCHAT (255),
+    conversation_id VARCHAR (255),
     user_id VARCHAR(255),
     date VARCHAR(255),
     hour VARCHAR(255),
