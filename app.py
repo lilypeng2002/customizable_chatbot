@@ -272,7 +272,7 @@ with col2:
             # Re-enable the send button and clear the last submission
         st.session_state['send_button_enabled'] = True 
         save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
-        save_conversation(save_conversation_content)
+        save_conversation(conversation_id, user_id, content, save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
 
