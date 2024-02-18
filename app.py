@@ -32,7 +32,7 @@ js_code = """
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
             }
-        }, 1000);
+        }, 4000);
     </script>
 </div>
 """
@@ -204,6 +204,7 @@ def submit():
     st.session_state['widget_value'] = ''
 
 def save_conversation(content):
+    user_id = st.session_state.get('user_id', 'unknown_user_id')
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
                    (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
