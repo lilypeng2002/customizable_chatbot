@@ -212,10 +212,11 @@ def submit():
 
 def save_conversation(content):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
-                   (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
+                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
+
 
 
 # Automatically send the first bot message if the chat hasn't started
