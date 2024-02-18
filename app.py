@@ -210,7 +210,7 @@ def submit():
 
 def save_conversation(content):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
+    cursor.execute("INSERT INTO conversations (conversation_id,user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
                    (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
