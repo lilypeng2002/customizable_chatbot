@@ -201,19 +201,19 @@ CREATE TABLE IF NOT EXISTS conversations (
     content MEDIUMTEXT
 )
 ''')
-
 conn.commit()
 cursor.close()
+
 
 # Define helper functions
 def submit():
     st.session_state['last_submission'] = st.session_state['widget_value']
     st.session_state['widget_value'] = ''
 
-def save_conversation(content):
+def save_conversation(content, speaker):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content, speaker) VALUES (%s, %s, %s, %s, %s, %s)",
+                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content, speaker))
     conn.commit()
     cursor.close()
 
