@@ -3,6 +3,7 @@ import streamlit as st
 from datetime import datetime
 import mysql.connector
 from streamlit.components.v1 import html
+import uuid 
 
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
@@ -21,6 +22,10 @@ if 'send_button_enabled' not in st.session_state:
 
 # Set OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
+
+# Initialize a unique conversation ID
+if 'conversation_id' not in st.session_state:
+    st.session_state['conversation_id'] = str(uuid.uuid4())
 
 
 # JavaScript for capturing userID
@@ -189,12 +194,14 @@ conn = mysql.connector.connect(
 cursor = conn.cursor()
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS conversations (
+    conversation_id VARCHAR(255),
     user_id VARCHAR(255),
     date VARCHAR(255),
     hour VARCHAR(255),
     content MEDIUMTEXT
 )
 ''')
+
 conn.commit()
 cursor.close()
 
