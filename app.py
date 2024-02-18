@@ -32,7 +32,7 @@ js_code = """
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
             }
-        }, 4000);
+        }, 1000);
     </script>
 </div>
 """
