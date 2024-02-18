@@ -211,10 +211,9 @@ def submit():
     st.session_state['widget_value'] = ''
 
 def save_conversation(content):
-    content_with_id = f"{content} (Conversation ID: {st.session_state['conversation_id']})"
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content_with_id))
+                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
 
@@ -244,6 +243,7 @@ with col2:
         st.session_state['send_button_enabled'] = False
         user_message = st.session_state['last_submission']
         if user_message:  # Ensure there is a message to send
+            save_conversation(f"You: {user_message}")
             display_user_message = user_message  # Message without prefix for display
             st.session_state['messages'].append({'class': 'user', 'text': display_user_message})    
 
@@ -263,6 +263,7 @@ with col2:
             frequency_penalty = 0.2
         )
         bot_response = response.choices[0].message.content
+        save_conversation(f"Alex: {bot_response}")
         st.session_state['messages'].append({'class': 'bot', 'text': bot_response})
 
         scroll_js = """
@@ -274,8 +275,8 @@ with col2:
 
             # Re-enable the send button and clear the last submission
         st.session_state['send_button_enabled'] = True 
-        save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
-        save_conversation(save_conversation_content)
+        #save_conversation_content = f"You: {user_message}\nAlex: {bot_response}"
+        #save_conversation(save_conversation_content)
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
 
