@@ -208,7 +208,7 @@ def submit():
     st.session_state['last_submission'] = st.session_state['widget_value']
     st.session_state['widget_value'] = ''
 
-def save_conversation(content):
+def save_conversation(conversation_id, user_id, content):
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
                    (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
