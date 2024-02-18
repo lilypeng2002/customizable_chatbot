@@ -4,7 +4,6 @@ from datetime import datetime
 import mysql.connector
 from streamlit.components.v1 import html
 
-
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
     st.session_state['last_submission'] = ''
@@ -22,7 +21,6 @@ if 'send_button_enabled' not in st.session_state:
 
 # Set OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
-
 
 
 # JavaScript for capturing userID
@@ -205,10 +203,10 @@ def submit():
     st.session_state['last_submission'] = st.session_state['widget_value']
     st.session_state['widget_value'] = ''
 
-def save_conversation(user_id, content):
+def save_conversation(content):
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-               (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+    cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
+                   (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
 
