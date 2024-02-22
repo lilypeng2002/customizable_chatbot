@@ -6,15 +6,19 @@ import sqlalchemy
 import mysql.connector
 import uuid
 
+
 if 'last_submission' not in st.session_state:
     st.session_state.last_submission = ''
 if 'widget_value' not in st.session_state:
     st.session_state.widget_value = ''
 
+first = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
+
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
-    
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {first}"})
+
 if 'chat_uuid' not in st.session_state:
     st.session_state.chat_uuid = str(uuid.uuid4())
 
@@ -140,10 +144,7 @@ user_input = st.text_input("You: ", value=st.session_state.widget_value, on_chan
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-
-first = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
-st.session_state.chat.append(first)
-st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {first}"})
+    st.session_state.chat.append(first)
 
 
 if st.button('Send'):
