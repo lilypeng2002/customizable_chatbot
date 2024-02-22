@@ -12,12 +12,13 @@ if 'last_submission' not in st.session_state:
 if 'widget_value' not in st.session_state:
     st.session_state.widget_value = ''
 
+
 first = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
 
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
-    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {first}"})
+    # st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {first}"})
 
 if 'chat_uuid' not in st.session_state:
     st.session_state.chat_uuid = str(uuid.uuid4())
@@ -49,6 +50,8 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
+
+st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 
 # Custom CSS for the chat interface
 st.markdown(
@@ -131,7 +134,7 @@ start_message = {
 "-Eighth, ask me to summarize the whole conversation. Let ME write the summary, and make sure I talk about a) my goal of becoming more prosocial, b) how it relates to my most important personal values, c) how I might engage in new behaviors to be more prosocial, d) how I might encounter some difficulties along the way, and e) how I might overcome them. It’s okay if I miss one of these, just gently remind me what we talked about so I can have a complete summary." +
 "-Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits. Tell them to press the end chat button when they are finished." +
 "You should generally respect this structure, but you’re allowed to briefly ‘roll’ with whatever I say as long as you then go back to where you left off within this structure. Try to spend the most time on the fifth, sixth, and seventh steps. Every step (e.g. first, second, third…) can take more than one message." +
-"Your first sentence reads: “Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?" 
+"This is hardcoded into the UI, you don't have to display this, just interpret the first user input as a response to this. Your first sentence reads: Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?" 
 
 }
 
