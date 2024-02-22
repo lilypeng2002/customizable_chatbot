@@ -33,7 +33,7 @@ js_code = """
 <div style="color: black;">
     <script>
         setTimeout(function() {
-            const userID = document.getElementById("userID").value;
+            var userID = document.getElementById("userID").value;
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
             }
