@@ -119,7 +119,8 @@ st.markdown("""
 
 
 # Get user_id from session state
-user_id = st.session_state.get('user_id', 'unknown_user_id')
+params = st.experimental_get_query_params()
+userID = params.get("userID", ["unknown id"])[0]
 
 
 # Styling
