@@ -147,7 +147,7 @@ user_input = st.text_input("You: ", value=st.session_state.widget_value, on_chan
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-    st.session_state.chat.append(first)
+    # st.session_state.chat.append(first)
 
 
 if st.button('Send'):
