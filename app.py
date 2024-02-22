@@ -4,6 +4,8 @@ import streamlit as st
 from datetime import datetime
 import sqlalchemy
 import mysql.connector
+import uuid
+
 
 if 'last_submission' not in st.session_state:
     st.session_state.last_submission = ''
@@ -15,6 +17,9 @@ if 'messages' not in st.session_state:
     st.session_state.messages = []
     welcome_message = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?"
     st.session_state.messages.insert(0, {'class': 'bot', 'text': welcome_message})
+# Generate a unique ID at the start of the conversation
+if 'unique_id' not in st.session_state:
+    st.session_state.unique_id = f"A-{uuid.uuid4()}"
 
 
 # Set your OpenAI API key here, or use an environment variable
@@ -131,6 +136,7 @@ for msg in st.session_state.messages:
 user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 
+
 if st.button('Send'):
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
@@ -153,5 +159,8 @@ if st.button('Send'):
     save_conversation(conversation_content)
     #st.write(conversation_content)
     
-    st.session_state.last_submission = ''
+    st.session_state.last_submission = 'st.session_state.unique_id'
+    # At the end of the conversation, present the unique ID to the user
+    st.write(f"Your Chat ID: {st.session_state.unique_id}")
+
     st.rerun()  # Clear input box by rerunning the app
