@@ -141,6 +141,11 @@ user_input = st.text_input("You: ", value=st.session_state.widget_value, on_chan
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
+first = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
+st.session_state.chat.append(first)
+st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {first}"})
+
+
 if st.button('Send'):
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
