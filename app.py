@@ -119,8 +119,8 @@ start_message = {
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-    welcome_bot_message = {"role": "system", "content": welcome_message}
-    st.session_state.chat.append(welcome_bot_message)
+    # welcome_bot_message = {"role": "system", "content": welcome_message}
+    # st.session_state.chat.append(welcome_bot_message)
 
 # Display chat messages
 for msg in st.session_state.messages:
