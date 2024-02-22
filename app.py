@@ -1,5 +1,6 @@
 import openai
 import streamlit as st
+from urllib.parse import urlparse, parse_qs
 from datetime import datetime
 import mysql.connector
 from streamlit.components.v1 import html
@@ -19,6 +20,15 @@ if 'chat_started' not in st.session_state:
 if 'send_button_enabled' not in st.session_state:
     st.session_state['send_button_enabled'] = True  
 
+def get_query_params():
+    # Extract query parameters from the URL
+    query_params = parse_qs(st.experimental_get_query_params())
+    # Extract userID from the query parameters
+    user_id = query_params.get('userID', ['unknown_user_id'])[0]
+    return user_id
+user_id = get_query_params()
+if 'user_id' not in st.session_state:
+    st.session_state['user_id'] = user_id
 
 # Set OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
@@ -119,7 +129,7 @@ st.markdown("""
 
 
 # Get user_id from session state
-user_id = st.session_state.get('user_id', 'unknown_user_id')
+#user_id = st.session_state.get('user_id', 'unknown_user_id')
 
 
 # Styling
@@ -213,7 +223,7 @@ def submit():
 def save_conversation(content):
     cursor = conn.cursor()
     cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                   (st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+                   (st.session_state['conversation_id'], st.session_state['user_id'], datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
     conn.commit()
     cursor.close()
 
@@ -307,3 +317,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 # Embed the custom JavaScript in the Streamlit app
 html(disable_enter_key_js)
+
+
+
+
