@@ -216,7 +216,7 @@ def save_conversation(content):
     current_hour = datetime.now().strftime("%H:%M:%S")
     cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
                    #(st.session_state['conversation_id'], user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
-                   (conversation_id, userID, current_date, current_hour, content))
+                   (conversation_id, user_id, current_date, current_hour, content))
     conn.commit()
     cursor.close()
 
