@@ -4,6 +4,7 @@ import streamlit as st
 from datetime import datetime
 import sqlalchemy
 import mysql.connector
+import uuid
 
 if 'last_submission' not in st.session_state:
     st.session_state.last_submission = ''
@@ -13,6 +14,9 @@ if 'widget_value' not in st.session_state:
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
+    
+if 'chat_uuid' not in st.session_state:
+    st.session_state.chat_uuid = str(uuid.uuid4())
 
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
@@ -121,7 +125,7 @@ start_message = {
 "-Sixth, gently encourage me to come up with a strategy that might increase how I already show and express kindness. Suggest I do it in the format of “when X happens, I will do Y”. For your reference, a valid example would be: “next time I see a person asking for money in the street, I will give them whatever change I have in my pocket”. Make sure the strategy is specific and it resembles the format I just gave you. If it doesn’t follow that format or it isn’t detailed, gently ask me to re-do it until it does follow the format and is detailed." +
 "-Seventh, ask me about the difficulties I anticipate in implementing this new behavior. After I express some difficulties, empathically recognize that my worries are valid and reasonable, and inquire about how (if I wanted to) I might overcome them so that I can still achieve my intended goal of becoming more prosocial." +
 "-Eighth, ask me to summarize the whole conversation. Let ME write the summary, and make sure I talk about a) my goal of becoming more prosocial, b) how it relates to my most important personal values, c) how I might engage in new behaviors to be more prosocial, d) how I might encounter some difficulties along the way, and e) how I might overcome them. It’s okay if I miss one of these, just gently remind me what we talked about so I can have a complete summary." +
-"-Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits." +
+"-Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits. Access the uuid stored as st.session_state.chat_uuid and give this to the user. Tell them they can go back and paste the uuid into qualtrics" +
 "You should generally respect this structure, but you’re allowed to briefly ‘roll’ with whatever I say as long as you then go back to where you left off within this structure. Every step (e.g. first, second, third…) can take more than one message." +
 "Your first sentence reads: “Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?" 
 
@@ -160,4 +164,5 @@ if st.button('Send'):
     #st.write(conversation_content)
     
     st.session_state.last_submission = ''
+    #st.write(conversation_content)
     st.rerun()  # Clear input box by rerunning the app
