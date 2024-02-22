@@ -13,6 +13,9 @@ if 'widget_value' not in st.session_state:
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
     st.session_state.messages = []
+    welcome_message = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?"
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {welcome_message}"})
+    
 
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
@@ -116,13 +119,8 @@ start_message = {
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-
-if not st.session_state.messages:
-    welcome_message = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?"
-    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {welcome_message}"})
     welcome_bot_message = {"role": "system", "content": welcome_message}
     st.session_state.chat.append(welcome_bot_message)
-
 
 # Display chat messages
 for msg in st.session_state.messages:
