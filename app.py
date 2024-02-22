@@ -117,11 +117,11 @@ start_message = {
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
-# if not st.session_state.messages:
-#     welcome_message = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?"
-#     st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {welcome_message}"})
-#     welcome_bot_message = {"role": "system", "content": welcome_message}
-#     st.session_state.chat.append(welcome_bot_message)
+if not st.session_state.messages:
+    welcome_message = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?"
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {welcome_message}"})
+    welcome_bot_message = {"role": "system", "content": welcome_message}
+    st.session_state.chat.append(welcome_bot_message)
 
 
 # Display chat messages
