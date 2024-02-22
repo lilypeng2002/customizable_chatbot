@@ -109,7 +109,18 @@ def submit():
     st.session_state.widget_value = ''
 
 
+def get_db_connection():
+    return mysql.connector.connect(
+        user=st.secrets['sql_user'],
+        password=st.secrets['sql_password'],
+        database=st.secrets['sql_database'],
+        host=st.secrets['sql_host'],
+        port=st.secrets['sql_port']
+    )
+
 def save_conversation(content):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
     cursor = conn.cursor()
@@ -117,6 +128,7 @@ def save_conversation(content):
                    (userID, current_date, current_hour, content))
     conn.commit()
     cursor.close()
+    conn.close()
 
 start_message = {
     "role": "system", 
@@ -159,7 +171,7 @@ if st.button('Send'):
     save_conversation(conversation_content)
     #st.write(conversation_content)
     
-    st.session_state.last_submission = 'st.session_state.unique_id'
+    st.session_state.last_submission = ''
     # At the end of the conversation, present the unique ID to the user
     st.write(f"Your Chat ID: {st.session_state.unique_id}")
 
