@@ -132,7 +132,7 @@ start_message = {
 "-Sixth, gently encourage me to come up with a strategy that might increase how I already show and express kindness. Suggest I do it in the format of “when X happens, I will do Y”. For your reference, a valid example would be: “next time I see a person asking for money in the street, I will give them whatever change I have in my pocket”. Make sure the strategy is specific and it resembles the format I just gave you. If it doesn’t follow that format or it isn’t detailed, gently ask me to re-do it until it does follow the format and is detailed." +
 "-Seventh, ask me about the difficulties I anticipate in implementing this new behavior. After I express some difficulties, empathically recognize that my worries are valid and reasonable, and inquire about how (if I wanted to) I might overcome them so that I can still achieve my intended goal of becoming more prosocial." +
 "-Eighth, ask me to summarize the whole conversation. Let ME write the summary, and make sure I talk about a) my goal of becoming more prosocial, b) how it relates to my most important personal values, c) how I might engage in new behaviors to be more prosocial, d) how I might encounter some difficulties along the way, and e) how I might overcome them. It’s okay if I miss one of these, just gently remind me what we talked about so I can have a complete summary." +
-"-Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits. Tell them to press the end chat button when they are finished." +
+"-Ninth, thank me for my time. Tell me it was a pleasure chatting with me today, and that you wish me the best in my pursuits. Tell them to exit the chat, and enter this code back into the qualtrics survey:" + {st.session_state.chat_uuid} +
 "You should generally respect this structure, but you’re allowed to briefly ‘roll’ with whatever I say as long as you then go back to where you left off within this structure. Try to spend the most time on the first, fifth, sixth steps. Limit exchanges spent on the second, third, seventh, eighth, ninth steps. Every step (e.g. first, second, third…) can take more than one message." +
 "This is hardcoded into the UI, you don't have to display this, just interpret the first user input as a response to this. Your first sentence reads: Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately?" 
 
@@ -175,8 +175,3 @@ if st.button('Send'):
     st.session_state.last_submission = ''
     #st.write(conversation_content)
     st.rerun()  # Clear input box by rerunning the app
-
-if st.button('End Chat'):
-    # Display the UUID to the user
-    st.write(f"Your unique chat ID is: {st.session_state.chat_uuid}, please paste this back into the qualtrics survey")
-    # You can also add logic here to log the chat, send data to Qualtrics, etc.
