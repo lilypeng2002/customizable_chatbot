@@ -56,97 +56,99 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 # Custom CSS for the chat interface
 st.markdown(
     """
+    <style>
     html, body {
-  background-color: #36393e;
-  color: #fff;
-  margin: 0; /* Remove default margin */
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-}
+      background-color: #36393e;
+      color: #fff;
+      margin: 0; /* Remove default margin */
+      height: 100vh; /* Full viewport height */
+      display: flex;
+      flex-direction: column; /* Stack children vertically */
+    }
 
-.chat-wrapper {
-  flex-grow: 1; /* Takes up available space */
-  display: flex;
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Maximize space between chat-box and form-wrapper */
-  padding: 0 20px; /* Adjust based on your design */
-}
+    .chat-wrapper {
+      flex-grow: 1; /* Takes up available space */
+      display: flex;
+      flex-direction: column; /* Stack children vertically */
+      justify-content: space-between; /* Maximize space between chat-box and form-wrapper */
+      padding: 0 20px; /* Adjust based on your design */
+    }
 
-.chat-box {
-  overflow-y: auto;
-  flex-grow: 1; /* Allows chat-box to grow and fill available space */
-  margin-bottom: 10px; /* Give some space above the input box */
-}
+    .chat-box {
+      overflow-y: auto;
+      flex-grow: 1; /* Allows chat-box to grow and fill available space */
+      margin-bottom: 10px; /* Give some space above the input box */
+    }
 
-.form-wrapper {
-  position: sticky; /* Sticks to the bottom within its parent */
-  bottom: 0; /* Align to the bottom */
-  width: 100%; /* Full width of its parent */
-  background-color: #40444d; /* Background color of the input area */
-}
+    .form-wrapper {
+      position: sticky; /* Sticks to the bottom within its parent */
+      bottom: 0; /* Align to the bottom */
+      width: 100%; /* Full width of its parent */
+      background-color: #40444d; /* Background color of the input area */
+    }
 
-.message-form {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #40444d;
-  border-radius: 5px;
-  flex-grow: 2;
-  height: 40px;
-}
+    .message-form {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      background-color: #40444d;
+      border-radius: 5px;
+      flex-grow: 2;
+      height: 40px;
+    }
 
-.message {
-  height: 30px;
-  padding: 5px;
-  padding-left: 10px;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #fff;
-  flex-grow: 2;
-  background-color: transparent;
-}
+    .message {
+      height: 30px;
+      padding: 5px;
+      padding-left: 10px;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #fff;
+      flex-grow: 2;
+      background-color: transparent;
+    }
 
-.send {
-  text-align: center;
-  height: 40px;
-  min-width: 50px;
-  border: none;
-  border-radius: 5px;
-  margin: 0;
-  font-size: 16px;
-  background-color: transparent;
-  color: #fff;
-  opacity: 50%;
-  transition: 0.3s;
-}
+    .send {
+      text-align: center;
+      height: 40px;
+      min-width: 50px;
+      border: none;
+      border-radius: 5px;
+      margin: 0;
+      font-size: 16px;
+      background-color: transparent;
+      color: #fff;
+      opacity: 50%;
+      transition: 0.3s;
+    }
 
-.send:hover {
-  cursor: pointer;
-  opacity: 75%;
-}
+    .send:hover {
+      cursor: pointer;
+      opacity: 75%;
+    }
 
-::-webkit-scrollbar {
-  width: 5px;
-}
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-::-webkit-scrollbar-thumb {
-  background: #121214;
-  border-radius: 10px;
-}
+    ::-webkit-scrollbar-thumb {
+      background: #121214;
+      border-radius: 10px;
+    }
 
-/* Add your existing .message, .user, and .bot styles here */
-
-""",
-    unsafe_allow_html=True,
+    /* Add your existing .message, .user, and .bot styles here */
+    </style>
+    """,
+    unsafe_allow_html=True
 )
+
 
 
 # Connect to the database
