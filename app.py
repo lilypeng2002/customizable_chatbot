@@ -58,12 +58,13 @@ st.markdown(
     """
     <style>
         .chat-container {
-            display: flex;
-            flex-direction: column;
-            height: 90vh; /* Adjust based on your header/footer */
-            justify-content: space-between;
+        display: flex;
+        flex-direction: column;
+        max-height: 80vh; /* Adjust based on your needs */
+        margin-bottom: 20px; /* Ensure some space */
         }
 
+        
         .messages {
             overflow-y: auto;
             flex-grow: 1;
