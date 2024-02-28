@@ -39,7 +39,6 @@ js_code = """
     </script>
 </div>
 """
-st.set_page_config(layout="wide")
 
 st.markdown(js_code, unsafe_allow_html=True)
 
@@ -143,16 +142,18 @@ start_message = {
 
 
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
-user_input = st.chat_input("Say something", on_submit=submit)
+# user_input = st.chat_input("Say something", on_submit=submit)
+prompt = st.chat_input("Say something")
+
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
 
-if user_input:
-    st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
-    user_message = {"role": "user", "content": st.session_state.last_submission}
+if prompt:
+    st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
+    user_message = {"role": "user", "content": prompt}
     st.session_state.chat.append(user_message)
 
     response = openai.ChatCompletion.create(
@@ -168,7 +169,7 @@ if user_input:
     st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
     # Save the conversation to SQLite
-    conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
+    conversation_content = f"You: {prompt}\nBot: {bot_response}"
     save_conversation(conversation_content)
     # st.write(conversation_content)
     
