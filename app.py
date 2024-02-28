@@ -176,13 +176,13 @@ start_message = {
 
 }
 
+
+prompt = st.chat_input("Say something...", on_submit=submit)
+
 if prompt:
 # Display chat messages
     for msg in st.session_state.messages:
         st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-
-prompt = st.chat_input("Say something...", on_submit=submit)
-
 
 
 if 'chat' not in st.session_state:
