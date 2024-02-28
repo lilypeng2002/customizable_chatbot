@@ -126,14 +126,7 @@ def save_conversation(content):
     conn.commit()
     cursor.close()
 
-prompt = st.chat_input("Say something")
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
-user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
-with st.chat_message("user"):
-    st.write("Hello 👋")
-    st.line_chart(np.random.randn(30, 3))
 
 start_message = {
     "role": "system", 
@@ -158,8 +151,14 @@ if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
+prompt = st.chat_input("Say something")
 
 if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
+user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+
+
+with st.chat_message("user"):
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
