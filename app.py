@@ -54,32 +54,12 @@ st.title('Chatbot')
 
 st.markdown("""
 <style>
-/* Custom CSS to make the input container stick to the bottom */
-.bottom-input {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 10px; /* Adjust the padding as needed */
-    background-color: #fff; /* Adjust the background color as needed */
-    z-index: 999; /* Ensure it stays on top of other content */
-}
-
-/* Additional styling to ensure the main content does not overlap with the input */
-.stApp {
-    margin-bottom: 60px; /* Adjust based on the height of your input area */
-}
+.stTextInput {{
+      position: fixed;
+      bottom: 3rem;
+    }}
 </style>
 """, unsafe_allow_html=True)
-
-# Opening tag for the custom bottom input container
-st.markdown('<div class="bottom-input">', unsafe_allow_html=True)
-
-# Your text input widget
-user_input = st.text_input("Type your message here...", key="user_input")
-
-# Closing tag for the custom bottom input container
-st.markdown('</div>', unsafe_allow_html=True)
 
 
 # st.markdown("""
