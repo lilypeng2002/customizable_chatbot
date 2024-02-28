@@ -83,15 +83,15 @@ st.markdown("""
 #     margin: 0;
 # } 
 
-.chatArea {
+.message {
     position: fixed;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    width: 70%;
+    width: 90%;
     bottom: 0;
     display: inline-block;
-    margin-top: 100%;
+    margin-top: 80%;
     background-color: #2D2928; /* Match the background of .chatContainer for consistency */
 }
 
