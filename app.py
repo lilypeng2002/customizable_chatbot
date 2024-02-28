@@ -111,12 +111,6 @@ userID = params.get("userID", ["unknown id"])[0]
 
 
 
-
-def submit():
-    st.session_state.last_submission = st.session_state.widget_value
-    st.session_state.widget_value = ''
-
-
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
     current_hour = datetime.now().strftime("%H:%M:%S")
@@ -151,14 +145,19 @@ if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
-prompt = st.chat_input("Say something")
+def submit():
+    st.session_state.last_submission = prompt
+    st.session_state.widget_value = ''
+
+prompt = st.chat_input("Say Something", on_submit=submit)
 
 if prompt:
     st.write(f"User has sent the following prompt: {prompt}")
-user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+
+# user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 
-with st.chat_message("user"):
+if prompt:
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
