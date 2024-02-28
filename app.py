@@ -51,7 +51,7 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-with st.chat_message(message["bot"]):
+with st.chat_message("bot"):
         st.markdown(first)
         
 # st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
