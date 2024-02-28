@@ -147,8 +147,11 @@ start_message = {
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-
+    
 prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
+
 
 if prompt:
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
