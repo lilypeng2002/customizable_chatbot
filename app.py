@@ -57,19 +57,34 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-        .chat-container {
-        display: flex;
-        flex-direction: column;
-        max-height: 80vh; /* Adjust based on your needs */
-        margin-bottom: 20px; /* Ensure some space */
+        .chat-wrapper {
+          height: 100%;
         }
-
         
-        .messages {
-            overflow-y: auto;
-            flex-grow: 1;
+        .chat-box {
+          height: 90%;
+          overflow-y: auto;
+          overflow-x: hidden;
+          padding-right: 8px;
         }
-
+        
+        .chat-message {
+          width: 100%;
+          padding: 5px;
+          padding-left: 10px;
+          padding-right: 10px;
+          display: grid;
+          grid-template-columns: 65px auto;
+        }
+        
+        .chat-message:hover {
+          background-color: #27292e;
+        }
+        .form-wrapper {
+          height: 100%;
+          position: fixed;
+          width: 60%;
+        }
         .message {
             margin: 10px;
             padding: 10px;
@@ -90,7 +105,6 @@ st.markdown(
         }
 
         .typing-box {
-            padding: 10px;
             background-color: #f0f0f0; /* Just an example; adjust as needed */
         }
     </style>
