@@ -57,31 +57,24 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-    .container {
-        position: relative;
-        height: calc(100vh - 150px); /* Adjust based on your Streamlit app's header/footer */
-        overflow: auto; /* Allows scrolling */
-    }
-    .child {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        background: #cccccc;
-    }
-    /* Additional styles to ensure the rest of the chat content scrolls */
-    .stTextInput > div {
-        position: absolute;
-        width: calc(100% - 32px); /* Adjust based on Streamlit's padding/margins */
-    }
-    .stButton > button {
-        position: absolute;
-        width: 100%;
-    }
+        .message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            width: 70%;
+        }
+        .user {
+            margin-left: auto;
+            background-color: #2D2928;
+        }
+        .bot {
+            margin-right: auto;
+            background-color: #2D2928;
+        }
     </style>
     """,
-    unsafe_allow_html=True
+    unsafe_allow_html=True,
 )
-
 # Example usage in Streamlit
 container = st.container()
 with container:
