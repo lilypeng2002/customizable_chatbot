@@ -57,24 +57,54 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 90vh; /* Adjust based on your header/footer */
+            justify-content: space-between;
+        }
+
+        .messages {
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
         .message {
             margin: 10px;
             padding: 10px;
             border-radius: 10px;
             width: 70%;
         }
+
         .user {
             margin-left: auto;
             background-color: #2D2928;
+            color: white; /* Assuming you want white text */
         }
+
         .bot {
             margin-right: auto;
             background-color: #2D2928;
+            color: white; /* Assuming you want white text */
+        }
+
+        .typing-box {
+            padding: 10px;
+            background-color: #f0f0f0; /* Just an example; adjust as needed */
         }
     </style>
+    <div class="chat-container">
+        <div class="messages">
+            <!-- Your messages go here -->
+        </div>
+        <div class="typing-box">
+            <!-- Your typing input and button go here -->
+        </div>
+    </div>
     """,
     unsafe_allow_html=True,
 )
+
 
 # Connect to the database
 conn = mysql.connector.connect(
