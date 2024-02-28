@@ -176,13 +176,11 @@ def submit():
 
         # Reset input field by clearing last_submission
         st.session_state.last_submission = ''
-        st.session_state.latest_prompt = ''
 
         
 
 prompt = st.chat_input("Say something...", on_submit=submit)
-if prompt:
-    st.rerun()
+
 # Display chat messages
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
