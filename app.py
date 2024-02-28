@@ -146,13 +146,11 @@ if 'chat' not in st.session_state:
     # st.session_state.chat.append(first)
 
 def submit():
+    st.write(prompt)
     st.session_state.last_submission = prompt
     st.session_state.widget_value = ''
 
 prompt = st.chat_input("Say Something", on_submit=submit)
-
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
 
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
