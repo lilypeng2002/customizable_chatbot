@@ -57,6 +57,18 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
+        html,
+        body {
+          background-color: #36393e;
+          color: #fff;
+          height: 100vh;
+        }
+        
+        body {
+          display: grid;
+          grid-template-columns: 20% auto 20%;
+        }
+        
         .chat-wrapper {
           height: 100%;
         }
@@ -80,73 +92,104 @@ st.markdown(
         .chat-message:hover {
           background-color: #27292e;
         }
+        
+        .message-time {
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          opacity: 50%;
+          font-size: 12px;
+          margin-right: 5px;
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        
+        .chat-message:hover > .message-time {
+          visibility: visible;
+        }
+        
+        .message-user {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .username {
+          margin-right: 15px;
+          color: #50c878;
+          font-weight: bold;
+          letter-spacing: 1px;
+        }
+        
+        .user-time {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 10px;
+        }
+        
         .form-wrapper {
           height: 100%;
           position: fixed;
           width: 60%;
         }
-        .message {
-            margin: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            width: 70%;
-        }
-
+        
         .message-form {
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  background-color: #40444d;
-  border-radius: 5px;
-  flex-grow: 2;
-  height: 40px;
-}
-
-.message {
-  height: 30px;
-  padding: 5px;
-  padding-left: 10px;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #fff;
-  flex-grow: 2;
-  background-color: transparent;
-}
-
-.send {
-  text-align: center;
-  height: 40px;
-  min-width: 50px;
-  border: none;
-  border-radius: 5px;
-  margin: 0;
-  font-size: 16px;
-  background-color: transparent;
-  color: #fff;
-  opacity: 50%;
-  transition: 0.3s;
-}
-
-.send:hover {
-  cursor: pointer;
-  opacity: 75%;
-}
-
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #121214;
-  border-radius: 10px;
-}
+          padding: 0;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          background-color: #40444d;
+          border-radius: 5px;
+          flex-grow: 2;
+          height: 40px;
+        }
+        
+        .message {
+          height: 30px;
+          padding: 5px;
+          padding-left: 10px;
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          font-size: 16px;
+          color: #fff;
+          flex-grow: 2;
+          background-color: transparent;
+        }
+        
+        .send {
+          text-align: center;
+          height: 40px;
+          min-width: 50px;
+          border: none;
+          border-radius: 5px;
+          margin: 0;
+          font-size: 16px;
+          background-color: transparent;
+          color: #fff;
+          opacity: 50%;
+          transition: 0.3s;
+        }
+        
+        .send:hover {
+          cursor: pointer;
+          opacity: 75%;
+        }
+        
+        ::-webkit-scrollbar {
+          width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+          background: #121214;
+          border-radius: 10px;
+        }
         }
     </style>
     <div class="chat-container">
