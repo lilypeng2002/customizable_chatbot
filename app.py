@@ -66,6 +66,7 @@ st.markdown(f"<div class="chatContainer">
 </div>", unsafe_allow_html=True)
 
 st.markdown("""
+<style>
 .chatContainer {
     font-size: 18px;
     position: relative;
@@ -102,7 +103,9 @@ st.markdown("""
 #cSubmitButton {
     width: 80%;
     display: inline-block;
-}""",
+}
+</style>
+""",
 ,
 unsafe_allow_html=True,
 )
