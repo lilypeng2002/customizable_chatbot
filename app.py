@@ -72,10 +72,10 @@ st.markdown("""
 .chatContainer {
     font-size: 18px;
     position: relative;
-    background-color: #90C3D4;
-    width: 300px;
-    height: 600px;
-    overflow-y: scroll;
+    background-color: #2D2928;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
     float: right;
     display: inline-block;
     margin-left: 8px;
@@ -93,7 +93,7 @@ st.markdown("""
     width: 300px; /* Match the width of .chatContainer */
     display: inline-block;
     margin-top: 100%;
-    background-color: #90C3D4; /* Match the background of .chatContainer for consistency */
+    background-color: #2D2928; /* Match the background of .chatContainer for consistency */
 }
 
 #chatInput {
