@@ -51,19 +51,21 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-st.markdown(f"<div class="chatContainer">
+st.markdown("""
+<div class="chatContainer">
     <div id="messages">
         <p>test</p>
         <p>test</p>
         <p>test</p>
-       <p>test</p>
+        <p>test</p>
     </div>
     <div class="chatArea">
         <form action="" id="cSubmitButton">
             <input id="chatInput" autocomplete="off" placeholder="Type your guess here!"/>
         </form>
     </div>
-</div>", unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("""
 <style>
@@ -88,16 +90,17 @@ st.markdown("""
 .chatArea {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 300px; /* Match the width of .chatContainer */
     display: inline-block;
     margin-top: 100%;
+    background-color: #90C3D4; /* Match the background of .chatContainer for consistency */
 }
 
 #chatInput {
-
-    width: 100%;
+    width: calc(100% - 24px); /* Adjust width to account for padding */
     padding: 6px 12px;
-    
+    margin: 0 12px; /* Center the input within the form */
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
 #cSubmitButton {
@@ -105,10 +108,8 @@ st.markdown("""
     display: inline-block;
 }
 </style>
-""",
-,
-unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
+
 
 # Custom CSS for the chat interface
 # st.markdown(
