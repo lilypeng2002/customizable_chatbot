@@ -39,6 +39,7 @@ js_code = """
     </script>
 </div>
 """
+st.set_page_config(layout="wide")
 
 st.markdown(js_code, unsafe_allow_html=True)
 
@@ -51,7 +52,6 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-st.set_page_config(layout="wide")
 st.markdown("""
 <style>
 /* Custom CSS to make the input container stick to the bottom */
