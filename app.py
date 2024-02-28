@@ -51,30 +51,84 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
+st.markdown(f"<div class="chatContainer">
+    <div id="messages">
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+       <p>test</p>
+    </div>
+    <div class="chatArea">
+        <form action="" id="cSubmitButton">
+            <input id="chatInput" autocomplete="off" placeholder="Type your guess here!"/>
+        </form>
+    </div>
+</div>", unsafe_allow_html=True)
+
+st.markdown("""
+.chatContainer {
+    font-size: 18px;
+    position: relative;
+    background-color: #90C3D4;
+    width: 300px;
+    height: 600px;
+    overflow-y: scroll;
+    float: right;
+    display: inline-block;
+    margin-left: 8px;
+    border-radius: 2px;
+}
+
+.chatContainer p {
+    padding: 3px;
+    margin: 0;
+} 
+
+.chatArea {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: inline-block;
+    margin-top: 100%;
+}
+
+#chatInput {
+
+    width: 100%;
+    padding: 6px 12px;
+    
+}
+
+#cSubmitButton {
+    width: 80%;
+    display: inline-block;
+}""",
+,
+unsafe_allow_html=True,
+)
 
 # Custom CSS for the chat interface
-st.markdown(
-    """
-    <style>
-        .message {
-            margin: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            width: 70%;
-        }
-        .user {
-            margin-left: auto;
-            background-color: #2D2928;
-        }
-        .bot {
-            margin-right: auto;
-            background-color: #2D2928;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+# st.markdown(
+#     """
+#     <style>
+#         .message {
+#             margin: 10px;
+#             padding: 10px;
+#             border-radius: 10px;
+#             width: 70%;
+#         }
+#         .user {
+#             margin-left: auto;
+#             background-color: #2D2928;
+#         }
+#         .bot {
+#             margin-right: auto;
+#             background-color: #2D2928;
+#         }
+#     </style>
+#     """,
+#     unsafe_allow_html=True,
+# )
 
 
 
