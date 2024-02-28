@@ -54,10 +54,6 @@ st.title('Chatbot')
 st.markdown("""
 <div class="chatContainer">
     <div id="messages">
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
-        <p>test</p>
     </div>
     <div class="chatArea">
         <form action="" id="cSubmitButton">
@@ -87,14 +83,20 @@ st.markdown("""
 
 .chatArea {
     position: fixed;
-    margin: 10px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     padding: 10px;
+    
     border-radius: 10px;
+
     width: 90%;
     bottom: 0;
     display: inline-block;
     margin-top: 80%;
-    background-color: #2D2928; /* Match the background of .chatContainer for consistency */
+    background-color: #2D2928; 
+    justify-content: center; /* Center children horizontally */
+    align-items: center;
 }
 
 #chatInput {
@@ -104,7 +106,7 @@ st.markdown("""
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
-#cSubmitButton {
+.cSubmitButton {
     width: 80%;
     display: inline-block;
 }
