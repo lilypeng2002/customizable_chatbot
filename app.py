@@ -13,6 +13,7 @@ if 'widget_value' not in st.session_state:
     st.session_state.widget_value = ''
 
 
+
 first = "Kit: Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
 
 # If messages does not exist in state, initialize it
@@ -22,6 +23,9 @@ if 'messages' not in st.session_state:
 
 if 'chat_uuid' not in st.session_state:
     st.session_state.chat_uuid = str(uuid.uuid4())
+
+if 'chat_messages' not in st.session_state:
+    st.session_state.chat_messages = []
 
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
@@ -143,36 +147,36 @@ start_message = {
 
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 # user_input = st.chat_input("Say something", on_submit=submit)
-prompt = st.chat_input("Say something")
 
+for msg in st.session_state.chat_messages:
+    st.container().markdown(f"> {msg}")
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
-    # st.session_state.chat.append(first)
 
+prompt = st.chat_input("Say something", on_submit=handle_chat_submit)
 
-if prompt:
-    st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
-    user_message = {"role": "user", "content": prompt}
-    st.session_state.chat.append(user_message)
-
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        temperature=0.2,
-        max_tokens=2000,
-        messages=[start_message, *st.session_state.chat]
-    )
-
-    bot_response = response['choices'][0]['message']['content']
-    bot_message = {"role": "system", "content": bot_response}
-    st.session_state.chat.append(bot_message)
-    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
-
-    # Save the conversation to SQLite
-    conversation_content = f"You: {prompt}\nBot: {bot_response}"
-    save_conversation(conversation_content)
-    # st.write(conversation_content)
+def handle_chat_submit(prompt):        
+    if prompt:
+        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
+        user_message = {"role": "user", "content": prompt}
+        st.session_state.chat.append(user_message)
     
-    st.session_state.last_submission = ''
-    #st.write(conversation_content)
-    st.rerun()  # Clear input box by rerunning the app
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            temperature=0.2,
+            max_tokens=2000,
+            messages=[start_message, *st.session_state.chat]
+        )
+    
+        bot_response = response['choices'][0]['message']['content']
+        bot_message = {"role": "system", "content": bot_response}
+        st.session_state.chat.append(bot_message)
+        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+    
+        # Save the conversation to SQLite
+        conversation_content = f"You: {prompt}\nBot: {bot_response}"
+        save_conversation(conversation_content)
+    
+        st.session_state.last_submission = ''
+        st.rerun()  # Clear input box by rerunning the app
