@@ -110,7 +110,7 @@ userID = params.get("userID", ["unknown id"])[0]
 #st.write(f"User ID: {userID}")
 
 
-def get_bot_response():
+def get_bot_response(prompt):
     if prompt:  # Check if the prompt is not empty
         st.session_state.last_submission = prompt
 
