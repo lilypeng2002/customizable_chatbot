@@ -92,20 +92,61 @@ st.markdown(
             width: 70%;
         }
 
-        .user {
-            margin-left: auto;
-            background-color: #2D2928;
-            color: white; /* Assuming you want white text */
-        }
+        .message-form {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: #40444d;
+  border-radius: 5px;
+  flex-grow: 2;
+  height: 40px;
+}
 
-        .bot {
-            margin-right: auto;
-            background-color: #2D2928;
-            color: white; /* Assuming you want white text */
-        }
+.message {
+  height: 30px;
+  padding: 5px;
+  padding-left: 10px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  flex-grow: 2;
+  background-color: transparent;
+}
 
-        .typing-box {
-            background-color: #f0f0f0; /* Just an example; adjust as needed */
+.send {
+  text-align: center;
+  height: 40px;
+  min-width: 50px;
+  border: none;
+  border-radius: 5px;
+  margin: 0;
+  font-size: 16px;
+  background-color: transparent;
+  color: #fff;
+  opacity: 50%;
+  transition: 0.3s;
+}
+
+.send:hover {
+  cursor: pointer;
+  opacity: 75%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #121214;
+  border-radius: 10px;
+}
         }
     </style>
     <div class="chat-container">
