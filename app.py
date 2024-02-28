@@ -57,42 +57,24 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-    html, body {
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-    }
-
+    /* Target the Streamlit container that wraps all content */
     .streamlit-container {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
+        position: relative;
+        height: 100vh; /* Ensure it takes full viewport height */
     }
 
-    .main .block-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .stTextInput > div > div > input {
-      margin-bottom: 0 !important; /* Remove margin to stick to bottom */
-    }
-
-    .stButton > button {
-      width: 100%;
-      border-radius: 0; /* Full width button with no rounded corners */
-    }
-
-    .message-box {
-      overflow-y: auto;
-      flex-grow: 1;
-    }
-
-    /* Add this to ensure the input area sticks to the bottom */
+    /* Mimic the .child class for Streamlit input elements */
     .stTextInput, .stButton {
-      margin-top: auto !important; /* Pushes the input and button to the bottom */
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Additional styles to match your design */
+    }
+    
+    /* Ensure the main content area allows for scrolling and doesn't overlap the input */
+    .main .block-container {
+        padding-bottom: 50px; /* Adjust based on the height of your input area */
+        overflow-y: auto;
     }
     </style>
     """,
