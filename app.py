@@ -145,7 +145,7 @@ if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
-def submit(prompt):
+def submit():
     if prompt:  # Check if the prompt is not empty
         # Process the user's prompt
         st.session_state.last_submission = prompt
