@@ -51,6 +51,7 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
+st.write('Kit: ' + first)
 
 # Custom CSS for the chat interface
 st.markdown(
@@ -148,6 +149,7 @@ for msg in st.session_state.messages:
 user_input = st.chat_input("Say Hello to Kit!")
 
 
+
 if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
@@ -173,7 +175,7 @@ if user_input:
     # Save the conversation to SQLite
     conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
     save_conversation(conversation_content)
-    #st.write(conversation_content)
+    st.write(conversation_content)
     
     st.session_state.last_submission = ''
     #st.write(conversation_content)
