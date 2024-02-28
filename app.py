@@ -75,14 +75,6 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-# Example usage in Streamlit
-container = st.container()
-with container:
-    st.markdown("<div class='container'><p>Your chat messages here</p></div>", unsafe_allow_html=True)
-    st.text_input("Type your message here...", key="input", on_change=None)
-    st.button("Send", key="send")
-
-
 
 
 
