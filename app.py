@@ -155,7 +155,7 @@ if 'chat' not in st.session_state:
     st.session_state.chat = []
 
 
-def handle_chat_submit(prompt):        
+def handle_chat_submit():        
     if prompt:
         st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
         user_message = {"role": "user", "content": prompt}
