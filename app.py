@@ -58,96 +58,47 @@ st.markdown(
     """
     <style>
     html, body {
-      background-color: #36393e;
-      color: #fff;
-      margin: 0; /* Remove default margin */
-      height: 100vh; /* Full viewport height */
-      display: flex;
-      flex-direction: column; /* Stack children vertically */
-    }
-
-    .chat-wrapper {
-      flex-grow: 1; /* Takes up available space */
-      display: flex;
-      flex-direction: column; /* Stack children vertically */
-      justify-content: space-between; /* Maximize space between chat-box and form-wrapper */
-      padding: 0 20px; /* Adjust based on your design */
-    }
-
-    .chat-box {
-      overflow-y: auto;
-      flex-grow: 1; /* Allows chat-box to grow and fill available space */
-      margin-bottom: 10px; /* Give some space above the input box */
-    }
-
-    .form-wrapper {
-      position: sticky; /* Sticks to the bottom within its parent */
-      bottom: 0; /* Align to the bottom */
-      width: 100%; /* Full width of its parent */
-      background-color: #40444d; /* Background color of the input area */
-    }
-
-    .message-form {
-      padding: 0;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      background-color: #40444d;
-      border-radius: 5px;
-      flex-grow: 2;
-      height: 40px;
-    }
-
-    .message {
-      height: 30px;
-      padding: 5px;
-      padding-left: 10px;
-      outline: none;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      color: #fff;
-      flex-grow: 2;
-      background-color: transparent;
-    }
-
-    .send {
-      text-align: center;
-      height: 40px;
-      min-width: 50px;
-      border: none;
-      border-radius: 5px;
+      height: 100vh;
       margin: 0;
-      font-size: 16px;
-      background-color: transparent;
-      color: #fff;
-      opacity: 50%;
-      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
     }
 
-    .send:hover {
-      cursor: pointer;
-      opacity: 75%;
+    .streamlit-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
-    ::-webkit-scrollbar {
-      width: 5px;
+    .main .block-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    ::-webkit-scrollbar-track {
-      background: transparent;
+    .stTextInput > div > div > input {
+      margin-bottom: 0 !important; /* Remove margin to stick to bottom */
     }
 
-    ::-webkit-scrollbar-thumb {
-      background: #121214;
-      border-radius: 10px;
+    .stButton > button {
+      width: 100%;
+      border-radius: 0; /* Full width button with no rounded corners */
     }
 
-    /* Add your existing .message, .user, and .bot styles here */
+    .message-box {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    /* Add this to ensure the input area sticks to the bottom */
+    .stTextInput, .stButton {
+      margin-top: auto !important; /* Pushes the input and button to the bottom */
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 
 
