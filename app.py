@@ -51,9 +51,6 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-prompt = st.chat_input("Say something")
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
 st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 
 # Custom CSS for the chat interface
@@ -112,9 +109,21 @@ params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 #st.write(f"User ID: {userID}")
 
+
+prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
+user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+
+with st.chat_message("user"):
+    st.write("Hello 👋")
+    st.line_chart(np.random.randn(30, 3))
+
+
 def submit():
     st.session_state.last_submission = st.session_state.widget_value
     st.session_state.widget_value = ''
+
 
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -143,8 +152,6 @@ start_message = {
 
 }
 
-# Display modified text input
-# user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
