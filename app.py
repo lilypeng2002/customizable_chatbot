@@ -182,5 +182,3 @@ for msg in st.session_state.messages:
 
 # Input field for new messages
 prompt = st.chat_input("Say something...", on_submit=submit)
-if prompt:
-    st.rerun()
