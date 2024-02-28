@@ -58,7 +58,7 @@ st.markdown("""
 .stTextInput > div > div > input {
     position: fixed !important;
     bottom: 3rem !important;
-    height: 10% !important
+    height: 40px !important
     width: 90% !important; /* Adjust the width as needed */
     left: 5% !important; 
     z-index: 100 !important; /* Ensure it's above other elements */
