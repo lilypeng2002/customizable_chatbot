@@ -52,111 +52,30 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-prompt = st.chat_input("Say something")
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
+prompt = st.chat_input("Say Hello to Kit!")
 
-# st.markdown("""
-# <style>
-# /* Increase specificity to ensure override and add !important to ensure application */
-# .stTextInput > div > div > input {
-#     position: fixed !important;
-#     bottom: 3rem !important;
-#     height: 40px !important
-#     width: 90% !important; /* Adjust the width as needed */
-#     left: 5% !important; 
-#     z-index: 100 !important; /* Ensure it's above other elements */
-# }
-# </style>
-# """, unsafe_allow_html=True)
-
-
-
-# st.markdown("""
-# <div class="chatContainer">
-#     <div id="messages">
-#     </div>
-#     <div class="chatArea">
-#         <form action="" id="cSubmitButton">
-#             <input id="chatInput" autocomplete="off" placeholder="Type your guess here!"/>
-#         </form>
-#     </div>
-# </div>
-# """, unsafe_allow_html=True)
-
-# st.markdown("""
-# <style>
-
-# .message {
-#             margin: 10px;
-#             padding: 10px;
-#             border-radius: 10px;
-#             width: 70%;
-#         }
-#         .user {
-#             margin-left: auto;
-#             background-color: #2D2928;
-#         }
-#         .bot {
-#             margin-right: auto;
-#             background-color: #2D2928;
-#         }
-
-# .chatArea {
-#     position: fixed;
-#     left: 50%;
-#     top: 50%;
-#     transform: translate(-50%, -50%);
-#     padding: 10px;
-    
-#     border-radius: 10px;
-
-#     width: 90%;
-#     bottom: 0;
-#     display: inline-block;
-#     margin-top: 80%;
-#     background-color: #2D2928; 
-#     justify-content: center; /* Center children horizontally */
-#     align-items: center;
-# }
-
-# #chatInput {
-#     width: calc(100% - 24px); /* Adjust width to account for padding */
-#     padding: 6px 12px;
-#     margin: 0 12px; /* Center the input within the form */
-#     box-sizing: border-box; /* Include padding in width calculation */
-# }
-
-# .cSubmitButton {
-#     width: 80%;
-#     display: inline-block;
-# }
-# </style>
-# """, unsafe_allow_html=True)
-
-
-# Custom CSS for the chat interface
-# st.markdown(
-#     """
-#     <style>
-#         .message {
-#             margin: 10px;
-#             padding: 10px;
-#             border-radius: 10px;
-#             width: 70%;
-#         }
-#         .user {
-#             margin-left: auto;
-#             background-color: #2D2928;
-#         }
-#         .bot {
-#             margin-right: auto;
-#             background-color: #2D2928;
-#         }
-#     </style>
-#     """,
-#     unsafe_allow_html=True,
-# )
+Custom CSS for the chat interface
+st.markdown(
+    """
+    <style>
+        .message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            width: 70%;
+        }
+        .user {
+            margin-left: auto;
+            background-color: #2D2928;
+        }
+        .bot {
+            margin-right: auto;
+            background-color: #2D2928;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 
@@ -227,7 +146,7 @@ for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 # Display modified text input
-user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+# user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
