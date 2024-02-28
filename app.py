@@ -175,6 +175,7 @@ def submit():
 
         # Reset input field by clearing last_submission
         st.session_state.last_submission = ''
+        st.experimental_rerun()
 
 # Display chat messages
 for msg in st.session_state.messages:
