@@ -69,21 +69,23 @@ st.markdown("""
 
 st.markdown("""
 <style>
-# .chatContainer {
-#     font-size: 18px;
-#     position: relative;
-#     background-color: #2D2928;
-#     width: 100vw;
-#     height: 100vh;
-#     overflow-y: scroll;
-# }
-
-# .chatContainer p {
-#     padding: 3px;
-#     margin: 0;
-# } 
 
 .message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            width: 70%;
+        }
+        .user {
+            margin-left: auto;
+            background-color: #2D2928;
+        }
+        .bot {
+            margin-right: auto;
+            background-color: #2D2928;
+        }
+
+.chatArea {
     position: fixed;
     margin: 10px;
     padding: 10px;
