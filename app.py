@@ -75,11 +75,7 @@ st.markdown("""
     background-color: #2D2928;
     width: 100vw;
     height: 100vh;
-    overflow-y: auto;
-    float: right;
-    display: inline-block;
-    margin-left: 8px;
-    border-radius: 2px;
+    overflow-y: scroll;
 }
 
 .chatContainer p {
