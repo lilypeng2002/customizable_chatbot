@@ -234,7 +234,7 @@ if 'chat' not in st.session_state:
     # st.session_state.chat.append(first)
 
 
-if st.button('Send'):
+if prompt:
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
