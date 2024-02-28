@@ -13,7 +13,7 @@ if 'widget_value' not in st.session_state:
     st.session_state.widget_value = ''
 
 
-first = "Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
+first = "Kit: Hey there! I’m an AI developed by the University of Toronto, and I’m here to help you explore your desire to become more kind and caring towards others. Can you tell me a little bit more about what’s been on your mind lately? "
 
 # If messages does not exist in state, initialize it
 if 'messages' not in st.session_state:
@@ -51,7 +51,8 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
-st.write('Kit: ' + first)
+st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)	st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
+
 
 # Custom CSS for the chat interface
 st.markdown(
