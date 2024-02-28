@@ -52,9 +52,7 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-prompt = st.chat_input("Say Hello to Kit!")
-
-Custom CSS for the chat interface
+# Custom CSS for the chat interface
 st.markdown(
     """
     <style>
@@ -147,13 +145,15 @@ for msg in st.session_state.messages:
 
 # Display modified text input
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+user_input = st.chat_input("Say Hello to Kit!")
+
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
 
-if prompt:
+if user_input:
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
