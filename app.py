@@ -143,12 +143,8 @@ start_message = {
 
 }
 
-# Display chat messages
-for msg in st.session_state.messages:
-    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-
 # Display modified text input
-user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+# user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
