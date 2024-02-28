@@ -110,17 +110,13 @@ userID = params.get("userID", ["unknown id"])[0]
 #st.write(f"User ID: {userID}")
 
 
-def submit():
-    
+def get_bot_response():
     if prompt:  # Check if the prompt is not empty
-        # Process the user's prompt
         st.session_state.last_submission = prompt
 
-        # Append user message to the conversation
         user_message = {"role": "user", "content": prompt}
         st.session_state.chat.append(user_message)
-        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
-
+        
         # Generate response from OpenAI
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -133,18 +129,15 @@ def submit():
         bot_response = response['choices'][0]['message']['content']
         bot_message = {"role": "system", "content": bot_response}
         st.session_state.chat.append(bot_message)
-        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
-
-        # st.markdown(f"<div class='message bot'>{prompt}</div>", unsafe_allow_html=True)
-        # st.markdown(f"<div class='message bot'>{bot_response}</div>", unsafe_allow_html=True)
-
+        
         # Optionally save the conversation
         # Ensure save_conversation function is defined and works with your DB setup
         save_conversation(f"You: {prompt}\nBot: {bot_response}")
-        # st.write(conversation_content)
+        
         
         # Reset input field by clearing last_submission
         st.session_state.last_submission = ''
+        return bot_response
 
 
 def save_conversation(content):
@@ -177,11 +170,21 @@ start_message = {
 }
 
 
-prompt = st.chat_input("Say something...", on_submit=submit)
+prompt = st.chat_input("Say something...")
 
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    # st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+    with st.chat_message(message["class"]):
+        st.markdown(message["text"])
+        
+if prompt:
+    # Add user message to chat history and display it
+    st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
+
+    # Generate and display bot response
+    bot_response = get_bot_response(prompt)
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+
 
 
 if 'chat' not in st.session_state:
