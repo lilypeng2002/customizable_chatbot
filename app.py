@@ -135,8 +135,8 @@ def submit():
         st.session_state.chat.append(bot_message)
         st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
-        st.markdown(f"<div class='message bot'>{prompt}</div>", unsafe_allow_html=True)
-        st.markdown(f"<div class='message bot'>{bot_response}</div>", unsafe_allow_html=True)
+        # st.markdown(f"<div class='message bot'>{prompt}</div>", unsafe_allow_html=True)
+        # st.markdown(f"<div class='message bot'>{bot_response}</div>", unsafe_allow_html=True)
 
         # Optionally save the conversation
         # Ensure save_conversation function is defined and works with your DB setup
@@ -176,9 +176,10 @@ start_message = {
 
 }
 
+if prompt:
 # Display chat messages
-for msg in st.session_state.messages:
-    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+    for msg in st.session_state.messages:
+        st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
 prompt = st.chat_input("Say something...", on_submit=submit)
 
