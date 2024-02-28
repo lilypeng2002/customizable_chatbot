@@ -110,6 +110,39 @@ userID = params.get("userID", ["unknown id"])[0]
 #st.write(f"User ID: {userID}")
 
 
+def submit():
+    
+    if prompt:  # Check if the prompt is not empty
+        # Process the user's prompt
+        st.session_state.last_submission = prompt
+
+        # Append user message to the conversation
+        user_message = {"role": "user", "content": prompt}
+        st.session_state.chat.append(user_message)
+        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
+
+        # Generate response from OpenAI
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            temperature=0.2,
+            max_tokens=2000,
+            messages=[start_message, *st.session_state.chat]
+        )
+
+        # Extract and process bot response
+        bot_response = response['choices'][0]['message']['content']
+        bot_message = {"role": "system", "content": bot_response}
+        st.session_state.chat.append(bot_message)
+        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+
+        # Optionally save the conversation
+        # Ensure save_conversation function is defined and works with your DB setup
+        save_conversation(f"You: {prompt}\nBot: {bot_response}")
+        st.write(conversation_content)
+        
+        # Reset input field by clearing last_submission
+        st.session_state.last_submission = ''
+
 
 def save_conversation(content):
     current_date = datetime.now().strftime("%Y-%m-%d")
@@ -140,48 +173,14 @@ start_message = {
 
 }
 
-
 # Display chat messages
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+
+prompt = st.chat_input("Say something...", on_submit=submit)
 
 
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
-
-def submit():
-    
-    if prompt:  # Check if the prompt is not empty
-        # Process the user's prompt
-        st.session_state.last_submission = prompt
-
-        # Append user message to the conversation
-        user_message = {"role": "user", "content": prompt}
-        st.session_state.chat.append(user_message)
-        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
-
-        # Generate response from OpenAI
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            temperature=0.2,
-            max_tokens=2000,
-            messages=[start_message, *st.session_state.chat]
-        )
-
-        # Extract and process bot response
-        bot_response = response['choices'][0]['message']['content']
-        bot_message = {"role": "system", "content": bot_response}
-        st.session_state.chat.append(bot_message)
-        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
-
-        # Optionally save the conversation
-        # Ensure save_conversation function is defined and works with your DB setup
-        save_conversation(f"You: {prompt}\nBot: {bot_response}")
-
-        # Reset input field by clearing last_submission
-        st.session_state.last_submission = ''
-
-prompt = st.chat_input("Say something...", on_submit=submit)
-
