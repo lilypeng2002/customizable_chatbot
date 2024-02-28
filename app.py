@@ -145,38 +145,40 @@ if 'chat' not in st.session_state:
     st.session_state.chat = []
     # st.session_state.chat.append(first)
 
-def submit():
-    st.write(prompt)
-    st.session_state.last_submission = prompt
-    st.session_state.widget_value = ''
+def submit(prompt):
+    if prompt:  # Check if the prompt is not empty
+        # Process the user's prompt
+        st.session_state.last_submission = prompt
 
-prompt = st.chat_input("Say Something", on_submit=submit)
+        # Append user message to the conversation
+        user_message = {"role": "user", "content": prompt}
+        st.session_state.chat.append(user_message)
+        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
 
-# user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+        # Generate response from OpenAI
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            temperature=0.2,
+            max_tokens=2000,
+            messages=[start_message, *st.session_state.chat]
+        )
 
+        # Extract and process bot response
+        bot_response = response['choices'][0]['message']['content']
+        bot_message = {"role": "system", "content": bot_response}
+        st.session_state.chat.append(bot_message)
+        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
-if prompt:
-    st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
-    user_message = {"role": "user", "content": st.session_state.last_submission}
-    st.session_state.chat.append(user_message)
+        # Optionally save the conversation
+        # Ensure save_conversation function is defined and works with your DB setup
+        save_conversation(f"You: {prompt}\nBot: {bot_response}")
 
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
-        temperature=0.2,
-        max_tokens=2000,
-        messages=[start_message, *st.session_state.chat]
-    )
+        # Reset input field by clearing last_submission
+        st.session_state.last_submission = ''
 
-    bot_response = response['choices'][0]['message']['content']
-    bot_message = {"role": "system", "content": bot_response}
-    st.session_state.chat.append(bot_message)
-    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+# Display chat messages
+for msg in st.session_state.messages:
+    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
 
-    # Save the conversation to SQLite
-    conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
-    save_conversation(conversation_content)
-    #st.write(conversation_content)
-    
-    st.session_state.last_submission = ''
-    #st.write(conversation_content)
-    st.rerun()  # Clear input box by rerunning the app
+# Input field for new messages
+prompt = st.chat_input("Say something...", on_submit=submit)
