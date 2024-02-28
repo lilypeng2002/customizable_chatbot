@@ -138,7 +138,7 @@ def submit():
         # Optionally save the conversation
         # Ensure save_conversation function is defined and works with your DB setup
         save_conversation(f"You: {prompt}\nBot: {bot_response}")
-        st.write(conversation_content)
+        # st.write(conversation_content)
         
         # Reset input field by clearing last_submission
         st.session_state.last_submission = ''
