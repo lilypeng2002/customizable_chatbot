@@ -24,9 +24,6 @@ if 'messages' not in st.session_state:
 if 'chat_uuid' not in st.session_state:
     st.session_state.chat_uuid = str(uuid.uuid4())
 
-if 'chat_messages' not in st.session_state:
-    st.session_state.chat_messages = []
-
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
@@ -147,9 +144,6 @@ start_message = {
 
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
 # user_input = st.chat_input("Say something", on_submit=submit)
-
-for msg in st.session_state.chat_messages:
-    st.container().markdown(f"> {msg}")
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
