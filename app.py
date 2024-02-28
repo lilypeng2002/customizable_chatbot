@@ -154,30 +154,25 @@ for msg in st.session_state.chat_messages:
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
+prompt = st.chat_input("Say something")
 
-def handle_chat_submit():        
-    if prompt:
-        st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
-        user_message = {"role": "user", "content": prompt}
-        st.session_state.chat.append(user_message)
+if st.button('Send'):
+    st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
+    user_message = {"role": "user", "content": st.session_state.last_submission}
+    st.session_state.chat.append(user_message)
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        temperature=0.2,
+        max_tokens=2000,
+        messages=[start_message, *st.session_state.chat]
+    )
+    bot_response = response['choices'][0]['message']['content']
+    bot_message = {"role": "system", "content": bot_response}
+    st.session_state.chat.append(bot_message)
+    st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
+    # Save the conversation to SQLite
+    conversation_content = f"You: {st.session_state.last_submission}\nBot: {bot_response}"
+    save_conversation(conversation_content)
     
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            temperature=0.2,
-            max_tokens=2000,
-            messages=[start_message, *st.session_state.chat]
-        )
-    
-        bot_response = response['choices'][0]['message']['content']
-        bot_message = {"role": "system", "content": bot_response}
-        st.session_state.chat.append(bot_message)
-        st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
-    
-        # Save the conversation to SQLite
-        conversation_content = f"You: {prompt}\nBot: {bot_response}"
-        save_conversation(conversation_content)
-    
-        st.session_state.last_submission = ''
-        st.rerun()  # Clear input box by rerunning the app
-
-prompt = st.chat_input("Say something", on_submit=handle_chat_submit)
+    st.session_state.last_submission = ''
+    st.rerun()  # Clear input box by rerunning the app
