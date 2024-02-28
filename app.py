@@ -57,28 +57,42 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-        html,
-        body {
-          background-color: #36393e;
-          color: #fff;
-          height: 100vh;
-        }
-        
+        html, body {
+  background-color: #36393e;
+  color: #fff;
+  margin: 0; /* Remove default margin */
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+}
+
+.chat-wrapper {
+  flex-grow: 1; /* Takes up available space */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-between; /* Maximize space between chat-box and form-wrapper */
+}
+
+.chat-box {
+  overflow-y: auto;
+  flex-grow: 1; /* Allows chat-box to grow and fill available space */
+  margin-bottom: 10px; /* Give some space above the input box */
+}
+
+.form-wrapper {
+  position: sticky; /* Sticks to the bottom within its parent */
+  bottom: 0; /* Align to the bottom */
+  width: 100%; /* Full width of its parent */
+}
+
+/* No changes needed for the rest of your CSS */
+
         body {
           display: grid;
           grid-template-columns: 20% auto 20%;
         }
         
-        .chat-wrapper {
-          height: 100%;
-        }
         
-        .chat-box {
-          height: 90%;
-          overflow-y: auto;
-          overflow-x: hidden;
-          padding-right: 8px;
-        }
         
         .chat-message {
           width: 100%;
