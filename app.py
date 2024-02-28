@@ -69,24 +69,27 @@ st.markdown("""
 
 st.markdown("""
 <style>
-.chatContainer {
-    font-size: 18px;
-    position: relative;
-    background-color: #2D2928;
-    width: 100vw;
-    height: 100vh;
-    overflow-y: scroll;
-}
+# .chatContainer {
+#     font-size: 18px;
+#     position: relative;
+#     background-color: #2D2928;
+#     width: 100vw;
+#     height: 100vh;
+#     overflow-y: scroll;
+# }
 
-.chatContainer p {
-    padding: 3px;
-    margin: 0;
-} 
+# .chatContainer p {
+#     padding: 3px;
+#     margin: 0;
+# } 
 
 .chatArea {
     position: fixed;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 70%;
     bottom: 0;
-    width: 300px; /* Match the width of .chatContainer */
     display: inline-block;
     margin-top: 100%;
     background-color: #2D2928; /* Match the background of .chatContainer for consistency */
