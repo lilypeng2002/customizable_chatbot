@@ -57,29 +57,38 @@ st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 st.markdown(
     """
     <style>
-    /* Target the Streamlit container that wraps all content */
-    .streamlit-container {
+    .container {
         position: relative;
-        height: 100vh; /* Ensure it takes full viewport height */
+        height: calc(100vh - 150px); /* Adjust based on your Streamlit app's header/footer */
+        overflow: auto; /* Allows scrolling */
     }
-
-    /* Mimic the .child class for Streamlit input elements */
-    .stTextInput, .stButton {
-        position: absolute;
+    .child {
+        position: sticky;
         bottom: 0;
         width: 100%;
-        /* Additional styles to match your design */
+        background: #cccccc;
     }
-    
-    /* Ensure the main content area allows for scrolling and doesn't overlap the input */
-    .main .block-container {
-        padding-bottom: 50px; /* Adjust based on the height of your input area */
-        overflow-y: auto;
+    /* Additional styles to ensure the rest of the chat content scrolls */
+    .stTextInput > div {
+        position: absolute;
+        width: calc(100% - 32px); /* Adjust based on Streamlit's padding/margins */
+    }
+    .stButton > button {
+        position: absolute;
+        width: 100%;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
+
+# Example usage in Streamlit
+container = st.container()
+with container:
+    st.markdown("<div class='container'><p>Your chat messages here</p></div>", unsafe_allow_html=True)
+    st.text_input("Type your message here...", key="input", on_change=None)
+    st.button("Send", key="send")
+
 
 
 
