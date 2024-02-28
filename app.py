@@ -153,7 +153,7 @@ if prompt:
     st.write(f"User has sent the following prompt: {prompt}")
 
 
-if prompt:
+if st.chat_input("Say something"):
     st.session_state.messages.append({'class': 'user', 'text': f"You: {st.session_state.last_submission}"})
     user_message = {"role": "user", "content": st.session_state.last_submission}
     st.session_state.chat.append(user_message)
