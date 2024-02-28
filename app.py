@@ -154,7 +154,6 @@ for msg in st.session_state.chat_messages:
 if 'chat' not in st.session_state:
     st.session_state.chat = []
 
-prompt = st.chat_input("Say something", on_submit=handle_chat_submit)
 
 def handle_chat_submit(prompt):        
     if prompt:
@@ -180,3 +179,5 @@ def handle_chat_submit(prompt):
     
         st.session_state.last_submission = ''
         st.rerun()  # Clear input box by rerunning the app
+
+prompt = st.chat_input("Say something", on_submit=handle_chat_submit)
