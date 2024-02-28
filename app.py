@@ -146,8 +146,9 @@ for msg in st.session_state.messages:
 
 # Display modified text input
 # user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
-user_input = st.chat_input("Say Hello to Kit!",value=st.session_state.widget_value, on_submit=submit, key='widget_value')
 
+
+prompt = st.chat_input("Say something", on_submit=submit, key='widget_value')
 
 if 'chat' not in st.session_state:
     st.session_state.chat = []
