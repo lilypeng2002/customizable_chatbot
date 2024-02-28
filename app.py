@@ -146,6 +146,8 @@ if 'chat' not in st.session_state:
     # st.session_state.chat.append(first)
 
 def submit():
+    prompt = st.session_state.get('latest_prompt', '')
+    
     if prompt:  # Check if the prompt is not empty
         # Process the user's prompt
         st.session_state.last_submission = prompt
@@ -175,11 +177,15 @@ def submit():
 
         # Reset input field by clearing last_submission
         st.session_state.last_submission = ''
-        st.experimental_rerun()
+        st.session_state.latest_prompt = ''
+
+        
+
+prompt = st.chat_input("Say something...", on_submit=lambda: setattr(st.session_state, 'latest_prompt', st.session_state.chat_input))
+
+# After defining st.chat_input, call submit() to check and process any new submission
+submit()
 
 # Display chat messages
 for msg in st.session_state.messages:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-
-# Input field for new messages
-prompt = st.chat_input("Say something...", on_submit=submit)
