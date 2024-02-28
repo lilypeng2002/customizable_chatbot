@@ -51,8 +51,7 @@ current_date = datetime.now().strftime("%Y-%m-%d")
 current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
-st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)	st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
-
+st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
 
 # Custom CSS for the chat interface
 st.markdown(
