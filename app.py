@@ -110,14 +110,6 @@ userID = params.get("userID", ["unknown id"])[0]
 #st.write(f"User ID: {userID}")
 
 
-prompt = st.chat_input("Say something")
-if prompt:
-    st.write(f"User has sent the following prompt: {prompt}")
-user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
-
-with st.chat_message("user"):
-    st.write("Hello 👋")
-    st.line_chart(np.random.randn(30, 3))
 
 
 def submit():
@@ -133,6 +125,15 @@ def save_conversation(content):
                    (userID, current_date, current_hour, content))
     conn.commit()
     cursor.close()
+
+prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
+user_input = st.text_input("You: ", value=st.session_state.widget_value, on_change=submit, key='widget_value')
+
+with st.chat_message("user"):
+    st.write("Hello 👋")
+    st.line_chart(np.random.randn(30, 3))
 
 start_message = {
     "role": "system", 
