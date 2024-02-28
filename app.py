@@ -52,19 +52,23 @@ current_hour = datetime.now().strftime("%H:%M:%S")
 
 st.title('Chatbot')
 
-st.markdown("""
-<style>
-/* Increase specificity to ensure override and add !important to ensure application */
-.stTextInput > div > div > input {
-    position: fixed !important;
-    bottom: 3rem !important;
-    height: 40px !important
-    width: 90% !important; /* Adjust the width as needed */
-    left: 5% !important; 
-    z-index: 100 !important; /* Ensure it's above other elements */
-}
-</style>
-""", unsafe_allow_html=True)
+prompt = st.chat_input("Say something")
+if prompt:
+    st.write(f"User has sent the following prompt: {prompt}")
+
+# st.markdown("""
+# <style>
+# /* Increase specificity to ensure override and add !important to ensure application */
+# .stTextInput > div > div > input {
+#     position: fixed !important;
+#     bottom: 3rem !important;
+#     height: 40px !important
+#     width: 90% !important; /* Adjust the width as needed */
+#     left: 5% !important; 
+#     z-index: 100 !important; /* Ensure it's above other elements */
+# }
+# </style>
+# """, unsafe_allow_html=True)
 
 
 
