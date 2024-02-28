@@ -169,22 +169,21 @@ start_message = {
 
 }
 
-
-prompt = st.chat_input("Say something...")
-
 for message in st.session_state.messages:
     # st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
     with st.chat_message(message["class"]):
         st.markdown(message["text"])
         
-if prompt:
+if prompt := st.chat_input("Say something..."):
     # Add user message to chat history and display it
+    st.chat_message("user").markdown(prompt)
     st.session_state.messages.append({'class': 'user', 'text': f"You: {prompt}"})
-
+    
     # Generate and display bot response
     bot_response = get_bot_response(prompt)
+    with st.chat_message("bot"):
+        st.markdown(bot_response)
     st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
-
 
 
 if 'chat' not in st.session_state:
