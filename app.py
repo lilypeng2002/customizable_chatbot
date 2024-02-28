@@ -135,6 +135,9 @@ def submit():
         st.session_state.chat.append(bot_message)
         st.session_state.messages.append({'class': 'bot', 'text': f"Kit: {bot_response}"})
 
+        st.markdown(f"<div class='message bot'>{prompt}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='message bot'>{bot_response}</div>", unsafe_allow_html=True)
+
         # Optionally save the conversation
         # Ensure save_conversation function is defined and works with your DB setup
         save_conversation(f"You: {prompt}\nBot: {bot_response}")
