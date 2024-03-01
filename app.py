@@ -53,39 +53,6 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 
-# Custom CSS for styling
-st.markdown("""
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-    .message {
-        margin: 10px 0;
-        padding: 10px;
-        border-radius: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        width: 70%;
-        position: relative;
-        word-wrap: break-word;
-    }
-    .user-message {
-        background-color: #007bff;
-        color: white;
-        margin-left: auto;
-        border-top-right-radius: 0;
-        text-align: left;
-    }
-    .bot-message {
-        background-color: #f1f1f1;
-        color: #333;
-        margin-right: auto;
-        border-top-left-radius: 0;
-        text-align: left;
-    }
-</style>
-""", unsafe_allow_html=True)
-
 
 # Start of the chat application
 st.markdown("""
