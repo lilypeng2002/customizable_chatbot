@@ -64,7 +64,7 @@ if not st.session_state["chat_started"]:
 # Display messages
 for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        st.markdown(message["content"]) 
 
 # Input field for new messages
 if prompt := st.chat_input("Please type your entire response in one message."):
