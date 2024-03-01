@@ -109,7 +109,7 @@ if prompt := st.chat_input("Please type your entire response in one message."):
     # Prepare the conversation history for OpenAI API
     conversation_history = [{"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]]
 
-    # Call OpenAI API and display bot's response
+    # Call OpenAI API and display bot's response 
     response = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=conversation_history)
 
     bot_response = response.choices[0].message.content
