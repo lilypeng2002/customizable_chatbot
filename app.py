@@ -4,6 +4,8 @@ from datetime import datetime
 import mysql.connector
 from streamlit.components.v1 import html
 import uuid 
+import sqlalchemy
+
 
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
@@ -42,6 +44,7 @@ js_code = """
 </div>
 """
 
+st.markdown(js_code, unsafe_allow_html=True)
 
 # Chat header with logo and name
 st.markdown("""
