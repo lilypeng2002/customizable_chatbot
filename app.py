@@ -69,14 +69,17 @@ for message in st.session_state["messages"]:
 if prompt := st.chat_input("Please type your entire response in one message."):
     st.session_state["last_submission"] = prompt
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"You: {prompt}")
+    # Append and immediately display the participant's message
     st.session_state["messages"].append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
     # Prepare the conversation history for OpenAI API
     conversation_history = [
         {"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]
     ]
 
-    # Call OpenAI API
+    # Call OpenAI API and display bot's response
     response = openai.ChatCompletion.create(
         model="gpt-4-turbo-preview",
         messages=conversation_history
@@ -84,5 +87,7 @@ if prompt := st.chat_input("Please type your entire response in one message."):
 
     bot_response = response.choices[0].message.content
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"Alex: {bot_response}")
+    # Append the bot's response without rerunning the script
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
-    st.experimental_rerun()
+    with st.chat_message("assistant"):
+        st.markdown(bot_response)
