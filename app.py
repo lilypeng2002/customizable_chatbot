@@ -42,7 +42,6 @@ def create_conversations_table():
     cursor.close()
 
 
-
 create_conversations_table()
 
 # Function to save conversations to the database
