@@ -53,7 +53,7 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 # Start of the chat application
-st.markdown("""
+st.markdown(""" 
 <style>
     .chat-header {
         display: flex;
