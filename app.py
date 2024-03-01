@@ -130,6 +130,14 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
+    .scrollable-container {
+            max-height: 500px; /* Fixed max-height */
+            overflow-y: auto; /* Show scrollbar when needed */
+            border: 1px solid #ccc; /* Visual boundary */
+            padding: 10px; /* Padding inside the container */
+            background-color: #000; /* Adjust the background color if needed */
+        }
+            
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -181,6 +189,11 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# # Display chat messages inside the scrollable container
+msgin = ''
+for msg in st.session_state.messages:
+    msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
+st.markdown(f"<div class='scrollable-container'>"+msgin+f"</div>", unsafe_allow_html=True)
 
 # Database connection
 conn = mysql.connector.connect(
