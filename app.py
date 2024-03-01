@@ -189,11 +189,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# # Display chat messages inside the scrollable container
-msgin = ''
-for msg in st.session_state.messages:
-    msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
-st.markdown(f"<div class='scrollable-container'>"+msgin+f"</div>", unsafe_allow_html=True)
+
 
 # Database connection
 conn = mysql.connector.connect(
@@ -247,8 +243,15 @@ if not st.session_state['chat_started']:
 
 
 # Display messages
-for msg in st.session_state['messages']:
-    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+#for msg in st.session_state['messages']:
+#    st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
+
+# # Display chat messages inside the scrollable container
+msgin = ''
+for msg in st.session_state.messages:
+    msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
+st.markdown(f"<div class='scrollable-container'>"+msgin+f"</div>", unsafe_allow_html=True)
+
 
 # Adjusted approach using Streamlit's columns for input and button alignment
 st.empty();
