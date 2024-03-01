@@ -15,7 +15,7 @@ if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
 
 # Set your OpenAI API key
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+openai.api_key = st.secrets["API_KEY"]
 
 # Database connection
 conn = mysql.connector.connect(
