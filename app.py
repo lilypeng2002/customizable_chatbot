@@ -53,7 +53,36 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 # Start of the chat application
-#st.title("Alex")
+st.markdown("""
+<style>
+    .chat-header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f1f1f1; /* Light grey background */
+        border-top-left-radius: 10px; /* Rounded corners at the top to match the chat container */
+        border-top-right-radius: 10px;
+    }
+    
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50; /* Green background */
+        border-radius: 50%; /* Makes the div circular */
+        margin-right: 10px;
+    }
+    
+    .chat-header h4 {
+        margin: 0;
+        font-weight: normal;
+    }
+</style>
+
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4>
+</div>
+""", unsafe_allow_html=True)
 
 # Automatically send the first bot message if the chat hasn't started
 if not st.session_state["chat_started"]:
