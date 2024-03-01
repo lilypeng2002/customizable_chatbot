@@ -41,6 +41,25 @@ def create_conversations_table():
     conn.commit()
     cursor.close()
 
+
+# Custom CSS to make the header sticky
+st.markdown("""
+<style>
+.sticky-header {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    background-color: white;
+    padding: 5px 0;
+    border-bottom: 2px solid #f0f0f0;
+}
+</style>
+<div class="sticky-header"><h1 style="margin:0">Alex</h1></div>
+""", unsafe_allow_html=True)
+
+
+
 create_conversations_table()
 
 # Function to save conversations to the database
@@ -58,7 +77,7 @@ st.title("Alex")
 if not st.session_state["chat_started"]:
     initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
     st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
-    st.session_state["chat_started"] = True
+    st.session_state["chat_started"] = True  # Mark the chat as started
 
 # Display messages
 for message in st.session_state["messages"]:
@@ -74,10 +93,6 @@ if prompt := st.chat_input("Please type your entire response in one message."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Show a loading message
-    loading_message_id = st.chat_message("assistant", "Typing...")
-    st.markdown("...")
-
     # Prepare the conversation history for OpenAI API
     conversation_history = [
         {"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]
@@ -91,9 +106,7 @@ if prompt := st.chat_input("Please type your entire response in one message."):
 
     bot_response = response.choices[0].message.content
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"Alex: {bot_response}")
-
-    # Update the loading message with the actual response
-    loading_message_id.empty()  # Remove the temporary loading message
+    # Append the bot's response without rerunning the script
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
     with st.chat_message("assistant"):
         st.markdown(bot_response)
