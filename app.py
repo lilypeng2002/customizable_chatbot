@@ -41,6 +41,7 @@ def create_conversations_table():
     conn.commit()
     cursor.close()
 
+
 create_conversations_table()
 
 # Function to save conversations to the database
@@ -51,70 +52,65 @@ def save_conversation(conversation_id, user_id, content):
     conn.commit()
     cursor.close()
 
-# Custom CSS for styling
+
+
+# Start of the chat application
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-    .message {
-        margin: 10px 0;
+    .chat-header {
+        display: flex;
+        align-items: center;
         padding: 10px;
-        border-radius: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        width: 70%;
-        position: relative;
-        word-wrap: break-word;
+        background-color: #f1f1f1; /* Light grey background */
+        border-top-left-radius: 10px; /* Rounded corners at the top to match the chat container */
+        border-top-right-radius: 10px;
     }
-    .user-message {
-        background-color: #007bff;
-        color: white;
-        margin-left: auto;
-        border-top-right-radius: 0;
-        text-align: left;
-    }
-    .bot-message {
-        background-color: #f1f1f1;
-        color: #333;
-        margin-right: auto;
-        border-top-left-radius: 0;
-        text-align: left;
-    }
+    
+    .chat-header h4 {
+        margin: 0;
+        font-weight: normal;
+    } 
 </style>
-""", unsafe_allow_html=True)
 
-# Display chat header
-st.markdown("""
 <div class="chat-header">
-    <div class="circle-logo"></div> 
     <h4>Alex</h4> 
 </div>
 """, unsafe_allow_html=True)
 
-# Display messages using markdown to apply custom styles
+# Automatically send the first bot message if the chat hasn't started
+if not st.session_state["chat_started"]:
+    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
+    st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
+    st.session_state["chat_started"] = True  # Mark the chat as started
+
+# Display messages
 for message in st.session_state["messages"]:
-    message_class = "user-message" if message["role"] == "user" else "bot-message"
-    st.markdown(f"<div class='message {message_class}'>{message['content']}</div>", unsafe_allow_html=True)
+    with st.chat_message(message["role"]): 
+        st.markdown(message["content"]) 
 
 # Input field for new messages
 if prompt := st.chat_input("Please type your entire response in one message."):
     st.session_state["last_submission"] = prompt
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"You: {prompt}")
+    # Append and immediately display the participant's message
     st.session_state["messages"].append({"role": "user", "content": prompt})
-    # Immediately display the participant's message using the new style
-    message_class = "user-message"
-    st.markdown(f"<div class='message {message_class}'>{prompt}</div>", unsafe_allow_html=True)
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
     # Prepare the conversation history for OpenAI API
-    conversation_history = [{"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]]
+    conversation_history = [
+        {"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]
+    ]
 
     # Call OpenAI API and display bot's response
-    response = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=conversation_history)
+    response = openai.ChatCompletion.create(
+        model="gpt-4-turbo-preview",
+        messages=conversation_history
+    )
 
     bot_response = response.choices[0].message.content
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"Alex: {bot_response}")
+    # Append the bot's response without rerunning the script
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
-    # Display the bot's response using the new style
-    message_class = "bot-message"
-    st.markdown(f"<div class='message {message_class}'>{bot_response}</div>", unsafe_allow_html=True)
+    with st.chat_message("assistant"):
+        st.markdown(bot_response)
