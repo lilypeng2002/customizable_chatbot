@@ -58,7 +58,7 @@ st.title("Alex")
 if not st.session_state["chat_started"]:
     initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
     st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
-    st.session_state["chat_started"] = True  # Mark the chat as started
+    st.session_state["chat_started"] = True
 
 # Display messages
 for message in st.session_state["messages"]:
@@ -74,6 +74,10 @@ if prompt := st.chat_input("Please type your entire response in one message."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
+    # Show a loading message
+    loading_message_id = st.chat_message("assistant", "Typing...")
+    st.markdown("...")
+
     # Prepare the conversation history for OpenAI API
     conversation_history = [
         {"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]
@@ -87,7 +91,9 @@ if prompt := st.chat_input("Please type your entire response in one message."):
 
     bot_response = response.choices[0].message.content
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"Alex: {bot_response}")
-    # Append the bot's response without rerunning the script
+
+    # Update the loading message with the actual response
+    loading_message_id.empty()  # Remove the temporary loading message
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
     with st.chat_message("assistant"):
         st.markdown(bot_response)
