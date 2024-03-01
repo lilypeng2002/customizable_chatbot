@@ -243,6 +243,33 @@ if not st.session_state['chat_started']:
     st.session_state['chat_started'] = True  # Mark the chat as started
 
 
+# Check if there are messages before displaying them and also add scrolling script
+if st.session_state.messages:
+    msgin = ''
+    for msg in st.session_state.messages:
+        msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
+    
+    # Display the messages inside the scrollable container
+    st.markdown(f"<div class='scrollable-container'>{msgin}</div>", unsafe_allow_html=True)
+
+    # Auto-scroll to the bottom of the chat container after new message is added
+    st.markdown(
+        """
+        <script>
+            setTimeout(function() {
+                const element = document.querySelector('.scrollable-container');
+                if (element) {
+                    element.scrollTop = element.scrollHeight;
+                }
+            }, 0);
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+
+
 # Display messages
 for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
