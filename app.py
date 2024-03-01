@@ -52,7 +52,7 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 # Start of the chat application
-#st.title("Alex")
+st.title("Alex")
 
 # Automatically send the first bot message if the chat hasn't started
 if not st.session_state["chat_started"]:
@@ -66,7 +66,7 @@ for message in st.session_state["messages"]:
         st.markdown(message["content"])
 
 # Input field for new messages
-if prompt := st.chat_input("Please Type here?"):
+if prompt := st.chat_input("Please type your entire response in one message."):
     st.session_state["last_submission"] = prompt
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"You: {prompt}")
     st.session_state["messages"].append({"role": "user", "content": prompt})
