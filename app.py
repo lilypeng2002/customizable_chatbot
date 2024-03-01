@@ -130,8 +130,6 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
-
-            
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -182,7 +180,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 
 # Database connection
@@ -239,13 +236,6 @@ if not st.session_state['chat_started']:
 # Display messages
 for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
-
-# # Display chat messages inside the scrollable container SHURAN SOLUTION
-#msgin = ''
-#for msg in st.session_state.messages:
-#    msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
-#st.markdown(f"<div class='scrollable-container'>"+msgin+f"</div>", unsafe_allow_html=True)
-
 
 # Adjusted approach using Streamlit's columns for input and button alignment
 st.empty();
@@ -318,7 +308,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 # Embed the custom JavaScript in the Streamlit app
 html(disable_enter_key_js)
-
-
-
-#git add . && git commit -m "update"
