@@ -80,7 +80,7 @@ st.markdown("""
 
 <div class="chat-header">
     <div class="circle-logo"></div> 
-    
+    <h4>Alex</h4>
 </div>
 """, unsafe_allow_html=True)
 
