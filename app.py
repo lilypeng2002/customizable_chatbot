@@ -133,6 +133,13 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
+    .scrollable-container {
+            max-height: 500px; /* Fixed max-height */
+            overflow-y: auto; /* Show scrollbar when needed */
+            border: 1px solid #ccc; /* Visual boundary */
+            padding: 10px; /* Padding inside the container */
+            background-color: #2D2928; /* Adjust the background color if needed */
+        }
     .message {
         margin: 10px 0;
         padding: 10px;
