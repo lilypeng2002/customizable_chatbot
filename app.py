@@ -324,24 +324,3 @@ with col2:
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
 
-
-
-
-disable_enter_key_js = """
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    document.querySelectorAll('input').forEach(inputField => {
-        inputField.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();  // Prevent the default Enter key behavior
-                // Optionally, trigger your own logic here, e.g., click a send button programmatically
-                // document.getElementById('your-send-button-id').click();
-            }
-        });
-    });
-});
-</script>
-"""
-
-# Embed the custom JavaScript in the Streamlit app
-html(disable_enter_key_js)
