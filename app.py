@@ -42,23 +42,6 @@ def create_conversations_table():
     cursor.close()
 
 
-# Custom CSS to make the header sticky
-st.markdown("""
-<style>
-.sticky-header {
-    position: -webkit-sticky; /* Safari */
-    position: sticky;
-    top: 0;
-    z-index: 9999;
-    background-color: white;
-    padding: 5px 0;
-    border-bottom: 2px solid #f0f0f0;
-}
-</style>
-<div class="sticky-header"><h1 style="margin:0">Alex</h1></div>
-""", unsafe_allow_html=True)
-
-
 
 create_conversations_table()
 
