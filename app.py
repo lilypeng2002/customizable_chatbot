@@ -84,13 +84,80 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Display chat header
+# Chat header with logo and name
 st.markdown("""
+<style>
+    .chat-header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #f1f1f1; /* Light grey background */
+        border-top-left-radius: 10px; /* Rounded corners at the top to match the chat container */
+        border-top-right-radius: 10px;
+    }
+    
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50; /* Green background */
+        border-radius: 50%; /* Makes the div circular */
+        margin-right: 10px;
+    }
+    
+    .chat-header h4 {
+        margin: 0;
+        font-weight: normal;
+    }
+            
+    .chat-container {
+        display: grid;
+        flex-direction: column-reverse;
+        justify-content: flex-start;
+        height: 90vh;
+        overflow-y: auto;
+        margin-bottom: 10vh;
+    }
+
+    .input-container {
+        display: flex;
+        justify-content: space-between;
+        height: 8vh;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: white;
+        z-index: 2;
+    }
+
+    .stTextInput>div>div>input {
+        flex-grow: 1;
+        margin-top: 0px;
+        margin-right: 10px; /* Adjust space between input and button */
+        border-radius: 20px !important; /* Keep your rounded corners */
+        padding: 10px !important; /* Keep your padding */
+    }
+    
+
+    .stButton>button {
+        white-space: nowrap; /* Ensure button text does not wrap */
+        border-radius: 20px; /* Match your input's rounded corners */
+        border: 1px solid #007bff;
+        color: #ffffff;
+        background-color: #007bff;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+    }
+</style>
+
 <div class="chat-header">
     <div class="circle-logo"></div> 
-    <h4>Alex</h4> 
+    <h4>Alex</h4>
 </div>
 """, unsafe_allow_html=True)
+
 
 # Display messages using markdown to apply custom styles
 for message in st.session_state["messages"]:
