@@ -4,8 +4,6 @@ from datetime import datetime
 import mysql.connector
 from streamlit.components.v1 import html
 import uuid 
-import sqlalchemy
-
 
 # Initialize session state variables
 if 'last_submission' not in st.session_state:
@@ -44,7 +42,6 @@ js_code = """
 </div>
 """
 
-st.markdown(js_code, unsafe_allow_html=True)
 
 # Chat header with logo and name
 st.markdown("""
@@ -133,13 +130,6 @@ st.markdown("""
     body {
         font-family: 'Roboto', sans-serif;
     }
-    .scrollable-container {
-            max-height: 500px; /* Fixed max-height */
-            overflow-y: auto; /* Show scrollbar when needed */
-            border: 1px solid #ccc; /* Visual boundary */
-            padding: 10px; /* Padding inside the container */
-            background-color: #2D2928; /* Adjust the background color if needed */
-        }
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -243,33 +233,6 @@ if not st.session_state['chat_started']:
     st.session_state['chat_started'] = True  # Mark the chat as started
 
 
-# Check if there are messages before displaying them and also add scrolling script
-if st.session_state.messages:
-    msgin = ''
-    for msg in st.session_state.messages:
-        msgin += f"<div class='message {msg['class']}'>{msg['text']}</div>"
-    
-    # Display the messages inside the scrollable container
-    st.markdown(f"<div class='scrollable-container'>{msgin}</div>", unsafe_allow_html=True)
-
-    # Auto-scroll to the bottom of the chat container after new message is added
-    st.markdown(
-        """
-        <script>
-            setTimeout(function() {
-                const element = document.querySelector('.scrollable-container');
-                if (element) {
-                    element.scrollTop = element.scrollHeight;
-                }
-            }, 0);
-        </script>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-
-
 # Display messages
 for msg in st.session_state['messages']:
     st.markdown(f"<div class='message {msg['class']}'>{msg['text']}</div>", unsafe_allow_html=True)
@@ -324,3 +287,24 @@ with col2:
         st.session_state['last_submission'] = ''
         st.experimental_rerun()
 
+
+
+
+disable_enter_key_js = """
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelectorAll('input').forEach(inputField => {
+        inputField.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // Prevent the default Enter key behavior
+                // Optionally, trigger your own logic here, e.g., click a send button programmatically
+                // document.getElementById('your-send-button-id').click();
+            }
+        });
+    });
+});
+</script>
+"""
+
+# Embed the custom JavaScript in the Streamlit app
+html(disable_enter_key_js)
