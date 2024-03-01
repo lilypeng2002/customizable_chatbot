@@ -75,7 +75,7 @@ st.markdown("""
     .chat-header h4 {
         margin: 0;
         font-weight: normal;
-    }
+    } 
 </style>
 
 <div class="chat-header">
