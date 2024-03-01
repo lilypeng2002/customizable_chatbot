@@ -53,7 +53,7 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 # Start of the chat application
-st.title("Alex")
+#st.title("Alex")
 
 # Automatically send the first bot message if the chat hasn't started
 if not st.session_state["chat_started"]:
