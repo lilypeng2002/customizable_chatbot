@@ -52,13 +52,6 @@ def save_conversation(conversation_id, user_id, content):
     cursor.close()
 
 
-if not st.session_state["chat_started"]:
-    # Assuming this block is correctly executed when the app first loads
-    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
-    st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
-    st.session_state["chat_started"] = True
-
-    
 # Custom CSS for styling
 st.markdown("""
 <style>
