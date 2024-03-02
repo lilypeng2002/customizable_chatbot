@@ -115,28 +115,24 @@ st.markdown("""
         flex-direction: column;
         align-items: center;
     }
-    .chat-container {
+            
+    .chat-header, .chat-container {
         width: 70%; /* Adjust width as needed */
-        overflow-y: auto;
-        margin-top: 100px; /* Increased space for the header */
-        position: relative;
+        position: relative; /* Changed from fixed to relative */
         box-sizing: border-box;
     }
             
     .chat-header {
-        width: 70%;
-        position: fixed;
         top: 20px; /* Increased to move the header lower */
-        left: 0;
-        right: 0;
+        z-index: 1;
         display: flex;
         align-items: center;
         padding: 10px;
         background-color: #333333; /* Darker background for the header */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        margin-bottom: 80px; /* Adjust as necessary for spacing between header and container */
     }
     .circle-logo {
         height: 40px;
@@ -145,7 +141,10 @@ st.markdown("""
         border-radius: 50%;
         margin-right: 10px;
     }
-            
+    .chat-container {
+        overflow-y: auto;
+        position: relative; /* Changed to relative to stay in the document flow */
+    }       
 
     .message {
         margin: 10px 0;
