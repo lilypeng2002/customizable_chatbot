@@ -146,7 +146,7 @@ st.markdown("""
         text-align: left;
     }
     .chat-header {
-        width: 70%;
+        width: 50%;
         position: fixed;
         top: 5%; /* Increased to move the header lower */
         left: 30%;
