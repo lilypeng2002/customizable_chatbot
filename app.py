@@ -117,7 +117,7 @@ st.markdown("""
     }
             
     .chat-header, .chat-container {
-        width: 70%; /* Adjust width as needed */
+        width: 100%; /* Adjust width as needed */
         position: relative; /* Changed from fixed to relative */
         box-sizing: border-box;
     }
