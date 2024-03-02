@@ -138,7 +138,7 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        margin-top: 10vh; 
+        margin: 5vh auto 0 auto;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
