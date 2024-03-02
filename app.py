@@ -146,6 +146,7 @@ st.markdown("""
         width: 70%; 
         margin: 0 auto;
         overflow-y: auto;
+        top: 5%;
         position: relative;
         box-sizing: border-box;
     }
