@@ -118,7 +118,7 @@ st.markdown("""
     }
             
     .chat-header {
-        width: 45rem;
+        width: 44rem;
         position: fixed;
         top: 3%; /* Increased to move the header lower */
         display: flex;
