@@ -125,7 +125,7 @@ st.markdown("""
     .chat-header {
         width: 44rem;
         position: fixed;
-        top: 3%; /* Increased to move the header lower */
+        top: 0%; /* Increased to move the header lower */
         display: flex;
         align-items: center;
         padding: 10px;
@@ -143,7 +143,7 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        margin: 50rem auto 0 auto;
+        margin: 50px auto 0 auto;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
