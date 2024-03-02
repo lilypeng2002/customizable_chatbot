@@ -114,6 +114,7 @@ st.markdown("""
         display: flex;
         flex-direction: column;
     }
+            
     .chat-container {
         width: 70%; /* Adjust width as needed */
         overflow-y: auto;
@@ -148,7 +149,7 @@ st.markdown("""
         width: 70%;
         position: fixed;
         top: 20px; /* Increased to move the header lower */
-        left: 0;
+        left: 30%;
         right: 0;
         display: flex;
         align-items: center;
