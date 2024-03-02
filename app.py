@@ -119,14 +119,17 @@ st.markdown("""
     }
             
     .chat-header {
-        width: 44rem;
         position: fixed;
-        top: 0%; /* Increased to move the header lower */
+        top: 20px; /* Increased to move the header lower */
+        left: 0;
+        right: 0;
         display: flex;
         align-items: center;
         padding: 10px;
         background-color: #333333; /* Darker background for the header */
-        z-index: 100;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     .circle-logo {
