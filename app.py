@@ -111,6 +111,17 @@ st.markdown("""
 st.markdown("""
 <style>
     <div class="chat-header">
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding-top: 60px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #EEE;
+    }
+            
     .chat-header {
         width: 44rem;
         position: fixed;
@@ -129,23 +140,6 @@ st.markdown("""
         border-radius: 50%;
         margin-right: 10px;
     }
-    <div class="circle-logo"></div> 
-    <h4>Alex</h4>
-    </div>
-
-<div class = "chat-container">
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-    body {
-        font-family: 'Roboto', sans-serif;
-        margin: 0;
-        padding-top: 60px;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        background: #EEE;
-    }
-            
-
             
     .chat-container {
         flex-grow: 1;
@@ -177,7 +171,7 @@ st.markdown("""
         border-top-left-radius: 0;
         text-align: left;
     }
-</div>
+
 </style>
 """, unsafe_allow_html=True)
 
