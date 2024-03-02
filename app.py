@@ -121,7 +121,7 @@ st.markdown("""
         width: 30%;
         margin:0 auto; 
         position: fixed;
-        top: 5%; /* Increased to move the header lower */
+        top: 3%; /* Increased to move the header lower */
         left: 15%;
         right: 15%;
         display: flex;
