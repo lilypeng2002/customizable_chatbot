@@ -105,10 +105,6 @@ if not st.session_state["chat_started"]:
 
 # Custom CSS for styling
 st.markdown("""
-<div class="chat-header">
-    <div class="circle-logo"></div> 
-    <h4>Alex</h4> <!-- This is where the header name "Alex" is set -->
-</div>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
     body {
@@ -117,39 +113,14 @@ st.markdown("""
         height: 100vh;
         display: flex;
         flex-direction: column;
-        align-items: center;
-    }
-            
-    .chat-header, .chat-container {
-        width: 100%; /* Adjust width as needed */
-        position: relative; /* Changed from fixed to relative */
-        box-sizing: border-box;
-    }
-            
-    .chat-header {
-        top: 20px; /* Increased to move the header lower */
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #333333; /* Darker background for the header */
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-bottom: 80px; /* Adjust as necessary for spacing between header and container */
-    }
-    .circle-logo {
-        height: 40px;
-        width: 40px;
-        background-color: #4CAF50;
-        border-radius: 50%;
-        margin-right: 10px;
     }
     .chat-container {
+        width: 70%; /* Adjust width as needed */
         overflow-y: auto;
-        position: relative; /* Changed to relative to stay in the document flow */
-    }       
-
+        margin-top: 100px; /* Increased space for the header */
+        position: relative;
+        box-sizing: border-box;
+    }
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -173,9 +144,42 @@ st.markdown("""
         border-top-left-radius: 0;
         text-align: left;
     }
-
+    .chat-header {
+        width: 70%;
+        position: fixed;
+        top: 20px; /* Increased to move the header lower */
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #333333; /* Darker background for the header */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 </style>
 """, unsafe_allow_html=True)
+
+# Chat header with logo and name
+st.markdown("""
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4>
+</div>
+<div class="chat-container">
+    <!-- Your messages will be inserted here by Streamlit -->
+</div>
+""", unsafe_allow_html=True)
+
 
 # Display messages using markdown to apply custom styles
 for message in st.session_state["messages"]:
@@ -208,3 +212,4 @@ if prompt := st.chat_input("Please type your full response in one message."):
     # Display the bot's response using the new style
     message_class = "bot-message"
     st.markdown(f"<div class='message {message_class}'>{bot_response}</div>", unsafe_allow_html=True)
+
