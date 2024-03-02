@@ -119,7 +119,7 @@ st.markdown("""
             
     .chat-header {
         width: 27%;
-        position: fixed;
+        position: relative;
         top: 3%; /* Increased to move the header lower */
         left: 50%;
         transform: translateX(-50%);
