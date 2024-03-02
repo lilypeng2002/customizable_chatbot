@@ -17,13 +17,33 @@ if "conversation_id" not in st.session_state:
 # Set your OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
 
+# If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
+js_code = """
+<div style="color: black;">
+    <script>
+        setTimeout(function() {
+            const userID = document.getElementById("userID").value;
+            if (userID) {
+                window.Streamlit.setSessionState({"user_id": userID});
+            }
+        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
+    </script>
+</div>
+"""
+
+st.markdown(js_code, unsafe_allow_html=True)
+
+# getting user_id from the hidden input
+user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+
 # Database connection
 conn = mysql.connector.connect(
     user=st.secrets['sql_user'],
     password=st.secrets['sql_password'],
     database=st.secrets['sql_database'],
     host=st.secrets['sql_host'],
-    port=st.secrets['sql_port']
+    port=st.secrets['sql_port'],
+    charset='utf8mb4'
 )
 
 # Function to create table if it doesn't exist
@@ -41,15 +61,46 @@ def create_conversations_table():
     conn.commit()
     cursor.close()
 
+def add_missing_columns():
+    cursor = conn.cursor()
+    try:
+        # Attempt to add the 'conversation_id' column if it doesn't exist.
+        # This SQL command might vary based on your SQL dialect.
+        cursor.execute('''
+        ALTER TABLE conversations ADD COLUMN conversation_id VARCHAR(255);
+        ''')
+        conn.commit()
+    except mysql.connector.Error as err:
+        print("Something went wrong when adding missing columns: {}".format(err))
+    finally:
+        cursor.close()
+
+# After creating the conversations table, call add_missing_columns to ensure all required columns exist.
 create_conversations_table()
+add_missing_columns()
 
 # Function to save conversations to the database
 def save_conversation(conversation_id, user_id, content):
-    cursor = conn.cursor()
-    cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                   (conversation_id, user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
-    conn.commit()
-    cursor.close()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
+                       (conversation_id, user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+        conn.commit()
+        cursor.close()
+    except mysql.connector.Error as err:
+        print("Something went wrong: {}".format(err))
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
+                       (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+        conn.commit()
+        cursor.close()
+
+
+if not st.session_state["chat_started"]:
+    # Assuming this block is correctly executed when the app first loads
+    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
+    st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
+    st.session_state["chat_started"] = True
 
 
 # Custom CSS for styling
@@ -58,6 +109,17 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
     body {
         font-family: 'Roboto', sans-serif;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .chat-container {
+        width: 70%; /* Adjust width as needed */
+        overflow-y: auto;
+        margin-top: 100px; /* Increased space for the header */
+        position: relative;
+        box-sizing: border-box;
     }
     .message {
         margin: 10px 0;
@@ -82,38 +144,38 @@ st.markdown("""
         border-top-left-radius: 0;
         text-align: left;
     }
+    .chat-header {
+        position: fixed;
+        top: 20px; /* Increased to move the header lower */
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #333333; /* Darker background for the header */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # Chat header with logo and name
 st.markdown("""
-<style>
-    .chat-header {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #f1f1f1; /* Light grey background */
-        border-top-left-radius: 10px; /* Rounded corners at the top to match the chat container */
-        border-top-right-radius: 10px;
-    }
-    
-    .circle-logo {
-        height: 40px;
-        width: 40px;
-        background-color: #4CAF50; /* Green background */
-        border-radius: 50%; /* Makes the div circular */
-        margin-right: 10px;
-    }
-    
-    .chat-header h4 {
-        margin: 0;
-        font-weight: normal;
-    }
-</style>
-
 <div class="chat-header">
     <div class="circle-logo"></div> 
     <h4>Alex</h4>
+</div>
+<div class="chat-container">
+    <!-- Your messages will be inserted here by Streamlit -->
 </div>
 """, unsafe_allow_html=True)
 
@@ -124,7 +186,7 @@ for message in st.session_state["messages"]:
     st.markdown(f"<div class='message {message_class}'>{message['content']}</div>", unsafe_allow_html=True)
 
 # Input field for new messages
-if prompt := st.chat_input("Please type your entire response in one message."):
+if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"You: {prompt}")
     st.session_state["messages"].append({"role": "user", "content": prompt})
@@ -136,7 +198,8 @@ if prompt := st.chat_input("Please type your entire response in one message."):
     conversation_history = [{"role": m["role"], "content": m["content"]} for m in st.session_state["messages"]]
 
     # Call OpenAI API and display bot's response 
-    response = openai.ChatCompletion.create(model="gpt-4-turbo-preview", messages=conversation_history)
+    response = openai.ChatCompletion.create(model="gpt-4-turbo-preview", 
+                                            messages=conversation_history)
 
     bot_response = response.choices[0].message.content
     save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"Alex: {bot_response}")
