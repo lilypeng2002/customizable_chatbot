@@ -181,6 +181,16 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Chat header with logo and name
+st.markdown("""
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4>
+</div>
+<div class="chat-container">
+    <!-- Your messages will be inserted here by Streamlit -->
+</div>
+""", unsafe_allow_html=True)
 
 
 # Display messages using markdown to apply custom styles
