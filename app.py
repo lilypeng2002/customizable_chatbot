@@ -118,18 +118,13 @@ st.markdown("""
     }
             
     .chat-header {
-        width: 30%;
-        margin:0 auto; 
+        width: 44rem;
         position: fixed;
         top: 3%; /* Increased to move the header lower */
-        left: 15%;
-        right: 15%;
         display: flex;
         align-items: center;
         padding: 10px;
         background-color: #333333; /* Darker background for the header */
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         z-index: 100;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
@@ -143,8 +138,7 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        width: 70%; 
-        margin: 0 auto;
+        margin: 500rem auto 0 auto;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
