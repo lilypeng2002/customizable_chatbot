@@ -143,7 +143,7 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        margin: 500rem auto 0 auto;
+        margin: 50rem auto 0 auto;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
@@ -195,7 +195,7 @@ for message in st.session_state["messages"]:
 # Input field for new messages
 if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
-    save_conversation(st.session_state["conversation_id"], "user_id_placeholder", f"You: {prompt}")
+    save_conversation(st.session_state["conversation_id"], "user_id", f"You: {prompt}")
     st.session_state["messages"].append({"role": "user", "content": prompt})
     # Immediately display the participant's message using the new style
     message_class = "user-message"
