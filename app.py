@@ -148,9 +148,9 @@ st.markdown("""
     .chat-header {
         width: 70%;
         position: fixed;
-        top: 20px; /* Increased to move the header lower */
+        top: 5%; /* Increased to move the header lower */
         left: 30%;
-        right: 0;
+        right: 30%;
         display: flex;
         align-items: center;
         padding: 10px;
