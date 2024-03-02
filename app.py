@@ -116,7 +116,7 @@ st.markdown("""
     }
             
     .chat-container {
-        width: 70%; /* Adjust width as needed */
+        width: 100%; /* Adjust width as needed */
         overflow-y: auto;
         margin-top: 100px; /* Increased space for the header */
         position: relative;
