@@ -119,8 +119,8 @@ st.markdown("""
     }
             
     .chat-header {
-        position: fixed;
-        top: 20px; /* Increased to move the header lower */
+        position: fixed; /* width: 44rem */
+        top: 0px; /* Increased to move the header lower */
         left: 0;
         right: 0;
         display: flex;
@@ -132,6 +132,8 @@ st.markdown("""
         z-index: 1;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+        
+            
     .circle-logo {
         height: 40px;
         width: 40px;
