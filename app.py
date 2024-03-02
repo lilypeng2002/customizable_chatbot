@@ -119,15 +119,12 @@ st.markdown("""
             
     .chat-header {
         width: 70%;
-        margin:0 auto; 
         position: fixed;
         top: 3%; /* Increased to move the header lower */
         display: flex;
         align-items: center;
         padding: 10px;
         background-color: #333333; /* Darker background for the header */
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         z-index: 100;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
