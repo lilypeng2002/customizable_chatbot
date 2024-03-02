@@ -121,8 +121,8 @@ st.markdown("""
         width: 70%;
         position: fixed;
         top: 3%; /* Increased to move the header lower */
-        left: 15%;
-        right: 15%;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
         align-items: center;
         padding: 10px;
@@ -144,6 +144,7 @@ st.markdown("""
         flex-grow: 1;
         width: 70%; 
         margin: 0 auto;
+        margin-top: 5%;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
@@ -170,6 +171,18 @@ st.markdown("""
         margin-right: auto;
         border-top-left-radius: 0;
         text-align: left;
+    }
+    
+        /* Use a media query to handle smaller screens */
+    @media (max-width: 768px) {
+        .chat-header, .chat-container {
+            width: 95%; /* Make chat wider on smaller screens */
+        }
+        .chat-header {
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     }
 
 </style>
