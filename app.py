@@ -122,6 +122,31 @@ st.markdown("""
         position: relative;
         box-sizing: border-box;
     }
+            
+    .chat-header {
+        width: 70%;
+        position: fixed;
+        top: 20px; /* Increased to move the header lower */
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #333333; /* Darker background for the header */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+            
+
     .message {
         margin: 10px 0;
         padding: 10px;
@@ -145,28 +170,7 @@ st.markdown("""
         border-top-left-radius: 0;
         text-align: left;
     }
-    .chat-header {
-        width: 70%;
-        position: fixed;
-        top: 20px; /* Increased to move the header lower */
-        left: 0;
-        right: 0;
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        background-color: #333333; /* Darker background for the header */
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        z-index: 1;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .circle-logo {
-        height: 40px;
-        width: 40px;
-        background-color: #4CAF50;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+
 </style>
 """, unsafe_allow_html=True)
 
