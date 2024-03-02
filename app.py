@@ -105,6 +105,10 @@ if not st.session_state["chat_started"]:
 
 # Custom CSS for styling
 st.markdown("""
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4> <!-- This is where the header name "Alex" is set -->
+</div>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
     body {
@@ -172,18 +176,6 @@ st.markdown("""
 
 </style>
 """, unsafe_allow_html=True)
-
-# Chat header with logo and name
-st.markdown("""
-<div class="chat-header">
-    <div class="circle-logo"></div> 
-    <h4>Alex</h4>
-</div>
-<div class="chat-container">
-    <!-- Your messages will be inserted here by Streamlit -->
-</div>
-""", unsafe_allow_html=True)
-
 
 # Display messages using markdown to apply custom styles
 for message in st.session_state["messages"]:
