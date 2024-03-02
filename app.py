@@ -118,11 +118,12 @@ st.markdown("""
     }
             
     .chat-header {
-        width: 70%;
+        width: 30%;
+        margin:0 auto; 
         position: fixed;
         top: 3%; /* Increased to move the header lower */
-        left: 50%;
-        transform: translateX(-50%);
+        left: 15%;
+        right: 15%;
         display: flex;
         align-items: center;
         padding: 10px;
@@ -142,9 +143,8 @@ st.markdown("""
             
     .chat-container {
         flex-grow: 1;
-        width: 100%; 
+        width: 70%; 
         margin: 0 auto;
-        margin-top: 5%;
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
@@ -171,18 +171,6 @@ st.markdown("""
         margin-right: auto;
         border-top-left-radius: 0;
         text-align: left;
-    }
-    
-        /* Use a media query to handle smaller screens */
-    @media (max-width: 768px) {
-        .chat-header, .chat-container {
-            width: 95%; /* Make chat wider on smaller screens */
-        }
-        .chat-header {
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
     }
 
 </style>
@@ -231,4 +219,5 @@ if prompt := st.chat_input("Please type your full response in one message."):
     # Display the bot's response using the new style
     message_class = "bot-message"
     st.markdown(f"<div class='message {message_class}'>{bot_response}</div>", unsafe_allow_html=True)
+
 
