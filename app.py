@@ -105,10 +105,6 @@ if not st.session_state["chat_started"]:
 
 # Custom CSS for styling
 st.markdown("""
-<div style="height: 60px;"></div> <!-- This div acts as a spacer to push chat content down -->
-""", unsafe_allow_html=True)
-
-st.markdown("""
 <style>
     <div class="chat-header">
     @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
