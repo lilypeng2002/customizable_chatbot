@@ -79,19 +79,24 @@ def add_missing_columns():
 create_conversations_table()
 add_missing_columns()
 
+
+params = st.experimental_get_query_params()
+userID = params.get("userID", ["unknown id"])[0]
+
+
 # Function to save conversations to the database
 def save_conversation(conversation_id, user_id, content):
     try:
         cursor = conn.cursor()
         cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                       (conversation_id, user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+                       (conversation_id, userID, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
         conn.commit()
         cursor.close()
     except mysql.connector.Error as err:
         print("Something went wrong: {}".format(err))
         cursor = conn.cursor()
         cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
-                       (user_id, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
+                       (userID, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
         conn.commit()
         cursor.close()
 
