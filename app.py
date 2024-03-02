@@ -113,6 +113,7 @@ st.markdown("""
         height: 100vh;
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
     .chat-container {
         width: 70%; /* Adjust width as needed */
