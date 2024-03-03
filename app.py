@@ -14,10 +14,10 @@ if "chat_started" not in st.session_state:
 if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
 
-# Set your OpenAI API key
+# Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
 
-# If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
+# If the user_id hasn't been set in session_state yet, try to retrieve it 
 js_code = """
 <div style="color: black;">
     <script>
@@ -30,10 +30,7 @@ js_code = """
     </script>
 </div>
 """
-
 st.markdown(js_code, unsafe_allow_html=True)
-
-# getting user_id from the hidden input
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
 
 # Database connection
@@ -46,7 +43,7 @@ conn = mysql.connector.connect(
     charset='utf8mb4'
 )
 
-# Function to create table if it doesn't exist
+# Create output table
 def create_conversations_table():
     cursor = conn.cursor()
     cursor.execute('''
@@ -65,7 +62,7 @@ def add_missing_columns():
     cursor = conn.cursor()
     try:
         # Attempt to add the 'conversation_id' column if it doesn't exist.
-        # This SQL command might vary based on your SQL dialect.
+        # This SQL command might vary based on SQL dialect.
         cursor.execute('''
         ALTER TABLE conversations ADD COLUMN conversation_id VARCHAR(255);
         ''')
@@ -74,12 +71,11 @@ def add_missing_columns():
         print("Something went wrong when adding missing columns: {}".format(err))
     finally:
         cursor.close()
-
-# After creating the conversations table, call add_missing_columns to ensure all required columns exist.
 create_conversations_table()
 add_missing_columns()
 
 
+#Get userID for the table
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 
@@ -124,7 +120,7 @@ st.markdown("""
     }
             
     .chat-header {
-        position: fixed; /* width: 44rem */
+        position: fixed; /* make "width: 44rem" if want to use full screen (but creates little visual bug in qualtrics) */
         top: 0px; /* Increased to move the header lower */
         left: 0;
         right: 0;
@@ -181,7 +177,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Chat header with logo and name
 st.markdown("""
 <div class="chat-header">
     <div class="circle-logo"></div> 
