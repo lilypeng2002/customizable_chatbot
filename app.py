@@ -79,24 +79,6 @@ add_missing_columns()
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 
-
-# Function to save conversations to the database
-def save_conversation(conversation_id, user_id, content):
-    try:
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO conversations (conversation_id, user_id, date, hour, content) VALUES (%s, %s, %s, %s, %s)",
-                       (conversation_id, userID, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
-        conn.commit()
-        cursor.close()
-    except mysql.connector.Error as err:
-        print("Something went wrong: {}".format(err))
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO conversations (user_id, date, hour, content) VALUES (%s, %s, %s, %s)",
-                       (userID, datetime.now().strftime("%Y-%m-%d"), datetime.now().strftime("%H:%M:%S"), content))
-        conn.commit()
-        cursor.close()
-
-
 if not st.session_state["chat_started"]:
     # Assuming this block is correctly executed when the app first loads
     initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
@@ -197,7 +179,6 @@ for message in st.session_state["messages"]:
 # Input field for new messages
 if prompt := st.chat_input("Please type your full response in one message."):
     st.session_state["last_submission"] = prompt
-    save_conversation(st.session_state["conversation_id"], "user_id", f"You: {prompt}")
     st.session_state["messages"].append({"role": "user", "content": prompt})
     # Immediately display the participant's message using the new style
     message_class = "user-message"
@@ -215,7 +196,6 @@ if prompt := st.chat_input("Please type your full response in one message."):
                                             messages=conversation_history)
 
     bot_response = response.choices[0].message.content
-    save_conversation(st.session_state["conversation_id"], "user_id", f"Alex: {bot_response}")
     st.session_state["messages"].append({"role": "assistant", "content": bot_response})
     # Display the bot's response using the new style
     message_class = "bot-message"
