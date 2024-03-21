@@ -130,7 +130,7 @@ st.markdown("""
         background-color: #333333; /* Darker background for the header */
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        z-index: 1;
+        z-index: 2;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
         
@@ -149,6 +149,7 @@ st.markdown("""
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
+        z-index: 1;
     }
     .message {
         margin: 10px 0;
