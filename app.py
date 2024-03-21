@@ -26,19 +26,90 @@ if 'chat_uuid' not in st.session_state:
 # Set your OpenAI API key here, or use an environment variable
 openai.api_key = st.secrets["API_KEY"]
 
-# If the user_id hasn't been set in session_state yet, try to retrieve it from the hidden input
-js_code = """
-<div style="color: black;">
-    <script>
-        setTimeout(function() {
-            const userID = document.getElementById("userID").value;
-            if (userID) {
-                window.Streamlit.setSessionState({"user_id": userID});
-            }
-        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
-    </script>
+# Custom CSS for styling
+st.markdown("""
+<style>
+    <div class="chat-header">
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding-top: 60px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: #EEE;
+    }
+            
+    .chat-header {
+        position: fixed; /* make "width: 44rem" if want to use full screen (but creates little visual bug in qualtrics) */
+        top: 0px; /* Increased to move the header lower */
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        background-color: #333333; /* Darker background for the header */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        z-index: 1;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+        
+            
+    .circle-logo {
+        height: 40px;
+        width: 40px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+            
+    .chat-container {
+        flex-grow: 1;
+        margin: 2rem auto 0 auto;
+        overflow-y: auto;
+        position: relative;
+        box-sizing: border-box;
+    }
+    .message {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 70%;
+        position: relative;
+        word-wrap: break-word;
+    }
+    .user-message {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        border-top-right-radius: 0;
+        text-align: left;
+    }
+    .bot-message {
+        background-color: #f1f1f1;
+        color: #333;
+        margin-right: auto;
+        border-top-left-radius: 0;
+        text-align: left;
+    }
+
+</style>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4>
 </div>
-"""
+<div class="chat-container">
+    <!-- Your messages will be inserted here by Streamlit -->
+</div>
+""", unsafe_allow_html=True)
+
+
 
 st.markdown(js_code, unsafe_allow_html=True)
 
@@ -55,30 +126,6 @@ with st.chat_message("bot"):
         st.markdown(first)
         
 # st.markdown(f"<div class='message bot'>{first}</div>", unsafe_allow_html=True)
-
-# Custom CSS for the chat interface
-st.markdown(
-    """
-    <style>
-        .message {
-            margin: 10px;
-            padding: 10px;
-            border-radius: 10px;
-            width: 70%;
-        }
-        .user {
-            margin-left: auto;
-            background-color: #2D2928;
-        }
-        .bot {
-            margin-right: auto;
-            background-color: #2D2928;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 
 
 # Connect to the database
