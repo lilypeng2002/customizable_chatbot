@@ -117,7 +117,6 @@ st.markdown("""
         overflow-y: auto;
         position: relative;
         box-sizing: border-box;
-        margin-top: 70px;
         z-index: 1;
     }
     .message {
