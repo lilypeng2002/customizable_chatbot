@@ -58,22 +58,8 @@ def create_conversations_table():
     conn.commit()
     cursor.close()
 
-def add_missing_columns():
-    cursor = conn.cursor()
-    try:
-        # Attempt to add the 'conversation_id' column if it doesn't exist.
-        # This SQL command might vary based on SQL dialect.
-        cursor.execute('''
-        ALTER TABLE conversations ADD COLUMN conversation_id VARCHAR(255);
-        ''')
-        conn.commit()
-    except mysql.connector.Error as err:
-        print("Something went wrong when adding missing columns: {}".format(err))
-    finally:
-        cursor.close()
-create_conversations_table()
-add_missing_columns()
 
+create_conversations_table()
 
 #Get userID for the table
 params = st.experimental_get_query_params()
