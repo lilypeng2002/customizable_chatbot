@@ -13,9 +13,6 @@ if "chat_started" not in st.session_state:
     st.session_state["chat_started"] = False
 if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
-if 'header_placeholder' not in st.session_state:
-    st.session_state.header_placeholder = st.empty()
-    
 
 
 # Set up OpenAI API key
@@ -116,12 +113,10 @@ st.markdown("""
     }
             
     .chat-container {
-        margin-top: 100px;
         flex-grow: 1;
         margin: 2rem auto 0 auto;
         overflow-y: auto;
         position: relative;
-        height: calc(100vh - 60px);
         box-sizing: border-box;
         z-index: 1;
     }
@@ -152,14 +147,15 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
-
-
-# st.markdown("""
-# <div class="chat-container">
-#     <!-- Your messages will be inserted here by Streamlit -->
-# </div>
-# """, unsafe_allow_html=True)
+st.markdown("""
+<div class="chat-header">
+    <div class="circle-logo"></div> 
+    <h4>Alex</h4>
+</div>
+<div class="chat-container">
+    <!-- Your messages will be inserted here by Streamlit -->
+</div>
+""", unsafe_allow_html=True)
 
 if not st.session_state["chat_started"]:
     # Assuming this block is correctly executed when the app first loads
