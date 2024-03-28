@@ -42,8 +42,6 @@ js_code = """
 """
 st.markdown(js_code, unsafe_allow_html=True)
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
-# Before the chat input field
-status_container = st.status("Processing...", expanded=False)
 
 
 # Database connection
