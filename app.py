@@ -27,10 +27,12 @@ openai.api_key = st.secrets["API_KEY"]
 js_code = """
 <div style="color: black;">
     <script>
+        setTimeout(function() {
             const userID = document.getElementById("userID").value;
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
-            };  
+            }
+        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
     </script>
 </div>
 """
