@@ -117,6 +117,7 @@ st.markdown("""
         margin: 2rem auto 0 auto;
         overflow-y: auto;
         position: relative;
+        height: calc(100vh - 60px);
         box-sizing: border-box;
         z-index: 1;
     }
