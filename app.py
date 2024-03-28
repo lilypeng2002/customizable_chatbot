@@ -35,13 +35,6 @@ js_code = """
 </div>
 """
 
-with st.session_state['header_placeholder']:
-        st.markdown("""
-        <div class="chat-header">
-            <div class="circle-logo"></div>
-            <h4>Alex</h4>
-        </div>
-        """, unsafe_allow_html=True)
 
 st.markdown(js_code, unsafe_allow_html=True)
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
@@ -79,6 +72,14 @@ create_conversations_table()
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 
+
+with st.session_state['header_placeholder']:
+        st.markdown("""
+        <div class="chat-header">
+            <div class="circle-logo"></div>
+            <h4>Alex</h4>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Custom CSS for styling
 st.markdown("""
