@@ -156,7 +156,7 @@ st.markdown("""
 # </div>
 # """, unsafe_allow_html=True)
 
-if 'header_displayed' not in st.session_state:
+if 'header_displayed' in st.session_state:
     with st.session_state['header_placeholder']:
         st.markdown("""
         <div class="chat-header">
