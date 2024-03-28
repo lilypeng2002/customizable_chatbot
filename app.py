@@ -21,14 +21,14 @@ if 'header_placeholder' not in st.session_state:
 # Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
 
-with st.session_state['header_placeholder']:
-        st.markdown("""
+st.markdown("""
         <div class="chat-header">
             <div class="circle-logo"></div>
             <h4>Alex</h4>
         </div>
         """, unsafe_allow_html=True)
 
+        
 # If the user_id hasn't been set in session_state yet, try to retrieve it 
 js_code = """
 <div style="color: black;">
