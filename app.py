@@ -15,6 +15,14 @@ if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
 if 'header_placeholder' not in st.session_state:
     st.session_state.header_placeholder = st.empty()
+    with st.session_state['header_placeholder']:
+        st.markdown("""
+        <div class="chat-header">
+            <div class="circle-logo"></div>
+            <h4>Alex</h4>
+        </div>
+        """, unsafe_allow_html=True)
+
 
 # Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
@@ -155,17 +163,6 @@ st.markdown("""
 #     <!-- Your messages will be inserted here by Streamlit -->
 # </div>
 # """, unsafe_allow_html=True)
-
-if 'header_displayed' in st.session_state:
-    with st.session_state['header_placeholder']:
-        st.markdown("""
-        <div class="chat-header">
-            <div class="circle-logo"></div>
-            <h4>Alex</h4>
-        </div>
-        """, unsafe_allow_html=True)
-    # Set a flag to indicate that the header has been displayed
-    st.session_state['header_displayed'] = True
 
 if not st.session_state["chat_started"]:
     # Assuming this block is correctly executed when the app first loads
