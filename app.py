@@ -21,25 +21,29 @@ if 'header_placeholder' not in st.session_state:
 # Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
 
-
+with st.session_state['header_placeholder']:
+        st.markdown("""
+        <div class="chat-header">
+            <div class="circle-logo"></div>
+            <h4>Alex</h4>
+        </div>
+        """, unsafe_allow_html=True)
 
 # If the user_id hasn't been set in session_state yet, try to retrieve it 
 js_code = """
 <div style="color: black;">
     <script>
-        setTimeout(function() {
             const userID = document.getElementById("userID").value;
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
-            }
-        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
+            };  
     </script>
 </div>
 """
-
-
 st.markdown(js_code, unsafe_allow_html=True)
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+# Before the chat input field
+status_container = st.status("Processing...", expanded=False)
 
 
 # Database connection
@@ -74,14 +78,6 @@ create_conversations_table()
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
 
-
-with st.session_state['header_placeholder']:
-        st.markdown("""
-        <div class="chat-header">
-            <div class="circle-logo"></div>
-            <h4>Alex</h4>
-        </div>
-        """, unsafe_allow_html=True)
 
 # Custom CSS for styling
 st.markdown("""
