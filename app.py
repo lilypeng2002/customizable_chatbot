@@ -13,6 +13,8 @@ if "chat_started" not in st.session_state:
     st.session_state["chat_started"] = False
 if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
+if 'header_placeholder' not in st.session_state:
+    st.session_state.header_placeholder = st.empty()
 
 # Set up OpenAI API key
 openai.api_key = st.secrets["API_KEY"]
@@ -32,6 +34,9 @@ js_code = """
 """
 st.markdown(js_code, unsafe_allow_html=True)
 user_id = st.session_state.get('user_id', 'unknown_user_id')  # Replace with your actual user identification method
+# Before the chat input field
+status_container = st.status("Processing...", expanded=False)
+
 
 # Database connection
 conn = mysql.connector.connect(
@@ -64,12 +69,6 @@ create_conversations_table()
 #Get userID for the table
 params = st.experimental_get_query_params()
 userID = params.get("userID", ["unknown id"])[0]
-
-if not st.session_state["chat_started"]:
-    # Assuming this block is correctly executed when the app first loads
-    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
-    st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
-    st.session_state["chat_started"] = True
 
 
 # Custom CSS for styling
@@ -148,15 +147,30 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("""
-<div class="chat-header">
-    <div class="circle-logo"></div> 
-    <h4>Alex</h4>
-</div>
-<div class="chat-container">
-    <!-- Your messages will be inserted here by Streamlit -->
-</div>
-""", unsafe_allow_html=True)
+
+
+
+# st.markdown("""
+# <div class="chat-container">
+#     <!-- Your messages will be inserted here by Streamlit -->
+# </div>
+# """, unsafe_allow_html=True)
+
+with st.session_state['header_placeholder']:
+    st.markdown("""
+    <div class="chat-header">
+        <!-- Your header content here -->
+        <div class="circle-logo"></div> 
+        <h4>Alex</h4>
+    </div>
+    """, unsafe_allow_html=True)
+
+if not st.session_state["chat_started"]:
+    # Assuming this block is correctly executed when the app first loads
+    initial_bot_message = "Hey there! I'm an AI developed by the University of Toronto, and I'm here to help you explore any desire you may have to become more kind and caring towards others. Can you tell me a little bit about what's been on your mind lately?"
+    st.session_state["messages"].append({"role": "assistant", "content": initial_bot_message})
+    st.session_state["chat_started"] = True
+
 
 
 # Display messages using markdown to apply custom styles
