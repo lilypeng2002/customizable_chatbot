@@ -15,7 +15,13 @@ if "conversation_id" not in st.session_state:
     st.session_state["conversation_id"] = str(uuid.uuid4())
 if 'header_placeholder' not in st.session_state:
     st.session_state.header_placeholder = st.empty()
-    with st.session_state['header_placeholder']:
+    
+
+
+# Set up OpenAI API key
+openai.api_key = st.secrets["API_KEY"]
+
+with st.session_state['header_placeholder']:
         st.markdown("""
         <div class="chat-header">
             <div class="circle-logo"></div>
@@ -23,20 +29,14 @@ if 'header_placeholder' not in st.session_state:
         </div>
         """, unsafe_allow_html=True)
 
-
-# Set up OpenAI API key
-openai.api_key = st.secrets["API_KEY"]
-
 # If the user_id hasn't been set in session_state yet, try to retrieve it 
 js_code = """
 <div style="color: black;">
     <script>
-        setTimeout(function() {
             const userID = document.getElementById("userID").value;
             if (userID) {
                 window.Streamlit.setSessionState({"user_id": userID});
-            }
-        }, 1000);  // Delaying the execution by 1 second to ensure DOM is ready
+            };  
     </script>
 </div>
 """
