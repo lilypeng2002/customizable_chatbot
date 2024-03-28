@@ -156,14 +156,16 @@ st.markdown("""
 # </div>
 # """, unsafe_allow_html=True)
 
-with st.session_state['header_placeholder']:
-    st.markdown("""
-    <div class="chat-header">
-        <!-- Your header content here -->
-        <div class="circle-logo"></div> 
-        <h4>Alex</h4>
-    </div>
-    """, unsafe_allow_html=True)
+if 'header_displayed' not in st.session_state:
+    with st.session_state['header_placeholder']:
+        st.markdown("""
+        <div class="chat-header">
+            <div class="circle-logo"></div>
+            <h4>Alex</h4>
+        </div>
+        """, unsafe_allow_html=True)
+    # Set a flag to indicate that the header has been displayed
+    st.session_state['header_displayed'] = True
 
 if not st.session_state["chat_started"]:
     # Assuming this block is correctly executed when the app first loads
